@@ -1,51 +1,15 @@
 {
-  "dependencies": ["xalapm-core"],
-  "hooks": [
+  "PostToolUse": [
     {
-      "event": "hook_created",
-      "action": "sync_hook_creation",
-      "description": "Log hook creation to Xala PM"
-    },
-    {
-      "event": "context_created",
-      "action": "sync_context_creation",
-      "description": "Log context creation to Xala PM"
-    },
-    {
-      "event": "file_created",
-      "pattern": "src/hooks/use*.ts",
-      "action": "check_hook_pattern",
-      "description": "Verify new hooks follow best practices"
-    },
-    {
-      "event": "file_modified",
-      "pattern": "src/contexts/*.tsx",
-      "action": "check_context_pattern",
-      "description": "Verify context providers are properly structured"
-    },
-    {
-      "event": "file_modified",
-      "pattern": "**/*.tsx",
-      "action": "check_performance",
-      "description": "Check for common performance issues"
+      "matcher": {
+        "tools": ["Write", "Edit"]
+      },
+      "hooks": [
+        {
+          "type": "prompt",
+          "prompt": "When creating React hooks or contexts, ensure proper TypeScript typing, memoization for performance, and cleanup in effects."
+        }
+      ]
     }
-  ],
-  "actions": {
-    "check_hook_pattern": {
-      "prompt": "Review this custom hook:\n1. Returns properly typed values?\n2. Uses useCallback for returned functions?\n3. Has proper cleanup in effects?\n4. Dependencies are correct?\n5. Follows naming convention (useX)?\n\nSuggest improvements."
-    },
-    "check_context_pattern": {
-      "prompt": "Review this context:\n1. Value is memoized with useMemo?\n2. Hook throws if used outside provider?\n3. Actions are wrapped in useCallback?\n4. Types are properly exported?\n\nSuggest improvements."
-    },
-    "check_performance": {
-      "prompt": "Check for performance issues:\n1. Object/array dependencies in useEffect?\n2. Missing memoization for expensive ops?\n3. Inline objects/functions in props?\n4. Fetching in effects without cleanup?\n\nWarn if found."
-    },
-    "sync_hook_creation": {
-      "prompt": "After creating a custom hook:\n\nlog_activity(\n  type='code_change',\n  title='Created hook: {hookName}',\n  entity_type='task',\n  entity_id='{task_id}',\n  metadata={\n    agent: 'react',\n    hook: '{name}',\n    artifacts: ['{filepath}']\n  }\n)"
-    },
-    "sync_context_creation": {
-      "prompt": "After creating a context:\n\nlog_activity(\n  type='code_change',\n  title='Created context: {contextName}',\n  entity_type='task',\n  entity_id='{task_id}',\n  metadata={\n    agent: 'react',\n    context: '{name}',\n    artifacts: ['{filepath}']\n  }\n)"
-    }
-  }
+  ]
 }
-

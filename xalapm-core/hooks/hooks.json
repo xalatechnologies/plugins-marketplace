@@ -1,62 +1,13 @@
 {
-  "hooks": [
+  "SessionStart": [
     {
-      "event": "session_start",
-      "action": "load_project_context",
-      "description": "Load current project context from Xala PM on session start"
-    },
-    {
-      "event": "task_started",
-      "action": "sync_task_start",
-      "description": "Update task status to in_progress when work begins"
-    },
-    {
-      "event": "task_completed",
-      "action": "sync_task_complete",
-      "description": "Update task status to done and log activity when work completes"
-    },
-    {
-      "event": "code_created",
-      "pattern": "src/**/*.{ts,tsx}",
-      "action": "log_code_creation",
-      "description": "Log code creation activity"
-    },
-    {
-      "event": "code_modified",
-      "pattern": "src/**/*.{ts,tsx}",
-      "action": "log_code_modification",
-      "description": "Log code modification activity"
-    },
-    {
-      "event": "analysis_complete",
-      "action": "sync_analysis_results",
-      "description": "Create tasks from analysis findings and update project"
+      "matcher": {},
+      "hooks": [
+        {
+          "type": "prompt",
+          "prompt": "You have access to Xala PM integration. At session start, briefly check project context using get_dashboard_stats if available. Acknowledge: 'Connected to Xala PM.'"
+        }
+      ]
     }
-  ],
-  "actions": {
-    "load_project_context": {
-      "prompt": "At session start, automatically:\n\n1. Call get_dashboard_stats to understand current project state\n2. Call get_tasks status='in_progress' to see active work\n3. Store context for reference during session\n\nBriefly acknowledge: 'Connected to Xala PM. Project: {name}, {X} active tasks.'"
-    },
-    "sync_task_start": {
-      "prompt": "When starting work on a task:\n\n1. Identify the task ID from context or ask user\n2. Call: update_task task_id='{id}' status='in_progress'\n3. Call: log_activity type='task_update' title='Started: {task_title}' entity_type='task' entity_id='{id}'\n\nConfirm: '📋 Task {id} marked as in progress in Xala PM.'"
-    },
-    "sync_task_complete": {
-      "prompt": "When completing work on a task:\n\n1. Get the task ID\n2. Call: update_task task_id='{id}' status='done'\n3. Call: log_activity type='task_update' title='Completed: {task_title}' entity_type='task' entity_id='{id}' metadata={agent: '{agent_name}', artifacts: ['{files_created}']}\n4. Check if phase progress needs updating\n\nConfirm: '✅ Task {id} completed and logged in Xala PM.'"
-    },
-    "log_code_creation": {
-      "prompt": "When code files are created:\n\n1. Determine which task this relates to (if any)\n2. Log activity with file details\n\nCall: log_activity type='code_change' title='Created {filename}' entity_type='task' entity_id='{task_id}' metadata={agent: '{agent}', artifacts: ['{filepath}'], changes: {files_created: 1}}"
-    },
-    "log_code_modification": {
-      "prompt": "When significant code changes are made:\n\n1. Determine which task this relates to\n2. Log activity with change summary\n\nCall: log_activity type='code_change' title='Modified {component/feature}' entity_type='task' entity_id='{task_id}' metadata={agent: '{agent}', changes: {files_modified: X}}"
-    },
-    "sync_analysis_results": {
-      "prompt": "When analysis is complete:\n\n1. Log the analysis activity\n2. Create tasks for each significant finding\n3. Update project metadata if PRD/structure was inferred\n\nFor each finding with priority >= medium:\n  Call: create_task id='{generated_id}' title='{finding_title}' role='{relevant_role}' phase_id={phase} priority='{severity}'\n\nCall: log_activity type='analysis' title='Analysis complete: {X} issues, {Y} tasks created' entity_type='project' entity_id='{project_id}'"
-    }
-  },
-  "global_rules": {
-    "before_any_task": "Check if working on a tracked task. If yes, ensure it's marked in_progress.",
-    "after_any_task": "If task was tracked, mark it done and log activity.",
-    "on_error": "Log the error to activity feed for visibility."
-  }
+  ]
 }
-

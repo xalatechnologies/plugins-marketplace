@@ -1,39 +1,15 @@
 {
-  "dependencies": ["xalapm-core"],
-  "hooks": [
+  "PostToolUse": [
     {
-      "event": "readme_updated",
-      "action": "sync_readme",
-      "description": "Log README update"
-    },
-    {
-      "event": "api_docs_generated",
-      "action": "sync_api_docs",
-      "description": "Log API documentation generation"
-    },
-    {
-      "event": "changelog_updated",
-      "action": "sync_changelog",
-      "description": "Log changelog update"
-    },
-    {
-      "event": "prd_created",
-      "action": "sync_prd_to_project",
-      "description": "Sync PRD content to project database"
+      "matcher": {
+        "tools": ["Write", "Edit"]
+      },
+      "hooks": [
+        {
+          "type": "prompt",
+          "prompt": "When creating or modifying code, consider updating related documentation: README, API docs, JSDoc comments."
+        }
+      ]
     }
-  ],
-  "actions": {
-    "sync_readme": {
-      "prompt": "After updating README:\n\n1. log_activity(\n     type='code_change',\n     title='📝 README updated',\n     entity_type='project',\n     entity_id='{project_id}',\n     metadata={\n       agent: 'documentation',\n       artifacts: ['README.md'],\n       sections_updated: ['installation', 'usage', etc]\n     }\n   )"
-    },
-    "sync_api_docs": {
-      "prompt": "After generating API documentation:\n\n1. log_activity(\n     type='code_change',\n     title='📚 API documentation generated',\n     entity_type='project',\n     entity_id='{project_id}',\n     metadata={\n       agent: 'documentation',\n       format: 'openapi|typedoc',\n       endpoints_documented: X,\n       artifacts: ['docs/api/']\n     }\n   )"
-    },
-    "sync_changelog": {
-      "prompt": "After updating changelog:\n\n1. log_activity(\n     type='code_change',\n     title='📋 Changelog updated for v{version}',\n     entity_type='project',\n     entity_id='{project_id}',\n     metadata={\n       agent: 'documentation',\n       version: '{version}',\n       changes: { added: X, changed: Y, fixed: Z }\n     }\n   )"
-    },
-    "sync_prd_to_project": {
-      "prompt": "When PRD is created or updated:\n\n1. Save content to docs/PRD.md\n2. update_project(\n     project_id='{id}',\n     prd_content='{markdown}',\n     prd_updated_at=now()\n   )\n3. log_activity(\n     type='analysis',\n     title='📋 PRD updated for {project_name}',\n     entity_type='project',\n     entity_id='{project_id}',\n     metadata={\n       agent: 'documentation',\n       sections: ['overview', 'features', 'requirements'],\n       artifacts: ['docs/PRD.md']\n     }\n   )\n4. notify_team(\n     type='info',\n     title='PRD Updated',\n     message='Product Requirements Document has been updated',\n     recipients=['pm', 'product-owner', 'tech-lead']\n   )"
-    }
-  }
+  ]
 }

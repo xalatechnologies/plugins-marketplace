@@ -1,47 +1,15 @@
 {
-  "dependencies": ["xalapm-core"],
-  "hooks": [
+  "PostToolUse": [
     {
-      "event": "before_endpoint_create",
-      "action": "check_task_context",
-      "description": "Check if this relates to a tracked task"
-    },
-    {
-      "event": "after_endpoint_create",
-      "action": "sync_endpoint_created",
-      "description": "Update Xala PM after creating API endpoint"
-    },
-    {
-      "event": "after_service_create",
-      "action": "sync_service_created",
-      "description": "Update Xala PM after creating service"
-    },
-    {
-      "event": "task_complete",
-      "action": "complete_backend_task",
-      "description": "Mark backend task complete and notify PM"
-    },
-    {
-      "event": "security_check",
-      "action": "log_security_review",
-      "description": "Log security review to compliance"
+      "matcher": {
+        "tools": ["Write", "Edit"]
+      },
+      "hooks": [
+        {
+          "type": "prompt",
+          "prompt": "When creating API endpoints, ensure proper validation, error handling, authentication checks, and follow REST best practices."
+        }
+      ]
     }
-  ],
-  "actions": {
-    "check_task_context": {
-      "prompt": "Before creating an endpoint:\n\n1. Check for task ID in context\n2. If found, mark task in_progress\n3. Store context for sync"
-    },
-    "sync_endpoint_created": {
-      "prompt": "After creating an API endpoint:\n\n1. log_activity(\n     type='code_change',\n     title='Created {method} {path} endpoint',\n     entity_type='task',\n     entity_id='{task_id}',\n     metadata={\n       agent: 'backend',\n       artifacts: ['{filepath}'],\n       changes: {\n         endpoint: '{method} {path}',\n         validation: true/false,\n         auth_required: true/false\n       }\n     }\n   )\n2. If this completes the task, trigger complete_backend_task"
-    },
-    "sync_service_created": {
-      "prompt": "After creating a service:\n\n1. log_activity(\n     type='code_change',\n     title='Created {ServiceName} service',\n     entity_type='task',\n     entity_id='{task_id}',\n     metadata={\n       agent: 'backend',\n       artifacts: ['{filepath}'],\n       changes: { service: '{name}', methods: X }\n     }\n   )"
-    },
-    "complete_backend_task": {
-      "prompt": "When backend task is complete:\n\n1. update_task task_id='{id}' status='done'\n2. log_activity(\n     type='task_update',\n     title='✅ Backend task completed: {task_title}',\n     entity_type='task',\n     entity_id='{task_id}',\n     metadata={\n       agent: 'backend',\n       completed_by: 'backend-agent',\n       artifacts: [created files],\n       endpoints_added: X\n     }\n   )\n3. notify_team(\n     type='success',\n     title='Backend task completed',\n     message='{task_title} - API ready for integration',\n     recipients=['pm', 'frontend']\n   )\n4. Update phase progress"
-    },
-    "log_security_review": {
-      "prompt": "When security checks are performed:\n\n1. update_compliance(\n     check_id='api_security',\n     status='{pass|fail|warning}',\n     notes='{findings}'\n   )\n2. log_activity(\n     type='compliance',\n     title='Security review: {endpoint}',\n     entity_type='task',\n     entity_id='{task_id}',\n     metadata={ issues_found: X, severity: '{level}' }\n   )"
-    }
-  }
+  ]
 }

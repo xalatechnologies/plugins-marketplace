@@ -1,31 +1,15 @@
 {
-  "dependencies": ["xalapm-core"],
-  "hooks": [
+  "PostToolUse": [
     {
-      "event": "screen_created",
-      "action": "sync_screen_created",
-      "description": "Log screen creation to Xala PM"
-    },
-    {
-      "event": "task_complete",
-      "action": "complete_mobile_task",
-      "description": "Mark mobile task complete"
-    },
-    {
-      "event": "build_complete",
-      "action": "log_mobile_build",
-      "description": "Log mobile build result"
+      "matcher": {
+        "tools": ["Write", "Edit"]
+      },
+      "hooks": [
+        {
+          "type": "prompt",
+          "prompt": "When creating mobile screens, consider cross-platform compatibility, responsive layouts, and platform-specific UX patterns."
+        }
+      ]
     }
-  ],
-  "actions": {
-    "sync_screen_created": {
-      "prompt": "After creating a mobile screen:\n\n1. log_activity(\n     type='code_change',\n     title='Created {ScreenName} screen',\n     entity_type='task',\n     entity_id='{task_id}',\n     metadata={\n       agent: 'mobile',\n       platform: 'expo',\n       screen: '{name}',\n       artifacts: ['src/screens/{Name}Screen.tsx']\n     }\n   )"
-    },
-    "complete_mobile_task": {
-      "prompt": "When mobile task is complete:\n\n1. update_task task_id='{id}' status='done'\n2. log_activity(\n     type='task_update',\n     title='✅ Mobile task completed: {title}',\n     entity_type='task',\n     entity_id='{task_id}',\n     metadata={ agent: 'mobile', artifacts: [files] }\n   )\n3. notify_team(\n     type='success',\n     title='Mobile task completed',\n     message='{title} ready for testing',\n     recipients=['pm', 'qa']\n   )"
-    },
-    "log_mobile_build": {
-      "prompt": "After mobile build:\n\n1. log_activity(\n     type='deployment',\n     title='📱 Mobile build: {platform} - {status}',\n     entity_type='project',\n     entity_id='{project_id}',\n     metadata={\n       agent: 'mobile',\n       platform: '{ios|android}',\n       build_status: '{success|failed}',\n       version: '{version}'\n     }\n   )"
-    }
-  }
+  ]
 }

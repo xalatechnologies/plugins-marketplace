@@ -1,39 +1,15 @@
 {
-  "dependencies": ["xalapm-core"],
-  "hooks": [
+  "PostToolUse": [
     {
-      "event": "migration_created",
-      "action": "sync_migration",
-      "description": "Log migration to Xala PM"
-    },
-    {
-      "event": "rls_policy_created",
-      "action": "sync_rls_policy",
-      "description": "Log RLS policy to compliance"
-    },
-    {
-      "event": "schema_changed",
-      "action": "log_schema_change",
-      "description": "Log schema changes"
-    },
-    {
-      "event": "types_generated",
-      "action": "log_types_generated",
-      "description": "Log TypeScript types generation"
+      "matcher": {
+        "tools": ["Write", "Edit"]
+      },
+      "hooks": [
+        {
+          "type": "prompt",
+          "prompt": "When creating database schemas or migrations, consider RLS policies for security, proper indexing, and TypeScript type generation."
+        }
+      ]
     }
-  ],
-  "actions": {
-    "sync_migration": {
-      "prompt": "After creating a migration:\n\n1. log_activity(\n     type='code_change',\n     title='Database migration: {name}',\n     entity_type='task',\n     entity_id='{task_id}',\n     metadata={\n       agent: 'supabase',\n       migration: '{name}',\n       artifacts: ['supabase/migrations/{file}'],\n       changes: {\n         tables_created: X,\n         tables_modified: Y,\n         indexes_added: Z\n       }\n     }\n   )\n2. If this completes a database task:\n   update_task task_id='{id}' status='done'"
-    },
-    "sync_rls_policy": {
-      "prompt": "After creating RLS policy:\n\n1. update_compliance(\n     check_id='database_security',\n     status='pass',\n     notes='RLS policy added for {table}'\n   )\n2. log_activity(\n     type='compliance',\n     title='🔒 RLS policy: {table}',\n     entity_type='task',\n     entity_id='{task_id}',\n     metadata={\n       agent: 'supabase',\n       table: '{table}',\n       policy: '{policy_name}',\n       operation: 'SELECT|INSERT|UPDATE|DELETE'\n     }\n   )"
-    },
-    "log_schema_change": {
-      "prompt": "When schema is modified:\n\n1. log_activity(\n     type='code_change',\n     title='Schema change: {table}',\n     entity_type='project',\n     entity_id='{project_id}',\n     metadata={\n       agent: 'supabase',\n       table: '{table}',\n       columns_added: X,\n       columns_removed: Y\n     }\n   )"
-    },
-    "log_types_generated": {
-      "prompt": "After generating TypeScript types:\n\n1. log_activity(\n     type='code_change',\n     title='Generated TypeScript types from schema',\n     entity_type='project',\n     entity_id='{project_id}',\n     metadata={\n       agent: 'supabase',\n       artifacts: ['src/lib/database.types.ts'],\n       tables: X\n     }\n   )"
-    }
-  }
+  ]
 }

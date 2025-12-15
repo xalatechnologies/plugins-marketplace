@@ -1,47 +1,15 @@
 {
-  "dependencies": ["xalapm-core"],
-  "hooks": [
+  "PostToolUse": [
     {
-      "event": "after_test_create",
-      "action": "sync_test_created",
-      "description": "Log test creation to Xala PM"
-    },
-    {
-      "event": "after_test_run",
-      "action": "sync_test_results",
-      "description": "Log test results to Xala PM"
-    },
-    {
-      "event": "coverage_report",
-      "action": "update_project_coverage",
-      "description": "Update project coverage metrics"
-    },
-    {
-      "event": "e2e_complete",
-      "action": "sync_e2e_results",
-      "description": "Log E2E test results"
-    },
-    {
-      "event": "security_scan",
-      "action": "sync_security_results",
-      "description": "Log security scan to compliance"
+      "matcher": {
+        "tools": ["Write", "Edit"]
+      },
+      "hooks": [
+        {
+          "type": "prompt",
+          "prompt": "When creating or modifying code, consider test coverage. Suggest unit tests for new functions and E2E tests for user flows."
+        }
+      ]
     }
-  ],
-  "actions": {
-    "sync_test_created": {
-      "prompt": "After creating tests:\n\n1. log_activity(\n     type='code_change',\n     title='Added tests for {feature}',\n     entity_type='task',\n     entity_id='{task_id}',\n     metadata={\n       agent: 'testing',\n       artifacts: ['{test_filepath}'],\n       changes: {\n         tests_added: X,\n         test_type: 'unit|e2e|integration'\n       }\n     }\n   )\n2. If this was a testing task, mark it complete"
-    },
-    "sync_test_results": {
-      "prompt": "After running tests:\n\n1. log_activity(\n     type='code_change',\n     title='Test run: {passed}/{total} passed',\n     entity_type='project',\n     entity_id='{project_id}',\n     metadata={\n       agent: 'testing',\n       changes: {\n         tests_passed: X,\n         tests_failed: Y,\n         coverage: Z%,\n         duration: '{time}s'\n       }\n     }\n   )\n2. If tests failed, notify relevant developers:\n   notify_team(\n     type='warning',\n     title='Tests failing',\n     message='{Y} tests failed in {feature}',\n     recipients=['developer', 'pm']\n   )"
-    },
-    "update_project_coverage": {
-      "prompt": "When coverage report is generated:\n\n1. update_repository(\n     repo_id='{repo_id}',\n     health_score={coverage_score},\n     last_analyzed=now()\n   )\n2. log_activity(\n     type='analysis',\n     title='Coverage report: {coverage}%',\n     entity_type='project',\n     entity_id='{project_id}',\n     metadata={\n       coverage: { statements: X, branches: Y, functions: Z }\n     }\n   )\n3. If coverage dropped, alert PM"
-    },
-    "sync_e2e_results": {
-      "prompt": "After E2E tests complete:\n\n1. log_activity(\n     type='code_change',\n     title='E2E: {passed}/{total} scenarios passed',\n     entity_type='project',\n     entity_id='{project_id}',\n     metadata={\n       agent: 'testing',\n       browsers: ['chromium', 'firefox'],\n       screenshots: X,\n       duration: '{time}'\n     }\n   )\n2. If all passed, update deployment readiness"
-    },
-    "sync_security_results": {
-      "prompt": "After security scan:\n\n1. update_compliance(\n     check_id='security_scan',\n     status='{pass|fail}',\n     notes='{vulnerability_count} vulnerabilities found'\n   )\n2. log_activity(\n     type='compliance',\n     title='Security scan: {status}',\n     entity_type='project',\n     entity_id='{project_id}',\n     metadata={\n       agent: 'testing',\n       vulnerabilities: {\n         critical: X,\n         high: Y,\n         medium: Z\n       }\n     }\n   )\n3. If critical issues found:\n   notify_team(\n     type='error',\n     title='🔴 Critical security vulnerability',\n     message='{details}',\n     recipients=['security-lead', 'pm']\n   )"
-    }
-  }
+  ]
 }

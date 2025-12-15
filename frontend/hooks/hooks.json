@@ -1,48 +1,15 @@
 {
-  "dependencies": ["xalapm-core"],
-  "hooks": [
+  "PostToolUse": [
     {
-      "event": "before_component_create",
-      "action": "check_task_context",
-      "description": "Check if this relates to a tracked task"
-    },
-    {
-      "event": "after_component_create",
-      "action": "sync_component_created",
-      "description": "Update Xala PM after creating component"
-    },
-    {
-      "event": "after_page_create",
-      "action": "sync_page_created",
-      "description": "Update Xala PM after creating page/route"
-    },
-    {
-      "event": "file_created",
-      "pattern": "**/*.tsx",
-      "action": "log_frontend_work",
-      "description": "Log frontend file creation"
-    },
-    {
-      "event": "task_complete",
-      "action": "complete_frontend_task",
-      "description": "Mark frontend task complete and notify PM"
+      "matcher": {
+        "tools": ["Write", "Edit"]
+      },
+      "hooks": [
+        {
+          "type": "prompt",
+          "prompt": "When creating React components, follow best practices: use TypeScript, implement proper props typing, consider accessibility, and use Tailwind for styling."
+        }
+      ]
     }
-  ],
-  "actions": {
-    "check_task_context": {
-      "prompt": "Before creating a component:\n\n1. Check if user mentioned a task ID\n2. If not, ask: 'Is this related to a tracked task? (Enter task ID or 'no')'\n3. If yes, call: update_task task_id='{id}' status='in_progress'\n4. Store task context for later sync"
-    },
-    "sync_component_created": {
-      "prompt": "After creating a component:\n\n1. Get the task context (if any)\n2. Log the activity:\n   log_activity(\n     type='code_change',\n     title='Created {ComponentName} component',\n     entity_type='task',\n     entity_id='{task_id}',\n     metadata={\n       agent: 'frontend',\n       artifacts: ['{filepath}'],\n       changes: { component_created: '{name}', lines: X }\n     }\n   )\n3. If task is complete, ask: 'Component created. Mark task as complete? (y/n)'\n4. If yes, call complete_frontend_task"
-    },
-    "sync_page_created": {
-      "prompt": "After creating a page/route:\n\n1. Log the activity:\n   log_activity(\n     type='code_change',\n     title='Created {PageName} page',\n     entity_type='task',\n     entity_id='{task_id}',\n     metadata={\n       agent: 'frontend',\n       artifacts: ['{filepath}'],\n       changes: { route: '{route_path}' }\n     }\n   )\n2. Check if this completes a phase deliverable\n3. If yes, update phase progress"
-    },
-    "log_frontend_work": {
-      "prompt": "When a .tsx file is created:\n\nIf in active task context:\n  log_activity(\n    type='code_change',\n    title='Frontend: {filename}',\n    entity_type='task',\n    entity_id='{task_id}',\n    metadata={ agent: 'frontend', artifacts: ['{path}'] }\n  )"
-    },
-    "complete_frontend_task": {
-      "prompt": "When frontend task is complete:\n\n1. update_task task_id='{id}' status='done'\n2. log_activity(\n     type='task_update',\n     title='✅ Frontend task completed: {task_title}',\n     entity_type='task',\n     entity_id='{task_id}',\n     metadata={\n       agent: 'frontend',\n       completed_by: 'frontend-agent',\n       artifacts: [list of created files]\n     }\n   )\n3. notify_team(\n     type='success',\n     title='Frontend task completed',\n     message='{task_title} is ready for review',\n     recipients=['pm', 'reviewer']\n   )\n4. Check phase progress and update if needed"
-    }
-  }
+  ]
 }
