@@ -1,13 +1,59 @@
 {
-  "description": "Planning Agent - Task estimation context",
+  "description": "Ship Captain Agent - Anti-overwhelm and MVP focus hooks",
   "hooks": {
+    "Startup": [
+      {
+        "type": "prompt",
+        "prompt": "🚀 Ship Captain active. Use /finish-line to define MVP, /focus mvp to filter distractions, /completion-status to track progress. Ask: What's the ONE thing that moves you closest to shipping?"
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Task|Create",
+        "hooks": [
+          {
+            "type": "prompt",
+            "prompt": "Before creating tasks, assign priority (P0/P1/P2/P3). P0/P1 = MVP, P2/P3 = defer to post-MVP. Ask: Is this critical for shipping?"
+          }
+        ]
+      }
+    ],
     "PostToolUse": [
       {
         "matcher": "Read|Grep",
         "hooks": [
           {
             "type": "prompt",
-            "prompt": "When analyzing for estimation, consider complexity, dependencies, and break into subtasks."
+            "prompt": "When analyzing for estimation, consider complexity, dependencies, and break into subtasks. Assign P0/P1/P2/P3 priority."
+          }
+        ]
+      },
+      {
+        "matcher": "Spec|Feature",
+        "hooks": [
+          {
+            "type": "prompt",
+            "prompt": "After creating a spec, remind user to: 1) Define MVP finish line, 2) Prioritize tasks (P0-P3), 3) Use /focus mvp to see only critical path."
+          }
+        ]
+      }
+    ],
+    "UserInput": [
+      {
+        "matcher": "overwhelm|stuck|too many|don't know where|restart",
+        "hooks": [
+          {
+            "type": "prompt",
+            "prompt": "Detected signs of overwhelm. Respond with: 1) Run /completion-status to see reality, 2) Run /focus mvp to filter distractions, 3) Identify the ONE P0 blocker, 4) Work on just that one thing."
+          }
+        ]
+      },
+      {
+        "matcher": "add|feature|before|launch|also|need",
+        "hooks": [
+          {
+            "type": "prompt",
+            "prompt": "Possible scope creep detected. Ask: Is this P0 (blocks shipping) or P1 (core UX)? If P2/P3, suggest deferring to post-MVP and adding to backlog."
           }
         ]
       }

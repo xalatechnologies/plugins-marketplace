@@ -4,7 +4,7 @@
 
 ---
 
-## 🎯 Philosophy
+## Philosophy
 
 ### Core Principles
 
@@ -23,7 +23,7 @@ We build software as if:
 
 ---
 
-## 📐 Architecture Standards
+## Architecture Standards
 
 ### Layered Architecture
 
@@ -51,7 +51,7 @@ We build software as if:
 
 ---
 
-## 🏗️ Code Standards
+## Code Standards
 
 ### TypeScript
 
@@ -131,7 +131,7 @@ type UserError =
 
 ---
 
-## 🧪 Testing Standards
+## Testing Standards
 
 ### Test Pyramid
 
@@ -182,7 +182,7 @@ describe('UserService', () => {
 
 ---
 
-## 📝 Documentation Standards
+## Documentation Standards
 
 ### Code Comments
 
@@ -208,7 +208,7 @@ Every API endpoint must have:
 
 ---
 
-## 🔐 Security Standards
+## Security Standards
 
 ### Never Commit
 
@@ -237,7 +237,7 @@ For security tokens (ERC-3643, etc.):
 
 ---
 
-## 📋 Commit Standards
+## Commit Standards
 
 ### Format
 
@@ -272,7 +272,7 @@ Closes #123
 
 ---
 
-## 🚀 Deployment Standards
+## Deployment Standards
 
 ### Pre-Deployment Checklist
 

@@ -30,7 +30,7 @@
     "essential": {
       "name": "Essential",
       "description": "Core plugins required for Xala PM integration",
-      "plugins": ["xalapm-core", "orchestrator", "tasks", "repo-analysis"]
+      "plugins": ["xalapm-core", "orchestrator", "tasks", "planning", "repo-analysis"]
     },
     "fullstack": {
       "name": "Full Stack Developer",
@@ -110,7 +110,7 @@
     {
       "name": "planning",
       "source": "./planning",
-      "description": "Planning Agent - Estimate tasks, prioritize backlog, break down stories",
+      "description": "Ship Captain Agent - Anti-overwhelm tools: finish-line, focus mode, completion tracking, MVP vs Production tiers",
       "category": "productivity"
     },
     {

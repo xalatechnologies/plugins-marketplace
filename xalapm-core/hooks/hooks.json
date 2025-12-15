@@ -1,12 +1,12 @@
 {
-  "description": "Core Xala PM hooks for automatic agent routing and quality enforcement",
+  "description": "Core Xala PM hooks for automatic agent routing, SOLID principles, and quality enforcement",
   "hooks": {
     "SessionStart": [
       {
         "hooks": [
           {
             "type": "prompt",
-            "prompt": "Read and apply the agent routing rules from xalapm-core/CLAUDE.md. You have access to specialized expert agents - automatically select the appropriate agent based on task context without waiting for explicit instructions. Always follow xalapm-core/standards/QUALITY_STANDARDS.md for quality gates."
+            "prompt": "CRITICAL RULES: 1) NO emojis in code, comments, commits, or documentation. 2) NO AI tone ('built with love', 'happy coding', 'awesome', 'let's dive in'). 3) Professional, human-written, technical language only. 4) SOLID principles - functions ≤30 lines, files ≤300 lines. 5) Use Conventional Commits (feat:, fix:, docs:). Read xalapm-core/CLAUDE.md for agent routing. Follow xalapm-core/standards/QUALITY_STANDARDS.md."
           }
         ]
       }
@@ -17,7 +17,7 @@
         "hooks": [
           {
             "type": "prompt",
-            "prompt": "Before making this change, verify: 1) You're applying the correct agent expertise for this file type, 2) The change follows quality standards (no any types, proper error handling, accessibility if UI), 3) Tests are considered (TDD). If this is a security-sensitive file (auth, password, token), apply @owasp-expert guidelines."
+            "prompt": "BEFORE writing code, verify SOLID compliance: 1) Single Responsibility - does this do ONE thing? 2) Is the function ≤30 lines? Is the file ≤300 lines? 3) Can common logic be extracted to shared utilities? 4) Are dependencies injected, not hardcoded? 5) Is there duplication that should be a reusable component? If the code is too long or does too much, SPLIT IT FIRST."
           }
         ]
       }
@@ -28,7 +28,7 @@
         "hooks": [
           {
             "type": "prompt",
-            "prompt": "After this write, verify: 1) JSDoc added for exports, 2) Types are explicit (no any), 3) Error handling present, 4) Accessibility attributes if UI element, 5) Test file exists or needs creation. Auto-apply relevant skill checks based on file type."
+            "prompt": "AFTER writing, verify: 1) NO emojis anywhere in the file. 2) NO AI tone in comments/docs. 3) Professional language only. 4) SOLID - function ≤30, file ≤300, class ≤200 lines? 5) JSDoc on exports (professional, no emojis)? 6) Commit message uses Conventional Commits format (feat:, fix:, etc.). If emojis or AI tone detected, REMOVE immediately."
           }
         ]
       }
@@ -38,7 +38,7 @@
         "hooks": [
           {
             "type": "prompt",
-            "prompt": "Analyze this request to determine the appropriate agent. Check for: 1) File types mentioned, 2) Keywords (security, auth, accessibility, etc.), 3) Domain context. Automatically adopt the matching agent persona without explicit routing instructions."
+            "prompt": "Analyze request for: 1) Agent routing (file types, keywords), 2) SOLID opportunity - can this be built with small, reusable components? 3) Existing utilities to reuse. Always prefer composition over large implementations. Break complex features into small, focused modules before coding."
           }
         ]
       }

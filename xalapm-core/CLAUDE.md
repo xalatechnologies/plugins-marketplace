@@ -2,6 +2,76 @@
 
 > This file configures automatic agent routing for both Claude CLI and Cursor.
 
+---
+
+## CRITICAL: Professional Communication Standards
+
+**Strictly Enforced - No Exceptions:**
+
+1. **NO emojis** in code, comments, commits, or documentation
+2. **NO AI tone** - avoid "built with love", "happy coding", "awesome", "let's dive in"
+3. **Professional, technical language only** - write as a senior engineer would
+4. **Conventional Commits** - use `feat:`, `fix:`, `docs:`, `refactor:` format
+5. **Factual documentation** - describe what, not how it makes you feel
+
+```typescript
+// WRONG
+// 🎉 Awesome validation function! Let's make sure those inputs are valid! 💪
+
+// CORRECT
+// Validates user input against schema before processing.
+```
+
+```bash
+# WRONG commit
+✨ Add amazing new feature! Built with love ❤️
+
+# CORRECT commit
+feat(auth): implement JWT refresh token rotation
+```
+
+---
+
+## PRIORITY #1: SOLID Principles & Clean Code
+
+**This is non-negotiable. Before writing ANY code:**
+
+### Size Limits (Strictly Enforced)
+
+| Element | Maximum | If Exceeded |
+|---------|---------|-------------|
+| **Function** | 30 lines | Extract helper functions |
+| **Class** | 200 lines | Split into focused classes |
+| **File** | 300 lines | Split into modules |
+| **Parameters** | 4 | Use options object |
+| **Nesting** | 3 levels | Extract to functions |
+
+### SOLID Checklist (Every Code Change)
+
+- **S**ingle Responsibility: Does this do ONE thing?
+- **O**pen/Closed: Can I extend without modifying?
+- **L**iskov Substitution: Are subtypes substitutable?
+- **I**nterface Segregation: Are interfaces focused (≤5 methods)?
+- **D**ependency Inversion: Am I depending on abstractions?
+
+### Reusability Rules
+
+1. **DRY**: If you see similar code twice, extract it
+2. **Compose**: Build from small, reusable components
+3. **Extract**: Common logic → shared utilities
+4. **Inject**: Dependencies via constructor/props, not hardcoded
+
+### When to Split
+
+```
+Function > 30 lines → Extract helpers
+Class > 200 lines → Split by responsibility  
+File > 300 lines → Create module folder
+Component > 200 lines → Compose from smaller components
+```
+
+---
+
 ## Automatic Agent Selection
 
 You have access to specialized expert agents. **Select the appropriate agent based on the task context automatically.** Do not wait for explicit instructions.

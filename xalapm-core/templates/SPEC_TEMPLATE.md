@@ -3,6 +3,7 @@
 > **Spec ID:** SPEC-{YYYY}-{NNN}
 > **Status:** Draft | Ready | In Progress | Done
 > **Created:** {date}
+> **Tier:** MVP | Production
 > **Xala PM Task:** [Link to Xala PM task or "To be created"]
 
 ---
@@ -15,9 +16,39 @@
 
 **Who:** [Target user/persona]
 
+**MVP Scope:** [What's in MVP vs what's deferred]
+
 ---
 
-## 2. Acceptance Criteria
+## 2. Priority & Scope
+
+> **Anti-Overwhelm:** Focus on P0/P1 for MVP. Defer P2/P3 to post-launch.
+
+### Priority Levels
+
+| Priority | Label | For MVP? | Description |
+|----------|-------|----------|-------------|
+| **P0** | 🔴 Critical | ✅ Yes | Blocks shipping, core functionality |
+| **P1** | 🟠 Important | ✅ Yes | Significantly improves core UX |
+| **P2** | 🟡 Nice to Have | ❌ No | Polish, optimization, can defer |
+| **P3** | ⚪ Future | ❌ No | Ideas for later, backlog |
+
+### MVP Finish Line
+
+- [ ] [P0 requirement 1]
+- [ ] [P0 requirement 2]
+- [ ] [P1 requirement 1]
+
+### Deferred to Post-MVP
+
+| Feature | Priority | Reason |
+|---------|----------|--------|
+| [Feature A] | P2 | Nice-to-have polish |
+| [Feature B] | P3 | Future enhancement |
+
+---
+
+## 3. Acceptance Criteria
 
 | ID | Criteria | Test Type | Assigned Agent | Status |
 |----|----------|-----------|----------------|--------|
@@ -43,20 +74,53 @@ THEN [expected result]
 
 ---
 
-## 3. Implementation Plan
+## 4. Implementation Plan
 
 ### Task Assignment
 
-> **IMPORTANT:** Each task MUST specify the responsible agent/skill. The CLI will route to the exact agent.
+> **IMPORTANT:** Each task MUST specify priority and responsible agent. P0/P1 = MVP, P2/P3 = Post-MVP.
 
-| # | Task | Agent | Plugin | Skill | Estimate | Status |
-|---|------|-------|--------|-------|----------|--------|
-| 1 | Design database schema | `@supabase-dev` | `supabase` | `migrations` | 2h | ⬜ |
-| 2 | Create API endpoints | `@backend-dev` | `backend` | `api-design` | 3h | ⬜ |
-| 3 | Build UI components | `@frontend-dev` | `frontend` | `react-components` | 4h | ⬜ |
-| 4 | Security review | `@owasp-expert` | `security` | `owasp/injection-prevention` | 1h | ⬜ |
-| 5 | Write E2E tests | `@testing-specialist` | `testing` | `e2e-testing` | 2h | ⬜ |
-| 6 | Accessibility audit | `@accessibility-expert` | `accessibility` | `wcag-audit` | 1h | ⬜ |
+| # | Task | Priority | Agent | Plugin | Skill | Estimate | Status |
+|---|------|----------|-------|--------|-------|----------|--------|
+| 1 | Design database schema | 🔴 P0 | `@supabase-dev` | `supabase` | `migrations` | 2h | ⬜ |
+| 2 | Create API endpoints | 🔴 P0 | `@backend-dev` | `backend` | `api-design` | 3h | ⬜ |
+| 3 | Build UI components | 🔴 P0 | `@frontend-dev` | `frontend` | `react-components` | 4h | ⬜ |
+| 4 | Error handling | 🟠 P1 | `@backend-dev` | `backend` | `error-handling` | 2h | ⬜ |
+| 5 | Basic tests | 🟠 P1 | `@testing-specialist` | `testing` | `unit-testing` | 2h | ⬜ |
+| 6 | Security review | 🟡 P2 | `@owasp-expert` | `security` | `owasp/injection-prevention` | 1h | ⬜ |
+| 7 | Full E2E tests | 🟡 P2 | `@testing-specialist` | `testing` | `e2e-testing` | 2h | ⬜ |
+| 8 | Accessibility audit | 🟡 P2 | `@accessibility-expert` | `accessibility` | `wcag-audit` | 1h | ⬜ |
+
+### MVP Tasks (P0 + P1) — Focus Here First
+
+| # | Task | Priority | Agent | Estimate |
+|---|------|----------|-------|----------|
+| 1 | Design database schema | 🔴 P0 | `@supabase-dev` | 2h |
+| 2 | Create API endpoints | 🔴 P0 | `@backend-dev` | 3h |
+| 3 | Build UI components | 🔴 P0 | `@frontend-dev` | 4h |
+| 4 | Error handling | 🟠 P1 | `@backend-dev` | 2h |
+| 5 | Basic tests | 🟠 P1 | `@testing-specialist` | 2h |
+| **Total MVP** | | | | **13h** |
+
+### Post-MVP Tasks (P2 + P3) — Defer These
+
+| # | Task | Priority | Agent | Defer Reason |
+|---|------|----------|-------|--------------|
+| 6 | Security review | 🟡 P2 | `@owasp-expert` | After MVP ships |
+| 7 | Full E2E tests | 🟡 P2 | `@testing-specialist` | Coverage can grow |
+| 8 | Accessibility audit | 🟡 P2 | `@accessibility-expert` | Polish phase |
+
+### Priority Decision Guide
+
+```
+Is this feature required for core user journey?
+├─ YES → P0 (Critical)
+└─ NO → Does it significantly improve UX?
+        ├─ YES → P1 (Important)
+        └─ NO → Is it just polish/optimization?
+                ├─ YES → P2 (Nice to Have)
+                └─ NO → P3 (Future)
+```
 
 ### Agent Reference
 
@@ -89,7 +153,7 @@ THEN [expected result]
 
 ---
 
-## 4. CLI Routing Instructions
+## 5. CLI Routing Instructions
 
 > These instructions tell the CLI/coding agent exactly how to execute each task.
 
@@ -127,7 +191,7 @@ THEN [expected result]
 
 ---
 
-## 5. Best Practices
+## 6. Best Practices
 
 ### Required Standards (by Agent)
 
@@ -148,7 +212,7 @@ THEN [expected result]
 
 ---
 
-## 6. Tests
+## 7. Tests
 
 ### Test Plan (by Agent)
 
@@ -181,7 +245,7 @@ describe('Feature: [Name]', () => {
 
 ---
 
-## 7. Xala PM Integration
+## 8. Xala PM Integration
 
 > **All actions sync with Xala PM for tracking and visibility.**
 
@@ -219,7 +283,7 @@ All agent actions are logged to Xala PM:
 
 ---
 
-## 8. Definition of Done
+## 9. Definition of Done
 
 ### Checklist
 
@@ -257,7 +321,7 @@ All agent actions are logged to Xala PM:
 
 ---
 
-## 9. Sign-off
+## 10. Sign-off
 
 | Role | Agent | Name | Date | Approved |
 |------|-------|------|------|----------|

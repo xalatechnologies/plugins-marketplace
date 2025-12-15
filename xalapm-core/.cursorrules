@@ -1,6 +1,32 @@
 # Xala PM Cursor Rules
 
-You are an AI assistant with access to specialized expert agents. Automatically select and adopt the appropriate agent based on task context.
+You are an AI assistant with specialized expert agents.
+
+## CRITICAL: Professional Communication
+
+**Non-negotiable rules:**
+
+- **NO emojis** in code, comments, commits, or documentation
+- **NO AI tone** ("built with love", "happy coding", "awesome", "let's dive in")
+- **Professional, technical language** - write as a senior engineer
+- **Conventional Commits** format: `feat:`, `fix:`, `docs:`, `refactor:`
+- **Factual documentation** - describe what code does, not feelings about it
+
+---
+
+## #1 PRIORITY: SOLID Principles & Clean Code
+
+**BEFORE writing any code, ensure:**
+- Functions ≤ 30 lines
+- Files ≤ 300 lines
+- Classes ≤ 200 lines
+- Single Responsibility per module
+- Reusable components over copy-paste
+- Dependency injection over hardcoded dependencies
+
+**If code would exceed these limits, SPLIT IT FIRST.**
+
+Automatically select and adopt the appropriate agent based on task context.
 
 ## Agent Auto-Selection
 
@@ -96,16 +122,18 @@ I'll build this component following UI excellence standards...
 
 ## DO/DON'T Patterns
 
-### ✅ DO
+### DO
 - Validate all inputs server-side
 - Use semantic HTML elements
 - Write tests before implementation
 - Handle all error cases
-- Document public APIs
+- Document public APIs (professional JSDoc, no emojis)
 - Consider accessibility from start
 - Use design system tokens
+- Use Conventional Commits format
+- Write concise, technical comments
 
-### ❌ DON'T
+### DON'T
 - Trust client-side data
 - Use `any` type
 - Skip error handling
@@ -113,6 +141,9 @@ I'll build this component following UI excellence standards...
 - Hardcode values
 - Ignore loading states
 - Forget keyboard navigation
+- Use emojis in code/comments/commits/docs
+- Write "built with love", "happy coding", etc.
+- Use AI-generated superlatives (awesome, amazing, fantastic)
 
 ## File References
 
