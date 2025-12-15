@@ -1,26 +1,44 @@
 {
-  "description": "Xala PM Core Integration - Session context and activity logging",
+  "description": "Core Xala PM hooks for automatic agent routing and quality enforcement",
   "hooks": {
     "SessionStart": [
       {
-        "matcher": "",
         "hooks": [
           {
-            "type": "command",
-            "command": "${CLAUDE_PLUGIN_ROOT}/scripts/session-start.sh",
-            "timeout": 10
+            "type": "prompt",
+            "prompt": "Read and apply the agent routing rules from xalapm-core/CLAUDE.md. You have access to specialized expert agents - automatically select the appropriate agent based on task context without waiting for explicit instructions. Always follow xalapm-core/standards/QUALITY_STANDARDS.md for quality gates."
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "prompt",
+            "prompt": "Before making this change, verify: 1) You're applying the correct agent expertise for this file type, 2) The change follows quality standards (no any types, proper error handling, accessibility if UI), 3) Tests are considered (TDD). If this is a security-sensitive file (auth, password, token), apply @owasp-expert guidelines."
           }
         ]
       }
     ],
     "PostToolUse": [
       {
-        "matcher": "Write|Edit",
+        "matcher": "Write",
         "hooks": [
           {
-            "type": "command",
-            "command": "${CLAUDE_PLUGIN_ROOT}/scripts/log-activity.sh",
-            "timeout": 5
+            "type": "prompt",
+            "prompt": "After this write, verify: 1) JSDoc added for exports, 2) Types are explicit (no any), 3) Error handling present, 4) Accessibility attributes if UI element, 5) Test file exists or needs creation. Auto-apply relevant skill checks based on file type."
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "prompt",
+            "prompt": "Analyze this request to determine the appropriate agent. Check for: 1) File types mentioned, 2) Keywords (security, auth, accessibility, etc.), 3) Domain context. Automatically adopt the matching agent persona without explicit routing instructions."
           }
         ]
       }
