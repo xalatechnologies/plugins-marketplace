@@ -1,13 +1,16 @@
 {
-  "SessionStart": [
-    {
-      "matcher": {},
-      "hooks": [
-        {
-          "type": "prompt",
-          "prompt": "For standups, gather recent activity, completed tasks, and blockers to generate comprehensive status updates."
-        }
-      ]
-    }
-  ]
+  "description": "Standup Agent - Activity gathering",
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "prompt",
+            "prompt": "For standups, gather recent activity, completed tasks, and blockers for status updates."
+          }
+        ]
+      }
+    ]
+  }
 }

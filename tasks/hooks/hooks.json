@@ -1,13 +1,16 @@
 {
-  "SessionStart": [
-    {
-      "matcher": {},
-      "hooks": [
-        {
-          "type": "prompt",
-          "prompt": "Check for in-progress tasks at session start. Use get_tasks to see current work status."
-        }
-      ]
-    }
-  ]
+  "description": "Tasks Agent - Task status awareness",
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "prompt",
+            "prompt": "Check for in-progress tasks at session start using get_tasks. Offer to continue or update status."
+          }
+        ]
+      }
+    ]
+  }
 }

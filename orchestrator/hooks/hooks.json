@@ -1,13 +1,16 @@
 {
-  "SessionStart": [
-    {
-      "matcher": {},
-      "hooks": [
-        {
-          "type": "prompt",
-          "prompt": "As the orchestrator, you can coordinate multiple specialized agents. Use get_dashboard_stats to understand project state before delegating tasks."
-        }
-      ]
-    }
-  ]
+  "description": "Orchestrator Agent - Project context loading",
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "prompt",
+            "prompt": "As orchestrator, you coordinate specialized agents. Check project state with get_dashboard_stats before delegating tasks."
+          }
+        ]
+      }
+    ]
+  }
 }

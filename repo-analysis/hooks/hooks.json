@@ -1,15 +1,16 @@
 {
-  "PostToolUse": [
-    {
-      "matcher": {
-        "tools": ["Read", "Grep", "Glob"]
-      },
-      "hooks": [
-        {
-          "type": "prompt",
-          "prompt": "When analyzing repositories, identify patterns, tech stack, potential issues, and create actionable findings for task creation."
-        }
-      ]
-    }
-  ]
+  "description": "Repo Analysis Agent - Pattern detection",
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Read|Grep|Glob",
+        "hooks": [
+          {
+            "type": "prompt",
+            "prompt": "When analyzing code, identify patterns, tech stack, and potential issues for task creation."
+          }
+        ]
+      }
+    ]
+  }
 }

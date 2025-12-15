@@ -1,13 +1,16 @@
 {
-  "SessionStart": [
-    {
-      "matcher": {},
-      "hooks": [
-        {
-          "type": "prompt",
-          "prompt": "Check for pending syncs and stale in-progress tasks at session start."
-        }
-      ]
-    }
-  ]
+  "description": "Project Sync Agent - Activity tracking",
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "prompt",
+            "prompt": "Check for pending syncs and stale in-progress tasks. Offer to update task status."
+          }
+        ]
+      }
+    ]
+  }
 }

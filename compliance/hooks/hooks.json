@@ -1,15 +1,17 @@
 {
-  "PostToolUse": [
-    {
-      "matcher": {
-        "tools": ["Write", "Edit"]
-      },
-      "hooks": [
-        {
-          "type": "prompt",
-          "prompt": "For security token operations, verify compliance: NO public trading, NO DEX/CEX, KYC required, whitelist required, pause mechanism required."
-        }
-      ]
-    }
-  ]
+  "description": "Compliance Agent - Regulatory compliance validation (GDPR, PCI-DSS, Security Tokens)",
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"${CLAUDE_PLUGIN_ROOT}/scripts/compliance-check.py\"",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  }
 }

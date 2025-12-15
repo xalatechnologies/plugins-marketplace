@@ -1,15 +1,17 @@
 {
-  "PostToolUse": [
-    {
-      "matcher": {
-        "tools": ["Write", "Edit"]
-      },
-      "hooks": [
-        {
-          "type": "prompt",
-          "prompt": "When creating or modifying code, consider test coverage. Suggest unit tests for new functions and E2E tests for user flows."
-        }
-      ]
-    }
-  ]
+  "description": "Testing Agent - Suggests tests for new code",
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"${CLAUDE_PLUGIN_ROOT}/scripts/suggest-tests.py\"",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  }
 }

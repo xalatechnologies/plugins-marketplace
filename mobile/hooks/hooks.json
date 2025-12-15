@@ -1,15 +1,16 @@
 {
-  "PostToolUse": [
-    {
-      "matcher": {
-        "tools": ["Write", "Edit"]
-      },
-      "hooks": [
-        {
-          "type": "prompt",
-          "prompt": "When creating mobile screens, consider cross-platform compatibility, responsive layouts, and platform-specific UX patterns."
-        }
-      ]
-    }
-  ]
+  "description": "Mobile Agent - Cross-platform development",
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "prompt",
+            "prompt": "For mobile screens: ensure cross-platform compatibility and responsive layouts."
+          }
+        ]
+      }
+    ]
+  }
 }

@@ -1,15 +1,28 @@
 {
-  "PostToolUse": [
-    {
-      "matcher": {
-        "tools": ["Write", "Edit"]
-      },
-      "hooks": [
-        {
-          "type": "prompt",
-          "prompt": "When creating smart contracts, prioritize security: check for reentrancy, overflow, access control. Security tokens require KYC, whitelist, and pause mechanisms."
-        }
-      ]
-    }
-  ]
+  "description": "Blockchain Agent - Smart contract security scanning",
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"${CLAUDE_PLUGIN_ROOT}/scripts/security-scan.py\"",
+            "timeout": 15
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "prompt",
+            "prompt": "For security token contracts: NO DEX/CEX integration, NO public trading, require KYC, require whitelist, require pause mechanism."
+          }
+        ]
+      }
+    ]
+  }
 }

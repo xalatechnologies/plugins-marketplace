@@ -1,15 +1,17 @@
 {
-  "PostToolUse": [
-    {
-      "matcher": {
-        "tools": ["Write", "Edit"]
-      },
-      "hooks": [
-        {
-          "type": "prompt", 
-          "prompt": "When creating UI components, verify accessibility: alt text for images, ARIA labels, keyboard navigation, color contrast. Check WCAG 2.1 AA compliance."
-        }
-      ]
-    }
-  ]
+  "description": "Accessibility Agent - WCAG compliance checking on UI code",
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"${CLAUDE_PLUGIN_ROOT}/scripts/check-a11y.py\"",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  }
 }

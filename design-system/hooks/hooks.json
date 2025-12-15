@@ -1,15 +1,16 @@
 {
-  "PostToolUse": [
-    {
-      "matcher": {
-        "tools": ["Write", "Edit"]
-      },
-      "hooks": [
-        {
-          "type": "prompt",
-          "prompt": "When creating UI components, ensure consistent theming with design tokens, accessibility compliance, and proper variant support."
-        }
-      ]
-    }
-  ]
+  "description": "Design System Agent - UI component standards",
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "prompt",
+            "prompt": "For UI components: use design tokens, support variants, ensure accessibility compliance."
+          }
+        ]
+      }
+    ]
+  }
 }

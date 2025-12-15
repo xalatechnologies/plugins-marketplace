@@ -1,15 +1,16 @@
 {
-  "PostToolUse": [
-    {
-      "matcher": {
-        "tools": ["Write", "Edit"]
-      },
-      "hooks": [
-        {
-          "type": "prompt",
-          "prompt": "When creating Tauri commands, use async for I/O, return Result<T, E> for errors, configure capabilities for security."
-        }
-      ]
-    }
-  ]
+  "description": "Tauri Agent - Desktop app patterns",
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "prompt",
+            "prompt": "For Tauri commands: use async for I/O, return Result<T,E>, configure security capabilities."
+          }
+        ]
+      }
+    ]
+  }
 }

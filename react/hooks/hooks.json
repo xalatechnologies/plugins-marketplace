@@ -1,15 +1,16 @@
 {
-  "PostToolUse": [
-    {
-      "matcher": {
-        "tools": ["Write", "Edit"]
-      },
-      "hooks": [
-        {
-          "type": "prompt",
-          "prompt": "When creating React hooks or contexts, ensure proper TypeScript typing, memoization for performance, and cleanup in effects."
-        }
-      ]
-    }
-  ]
+  "description": "React Agent - Hooks and context patterns",
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "prompt",
+            "prompt": "For React hooks/contexts: ensure TypeScript typing, proper memoization, cleanup in effects."
+          }
+        ]
+      }
+    ]
+  }
 }

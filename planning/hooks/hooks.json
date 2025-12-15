@@ -1,15 +1,16 @@
 {
-  "PostToolUse": [
-    {
-      "matcher": {
-        "tools": ["Read", "Grep"]
-      },
-      "hooks": [
-        {
-          "type": "prompt",
-          "prompt": "When estimating tasks, consider complexity, dependencies, and break down into manageable subtasks."
-        }
-      ]
-    }
-  ]
+  "description": "Planning Agent - Task estimation context",
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Read|Grep",
+        "hooks": [
+          {
+            "type": "prompt",
+            "prompt": "When analyzing for estimation, consider complexity, dependencies, and break into subtasks."
+          }
+        ]
+      }
+    ]
+  }
 }

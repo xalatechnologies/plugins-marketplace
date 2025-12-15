@@ -1,15 +1,16 @@
 {
-  "PostToolUse": [
-    {
-      "matcher": {
-        "tools": ["Write", "Edit"]
-      },
-      "hooks": [
-        {
-          "type": "prompt",
-          "prompt": "When creating React components, follow best practices: use TypeScript, implement proper props typing, consider accessibility, and use Tailwind for styling."
-        }
-      ]
-    }
-  ]
+  "description": "Frontend Agent - React component best practices",
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "prompt",
+            "prompt": "If this is a React component, briefly verify: TypeScript types, accessibility, proper hooks usage."
+          }
+        ]
+      }
+    ]
+  }
 }

@@ -1,15 +1,17 @@
 {
-  "PostToolUse": [
-    {
-      "matcher": {
-        "tools": ["Read", "Grep", "Glob"]
-      },
-      "hooks": [
-        {
-          "type": "prompt",
-          "prompt": "When reviewing code, consider: code quality, patterns, security, and best practices. Log significant findings to Xala PM if available."
-        }
-      ]
-    }
-  ]
+  "description": "Code Review Agent - Automatic code analysis on file changes",
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"${CLAUDE_PLUGIN_ROOT}/scripts/review-code.py\"",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  }
 }

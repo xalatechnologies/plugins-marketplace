@@ -1,15 +1,16 @@
 {
-  "PostToolUse": [
-    {
-      "matcher": {
-        "tools": ["Write", "Edit"]
-      },
-      "hooks": [
-        {
-          "type": "prompt",
-          "prompt": "When creating or modifying code, consider updating related documentation: README, API docs, JSDoc comments."
-        }
-      ]
-    }
-  ]
+  "description": "Documentation Agent - Remind about docs updates",
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "prompt",
+            "prompt": "Consider if this change requires documentation updates: README, API docs, JSDoc comments."
+          }
+        ]
+      }
+    ]
+  }
 }

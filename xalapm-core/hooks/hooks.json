@@ -1,13 +1,29 @@
 {
-  "SessionStart": [
-    {
-      "matcher": {},
-      "hooks": [
-        {
-          "type": "prompt",
-          "prompt": "You have access to Xala PM integration. At session start, briefly check project context using get_dashboard_stats if available. Acknowledge: 'Connected to Xala PM.'"
-        }
-      ]
-    }
-  ]
+  "description": "Xala PM Core Integration - Session context and activity logging",
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${CLAUDE_PLUGIN_ROOT}/scripts/session-start.sh",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${CLAUDE_PLUGIN_ROOT}/scripts/log-activity.sh",
+            "timeout": 5
+          }
+        ]
+      }
+    ]
+  }
 }
