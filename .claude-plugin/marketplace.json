@@ -6,6 +6,83 @@
     "name": "Xala Technologies",
     "url": "https://xala.no"
   },
+  "scopes": {
+    "project": {
+      "name": "Project",
+      "description": "Install for current project only",
+      "location": ".claude/plugins/",
+      "flag": "--project"
+    },
+    "user": {
+      "name": "User",
+      "description": "Install for current user across all projects",
+      "location": "~/.claude/plugins/",
+      "flag": "--user"
+    },
+    "global": {
+      "name": "Global",
+      "description": "Install system-wide for all users (requires admin)",
+      "location": "/usr/local/share/claude/plugins/",
+      "flag": "--global"
+    }
+  },
+  "groups": {
+    "essential": {
+      "name": "Essential",
+      "description": "Core plugins required for Xala PM integration",
+      "plugins": ["xalapm-core", "orchestrator", "tasks", "repo-analysis"]
+    },
+    "fullstack": {
+      "name": "Full Stack Developer",
+      "description": "Complete web development toolkit",
+      "plugins": ["xalapm-core", "frontend", "backend", "supabase", "react", "design-system", "testing"]
+    },
+    "mobile-dev": {
+      "name": "Mobile Developer",
+      "description": "Cross-platform mobile development",
+      "plugins": ["xalapm-core", "mobile", "react", "design-system", "testing"]
+    },
+    "desktop-dev": {
+      "name": "Desktop Developer", 
+      "description": "Native desktop application development",
+      "plugins": ["xalapm-core", "tauri", "frontend", "react", "testing"]
+    },
+    "blockchain-dev": {
+      "name": "Blockchain Developer",
+      "description": "Web3 and smart contract development",
+      "plugins": ["xalapm-core", "blockchain", "compliance", "testing"]
+    },
+    "devops": {
+      "name": "DevOps Engineer",
+      "description": "CI/CD and infrastructure automation",
+      "plugins": ["xalapm-core", "devops", "testing", "documentation"]
+    },
+    "qa": {
+      "name": "QA Engineer",
+      "description": "Testing and quality assurance",
+      "plugins": ["xalapm-core", "testing", "accessibility", "code-review"]
+    },
+    "pm": {
+      "name": "Project Manager",
+      "description": "Project management and coordination",
+      "plugins": ["xalapm-core", "orchestrator", "tasks", "planning", "standup", "project-sync", "documentation"]
+    },
+    "compliance": {
+      "name": "Compliance Officer",
+      "description": "Security, accessibility, and regulatory compliance",
+      "plugins": ["xalapm-core", "compliance", "accessibility", "testing"]
+    },
+    "all": {
+      "name": "Complete Suite",
+      "description": "Install all 21 plugins",
+      "plugins": [
+        "xalapm-core", "orchestrator", "repo-analysis", "project-sync", "planning",
+        "standup", "tasks", "compliance", "frontend", "backend", "supabase", "tauri",
+        "react", "mobile", "design-system", "testing", "accessibility", "blockchain",
+        "devops", "documentation", "code-review"
+      ]
+    }
+  },
   "plugins": [
     {
       "name": "xalapm-core",

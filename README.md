@@ -39,47 +39,66 @@ A comprehensive collection of Claude Code plugins for AI-native development and 
 
 ## 🚀 Installation
 
-### Prerequisites
-- [Claude Code](https://code.claude.com/docs/) installed
-- Xala PM project cloned locally
+### 1. Add the Marketplace
 
-### Add the Marketplace
-
-```bash
-# Start Claude Code
-claude
-
-# Add the Xala PM marketplace
-/plugin marketplace add /path/to/xalapm/plugins
+```
+/plugin marketplace add https://github.com/xalatechnologies/plugins-marketplace
 ```
 
-### Install All Plugins
+### 2. Choose Scope & Group
 
-```bash
-# Analysis
-/plugin install repo-analysis@xalapm-marketplace
+**Scopes:**
+| Scope | Flag | Description |
+|-------|------|-------------|
+| Project | `--project` | Current project only (default) |
+| User | `--user` | All your projects |
+| Global | `--global` | System-wide (requires admin) |
 
-# Productivity
-/plugin install project-sync@xalapm-marketplace
-/plugin install planning@xalapm-marketplace
-/plugin install standup@xalapm-marketplace
+**Groups:**
+| Group | Description | Plugins |
+|-------|-------------|---------|
+| `essential` | Core Xala PM integration | 4 |
+| `fullstack` | Web development toolkit | 7 |
+| `mobile-dev` | Cross-platform mobile | 5 |
+| `desktop-dev` | Native desktop apps | 5 |
+| `blockchain-dev` | Web3 & smart contracts | 4 |
+| `devops` | CI/CD automation | 4 |
+| `qa` | Testing & quality | 4 |
+| `pm` | Project management | 7 |
+| `compliance` | Security & accessibility | 4 |
+| `all` | Complete suite | 21 |
 
-# Security
-/plugin install compliance@xalapm-marketplace
+### 3. Install
 
-# Development
-/plugin install frontend@xalapm-marketplace
-/plugin install backend@xalapm-marketplace
-/plugin install supabase@xalapm-marketplace
-/plugin install tauri@xalapm-marketplace
-/plugin install react@xalapm-marketplace
-
-# Design
-/plugin install design-system@xalapm-marketplace
+#### Quick Start - Project Install
+```
+/plugin install xalapm-core@xala-marketplace --project
+/plugin install orchestrator@xala-marketplace --project
+/plugin install tasks@xala-marketplace --project
+/plugin install repo-analysis@xala-marketplace --project
 ```
 
-### Restart Claude Code
-After installing, restart Claude Code to activate the plugins.
+#### Full Stack - User Install
+```
+/plugin install xalapm-core@xala-marketplace --user
+/plugin install frontend@xala-marketplace --user
+/plugin install backend@xala-marketplace --user
+/plugin install supabase@xala-marketplace --user
+/plugin install react@xala-marketplace --user
+/plugin install design-system@xala-marketplace --user
+/plugin install testing@xala-marketplace --user
+```
+
+#### Use the Install Script
+```bash
+./install.sh --group fullstack --scope user
+./install.sh --group all --scope global
+./install.sh --scopes  # See scope details
+```
+
+### 4. Restart Claude Code
+
+> 📖 See [INSTALL.md](./INSTALL.md) for all options and detailed documentation.
 
 ---
 
