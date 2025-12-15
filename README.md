@@ -1,12 +1,14 @@
 # Xala PM Plugin Marketplace
 
-> **Spec-Driven Development for AI Coding Agents** — Inspired by [Agent OS](https://buildermethods.com/agent-os) and Blitzy Intelligence
+> **Spec-Driven Development for AI Coding Agents** - Inspired by [Agent OS](https://buildermethods.com/agent-os) and Blitzy Intelligence
 
 A comprehensive collection of Claude Code plugins featuring expert AI agents, spec-driven workflows, and automated code analysis.
 
+**Documentation:** [docs/](./docs/) | **Quickstart:** [docs/guides/QUICKSTART.md](./docs/guides/QUICKSTART.md)
+
 ---
 
-## 🎯 Philosophy
+## Philosophy
 
 We implement the **3-Layer Context System** from Agent OS:
 
@@ -28,9 +30,9 @@ We implement the **3-Layer Context System** from Agent OS:
 
 ---
 
-## ⭐ Key Features
+## Key Features
 
-### 🧠 Expert AI Agents (30+ Years Experience)
+### Expert AI Agents (30+ Years Experience)
 
 Each agent has a distinct personality, background, and expertise:
 
@@ -45,7 +47,7 @@ Each agent has a distinct personality, background, and expertise:
 | **Compliance Officer** | Dr. Catherine Rhodes | SEC/FINRA, KYC/AML, security tokens |
 | **Accessibility Director** | Dr. Maya Patel | WCAG, inclusive design, assistive tech |
 
-### 📋 Spec-Driven Workflow
+### Spec-Driven Workflow
 
 ```
 /spec → /implement → /verify → /deploy
@@ -58,7 +60,7 @@ Each agent has a distinct personality, background, and expertise:
 | `/verify {specId}` | Verify implementation meets acceptance criteria |
 | `/delegate {task}` | Assign tasks to specialized agents |
 
-### 🐍 Python Script Automation
+### Python Script Automation
 
 Automated code analysis runs on every file change:
 
@@ -73,16 +75,16 @@ Automated code analysis runs on every file change:
 
 ---
 
-## 📦 Plugin Categories
+## Plugin Categories
 
-### 🔮 Orchestration & Core
+### Orchestration and Core
 | Plugin | Agent | Key Commands |
 |--------|-------|--------------|
 | **orchestrator** | Chief Architect | `/spec`, `/implement`, `/verify`, `/delegate` |
 | **xalapm-core** | — | MCP integration, standards, templates |
 | **tasks** | Task Manager | `/task`, `/backlog`, `/generate-tasks` |
 
-### 💻 Development
+### Development
 | Plugin | Agent | Key Commands |
 |--------|-------|--------------|
 | **frontend** | Frontend Architect | `/component`, `/page` |
@@ -92,14 +94,14 @@ Automated code analysis runs on every file change:
 | **tauri** | Desktop Expert | `/command`, `/plugin` |
 | **mobile** | Mobile Expert | `/screen` |
 
-### 🔒 Security & Compliance
+### Security and Compliance
 | Plugin | Agent | Key Commands |
 |--------|-------|--------------|
 | **blockchain** | Security Architect | `/audit`, `/contract`, `/validator` |
 | **compliance** | Compliance Officer | `/check-compliance` |
 | **accessibility** | Accessibility Director | `/wcag-audit`, `/gdpr-check` |
 
-### 🧪 Quality & DevOps
+### Quality and DevOps
 | Plugin | Agent | Key Commands |
 |--------|-------|--------------|
 | **testing** | QA Director | `/unit`, `/e2e`, `/performance` |
@@ -109,7 +111,7 @@ Automated code analysis runs on every file change:
 
 ---
 
-## 🚀 Installation
+## Installation
 
 ### 1. Add the Marketplace
 
@@ -141,7 +143,7 @@ Automated code analysis runs on every file change:
 
 ---
 
-## 📐 Spec-Driven Development Workflow
+## Spec-Driven Development Workflow
 
 Based on [Agent OS methodology](https://buildermethods.com/agent-os):
 
@@ -189,7 +191,7 @@ Delegating to Backend Architect (Dr. Marcus Rivera)...
 
 ---
 
-## 🏗️ Project Structure
+## Project Structure
 
 ```
 plugins-marketplace/
@@ -222,7 +224,9 @@ plugins-marketplace/
 
 ---
 
-## 🔧 Creating Custom Plugins
+## Creating Custom Plugins
+
+See [docs/guides/CREATING_PLUGINS.md](./docs/guides/CREATING_PLUGINS.md) for detailed instructions.
 
 ### Plugin Structure
 
@@ -296,7 +300,17 @@ You are **Full Name**, a [expertise] expert with X years of experience.
 
 ---
 
-## 📚 References
+## Documentation
+
+- [Quickstart Guide](./docs/guides/QUICKSTART.md) - Get started in 5 minutes
+- [Developer Guide](./docs/guides/DEVELOPER_GUIDE.md) - In-depth usage documentation
+- [Creating Plugins](./docs/guides/CREATING_PLUGINS.md) - Build your own plugins
+- [Contributing](./docs/CONTRIBUTING.md) - Contribution guidelines
+- [Shipping](./docs/SHIPPING.md) - Distribution and release process
+
+---
+
+## References
 
 - [Claude Code Plugins](https://code.claude.com/docs/en/plugins)
 - [Hooks Reference](https://code.claude.com/docs/en/hooks)
@@ -305,10 +319,6 @@ You are **Full Name**, a [expertise] expert with X years of experience.
 
 ---
 
-## 📄 License
+## License
 
 MIT - Xala Technologies
-
----
-
-*"The best architecture is the one that makes the next change easy."* — Dr. Alexander Chen, Chief Architect
