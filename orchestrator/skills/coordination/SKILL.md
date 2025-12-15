@@ -1,190 +1,185 @@
----
-description: Multi-agent coordination and synthesis expertise
-triggers:
-  - complex tasks
-  - project analysis
-  - pr review
-  - production readiness
-  - comprehensive audit
----
+# Skill: Multi-Agent Coordination
 
-# Coordination Skill
+> Orchestrate specialized agents to deliver complex features through spec-driven development
 
-Expert multi-agent coordination and result synthesis.
+## Overview
 
-## Agent Selection Matrix
+This skill enables you to coordinate multiple specialized agents, following the Agent OS methodology of spec-driven development. You act as the Chief Architect, delegating to experts while maintaining overall quality and coherence.
 
+## The 3-Layer Context System
+
+Always operate within this context hierarchy:
+
+### Layer 1: Standards (How We Build)
 ```
-TASK TYPE                    AGENTS TO INVOLVE
-─────────────────────────────────────────────────────────
-New Feature                  frontend + backend + testing
-API Development              backend + supabase + testing
-UI Component                 frontend + design-system + a11y
-Database Changes             supabase + backend
-Smart Contract               blockchain + testing (security)
-Mobile Feature               mobile + testing
-Desktop Feature              tauri + testing
-PR Review                    code-review + testing + a11y + security
-Project Analysis             repo-analysis + all relevant
-Production Readiness         testing + security + performance + a11y
-Compliance Check             accessibility + compliance + security
-Documentation                documentation + relevant domain agent
+📁 xalapm-core/standards/STANDARDS.md
+- Coding standards
+- Architecture patterns
+- Security requirements
+- Testing requirements
 ```
+
+### Layer 2: Product (What We're Building)
+```
+📁 .claude/product/
+- VISION.md - Product vision and goals
+- ROADMAP.md - Feature timeline
+- PERSONAS.md - User personas
+```
+
+### Layer 3: Specs (What We're Building Next)
+```
+📁 .claude/specs/
+- SPEC-YYYY-NNN.md - Individual feature specifications
+```
+
+## Agent Delegation Matrix
+
+| Domain | Agent | Invoke When |
+|--------|-------|-------------|
+| UI/UX | Frontend Architect | Components, pages, accessibility |
+| APIs | Backend Architect | Endpoints, data models, security |
+| Quality | QA Director | Test plans, verification |
+| Security | Security Architect | Audits, compliance |
+| Infra | DevOps Director | CI/CD, deployment |
+| Contracts | Blockchain Expert | Smart contracts |
 
 ## Coordination Patterns
 
-### Parallel Execution
-```typescript
-async function parallelAnalysis(agents: Agent[], target: string) {
-  const results = await Promise.all(
-    agents.map(agent => dispatchAgent(agent, target))
-  )
-  return synthesize(results)
-}
+### Pattern 1: Feature Development
+
+```
+1. SPEC → Create specification
+   └─ /spec {feature_name}
+   
+2. REVIEW → Validate with stakeholders
+   └─ Share spec, gather feedback
+   
+3. DELEGATE → Assign to specialists
+   └─ Frontend: UI components
+   └─ Backend: API endpoints
+   └─ QA: Test strategy
+   
+4. IMPLEMENT → Parallel execution
+   └─ /implement SPEC-XXX T-001
+   └─ /implement SPEC-XXX T-002
+   
+5. VERIFY → Quality gate
+   └─ /verify SPEC-XXX
+   
+6. DEPLOY → Release
+   └─ /deploy staging SPEC-XXX
 ```
 
-### Sequential Execution
-```typescript
-async function sequentialBuild(steps: AgentStep[]) {
-  let context = {}
-  for (const step of steps) {
-    const result = await dispatchAgent(step.agent, step.task, context)
-    context = { ...context, [step.agent]: result }
-  }
-  return context
-}
+### Pattern 2: Bug Fix
+
+```
+1. ANALYZE → Understand the issue
+2. SPEC → Document fix requirements
+3. TEST → Write failing test first
+4. FIX → Implement solution
+5. VERIFY → Confirm fix
+6. DEPLOY → Release with monitoring
 ```
 
-### Conditional Branching
-```typescript
-async function conditionalRoute(task: string, context: Context) {
-  const analysis = analyzeTask(task)
-  
-  if (analysis.type === 'frontend') {
-    return dispatchAgent('frontend', task, context)
-  } else if (analysis.type === 'backend') {
-    return dispatchAgent('backend', task, context)
-  } else if (analysis.isComplex) {
-    return parallelAnalysis(['frontend', 'backend', 'testing'], task)
-  }
-}
+### Pattern 3: Refactoring
+
+```
+1. ASSESS → Identify code to refactor
+2. SPEC → Document desired state
+3. TEST → Ensure existing tests pass
+4. REFACTOR → Make changes
+5. VERIFY → All tests still pass
+6. REVIEW → Code review
 ```
 
-## Result Synthesis
+## Communication Protocol
 
-### Merging Findings
-```typescript
-interface AgentFinding {
-  agent: string
-  severity: 'critical' | 'high' | 'medium' | 'low'
-  category: string
-  description: string
-  location?: string
-  suggestion?: string
-}
+When coordinating agents:
 
-function synthesizeFindings(results: AgentResult[]): SynthesizedReport {
-  const allFindings = results.flatMap(r => r.findings)
-  
-  // Group by category
-  const byCategory = groupBy(allFindings, 'category')
-  
-  // Deduplicate similar findings
-  const deduplicated = deduplicateFindings(allFindings)
-  
-  // Sort by severity
-  const prioritized = sortBy(deduplicated, severityOrder)
-  
-  // Identify cross-cutting concerns
-  const crossCutting = findCrossCuttingIssues(allFindings)
-  
-  return {
-    findings: prioritized,
-    byCategory,
-    crossCutting,
-    summary: generateSummary(prioritized),
-  }
-}
+```markdown
+## 📋 Task Assignment
+
+**To:** {Agent Name}
+**From:** Chief Architect
+**Spec:** {SPEC-ID}
+**Task:** {Task ID and description}
+
+### Context
+[Relevant background]
+
+### Requirements
+[Specific requirements from spec]
+
+### Acceptance Criteria
+[How we know it's done]
+
+### Constraints
+[Limitations, dependencies]
+
+### Deadline
+[When needed]
 ```
 
-### Conflict Resolution
-```typescript
-function resolveConflicts(findings: Finding[]): Finding[] {
-  // Find conflicting recommendations
-  const conflicts = findConflicts(findings)
-  
-  for (const conflict of conflicts) {
-    // Prefer security over performance
-    // Prefer accessibility over convenience
-    // Prefer standards compliance
-    const resolved = resolveByPriority(conflict, PRIORITY_ORDER)
-    findings = applyResolution(findings, resolved)
-  }
-  
-  return findings
-}
+## Quality Gates
 
-const PRIORITY_ORDER = [
-  'security',
-  'accessibility',
-  'compliance',
-  'correctness',
-  'performance',
-  'style',
-]
+Before marking any phase complete:
+
+### Spec Phase
+- [ ] All requirements captured
+- [ ] Acceptance criteria defined
+- [ ] Technical design approved
+- [ ] Risks identified
+
+### Implementation Phase
+- [ ] Code follows standards
+- [ ] Tests written
+- [ ] No linting errors
+- [ ] Documentation updated
+
+### Verification Phase
+- [ ] All tests pass
+- [ ] Coverage thresholds met
+- [ ] Security scan clean
+- [ ] Performance verified
+
+## Escalation
+
+Escalate when:
+- Spec conflicts with standards
+- Security concern identified
+- Timeline at risk
+- Scope creep detected
+- Quality gate failed
+
+## Output Standards
+
+All coordination outputs follow:
+
+```markdown
+# {Action}: {Subject}
+
+## Context
+[Background and rationale]
+
+## Analysis
+[Assessment and findings]
+
+## Decision/Recommendation
+[Clear action with justification]
+
+## Next Steps
+[Numbered action items with owners]
+
+## Risks
+[Potential issues and mitigations]
 ```
 
-## Task Generation
+## Remember
 
-```typescript
-function generateTasks(findings: Finding[]): Task[] {
-  return findings.map(finding => ({
-    id: generateTaskId(finding),
-    title: findingToTaskTitle(finding),
-    role: findingToRole(finding),
-    priority: severityToPriority(finding.severity),
-    description: finding.suggestion || finding.description,
-    source: `${finding.agent}-agent`,
-    phase: determinePhase(finding),
-    estimate: estimateEffort(finding),
-  }))
-}
-```
-
-## Quality Scoring
-
-```typescript
-function calculateOverallScore(results: AgentResult[]): number {
-  const weights = {
-    security: 0.25,
-    testing: 0.20,
-    accessibility: 0.15,
-    performance: 0.15,
-    codeQuality: 0.15,
-    documentation: 0.10,
-  }
-  
-  let totalScore = 0
-  let totalWeight = 0
-  
-  for (const [category, weight] of Object.entries(weights)) {
-    const categoryResults = results.filter(r => r.category === category)
-    if (categoryResults.length > 0) {
-      const avgScore = average(categoryResults.map(r => r.score))
-      totalScore += avgScore * weight
-      totalWeight += weight
-    }
-  }
-  
-  return totalScore / totalWeight
-}
-```
-
-## When to Use
-
-Apply this skill when:
-- Task involves multiple domains
-- Comprehensive analysis needed
-- Multiple perspectives required
-- Synthesizing results from parallel work
-
+- Never skip specifications
+- Delegate to the right expert
+- Verify before declaring done
+- Document decisions
+- Communicate clearly
+- Maintain quality standards

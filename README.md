@@ -1,98 +1,111 @@
 # Xala PM Plugin Marketplace
 
-A comprehensive collection of Claude Code plugins for AI-native development and project management.
+> **Spec-Driven Development for AI Coding Agents** — Inspired by [Agent OS](https://buildermethods.com/agent-os) and Blitzy Intelligence
 
-## ✨ Features
-
-- **21 Specialized Plugins** - Full-stack development, security, compliance, testing
-- **Python Script Hooks** - Automated code analysis, security scanning, accessibility checks
-- **LLM-Powered Hooks** - Context-aware prompts for code quality
-- **MCP Integration** - Connect to external tools and services
-- **Group Installation** - Install plugin bundles by role
+A comprehensive collection of Claude Code plugins featuring expert AI agents, spec-driven workflows, and automated code analysis.
 
 ---
 
-## 🔥 Power Features (Beast Mode)
+## 🎯 Philosophy
 
-### Automated Code Analysis
-
-These plugins include **Python scripts** that run automatically on file changes:
-
-| Plugin | Script | What It Does |
-|--------|--------|--------------|
-| **code-review** | `review-code.py` | Detects security issues, TODOs, console.logs, TypeScript any usage |
-| **accessibility** | `check-a11y.py` | WCAG compliance checking for React/JSX components |
-| **testing** | `suggest-tests.py` | Suggests tests for new functions, components, hooks, APIs |
-| **blockchain** | `security-scan.py` | Smart contract security (reentrancy, DEX violations, tx.origin) |
-| **compliance** | `compliance-check.py` | GDPR, PCI-DSS, security token regulation checks |
-| **devops** | `ci-validator.py` | CI/CD config security (secrets, permissions, hardcoded keys) |
-
-### How It Works
+We implement the **3-Layer Context System** from Agent OS:
 
 ```
-You write code → Claude saves file → Hook runs Python script → 
-Script analyzes code → Findings injected as context → Claude sees issues
+┌─────────────────────────────────────────────────────┐
+│  Layer 1: STANDARDS — How We Build                  │
+│  → Coding standards, architecture patterns          │
+│  → xalapm-core/standards/STANDARDS.md              │
+├─────────────────────────────────────────────────────┤
+│  Layer 2: PRODUCT — What We're Building            │
+│  → Vision, roadmap, user personas                   │
+│  → .claude/product/*.md                            │
+├─────────────────────────────────────────────────────┤
+│  Layer 3: SPECS — What We're Building Next         │
+│  → Feature specifications with acceptance criteria  │
+│  → .claude/specs/SPEC-YYYY-NNN.md                  │
+└─────────────────────────────────────────────────────┘
 ```
 
-**Example Output (Code Review):**
+---
+
+## ⭐ Key Features
+
+### 🧠 Expert AI Agents (30+ Years Experience)
+
+Each agent has a distinct personality, background, and expertise:
+
+| Agent | Persona | Expertise |
+|-------|---------|-----------|
+| **Chief Architect** | Dr. Alexander Chen | System design, orchestration, spec-driven development |
+| **Frontend Architect** | Sarah Kim | React, accessibility, performance, design systems |
+| **Backend Architect** | Dr. Marcus Rivera | APIs, databases, security, distributed systems |
+| **QA Director** | Dr. Elena Vasquez | Testing strategies, verification, quality gates |
+| **Security Architect** | Dr. Wei Zhang | Smart contracts, cryptography, compliance |
+| **DevOps Director** | James O'Brien | CI/CD, infrastructure, reliability |
+| **Compliance Officer** | Dr. Catherine Rhodes | SEC/FINRA, KYC/AML, security tokens |
+| **Accessibility Director** | Dr. Maya Patel | WCAG, inclusive design, assistive tech |
+
+### 📋 Spec-Driven Workflow
+
 ```
-Code review findings:
-[SECURITY]
-  • Avoid eval() - potential code injection
-[CLEANUP]
-  • Remove console.log before commit
-[TODO]
-  • TODO comment found - track in task system
+/spec → /implement → /verify → /deploy
 ```
+
+| Command | Description |
+|---------|-------------|
+| `/spec {feature}` | Create comprehensive specification before coding |
+| `/implement {specId}` | Implement feature following its specification |
+| `/verify {specId}` | Verify implementation meets acceptance criteria |
+| `/delegate {task}` | Assign tasks to specialized agents |
+
+### 🐍 Python Script Automation
+
+Automated code analysis runs on every file change:
+
+| Script | Purpose | Detects |
+|--------|---------|---------|
+| `review-code.py` | Code quality | Security issues, TODOs, console.logs |
+| `check-a11y.py` | Accessibility | WCAG violations, missing ARIA |
+| `suggest-tests.py` | Test coverage | Functions needing tests |
+| `security-scan.py` | Smart contracts | Reentrancy, DEX violations |
+| `compliance-check.py` | Regulations | GDPR, PCI-DSS, security tokens |
+| `ci-validator.py` | CI/CD security | Hardcoded secrets, permissions |
 
 ---
 
 ## 📦 Plugin Categories
 
-### 🧠 Core & Orchestration
-| Plugin | Description | Commands |
-|--------|-------------|----------|
-| **xalapm-core** | MCP integration, activity logging, session context | (auto) |
-| **orchestrator** | Multi-agent coordination, task delegation | `/analyze-project`, `/delegate`, `/review-pr` |
-| **tasks** | Task management with Xala PM sync | `/task`, `/backlog`, `/generate-tasks` |
-
-### 🔍 Analysis
-| Plugin | Description | Commands |
-|--------|-------------|----------|
-| **repo-analysis** | Analyze codebases, generate inventory, detect issues | `/analyze`, `/inventory`, `/pitfalls`, `/infer-prd` |
-| **code-review** | Automated code review with Python analysis | `/review` |
-
-### 📊 Productivity
-| Plugin | Description | Commands |
-|--------|-------------|----------|
-| **project-sync** | Keep Xala PM in sync with your work | `/sync` |
-| **planning** | Estimate tasks, break down features | `/estimate`, `/breakdown` |
-| **standup** | Generate daily standups and summaries | `/standup`, `/summary` |
-
-### 🔒 Security & Compliance
-| Plugin | Description | Commands |
-|--------|-------------|----------|
-| **compliance** | GDPR, PCI-DSS, security token regulations | `/check-compliance` |
-| **blockchain** | Smart contract security scanning | `/audit`, `/contract`, `/validator` |
-| **accessibility** | WCAG compliance, GDPR checks | `/wcag-audit`, `/gdpr-check` |
+### 🔮 Orchestration & Core
+| Plugin | Agent | Key Commands |
+|--------|-------|--------------|
+| **orchestrator** | Chief Architect | `/spec`, `/implement`, `/verify`, `/delegate` |
+| **xalapm-core** | — | MCP integration, standards, templates |
+| **tasks** | Task Manager | `/task`, `/backlog`, `/generate-tasks` |
 
 ### 💻 Development
-| Plugin | Description | Commands |
-|--------|-------------|----------|
-| **frontend** | React, Remix, Next.js, Tailwind | `/component`, `/page` |
-| **backend** | API design, Hono, validation, security | `/endpoint`, `/service` |
-| **supabase** | Database, RLS, migrations, auth | `/migration`, `/rls`, `/types` |
-| **tauri** | Desktop apps with Rust backend | `/command`, `/plugin` |
-| **react** | Hooks, state, patterns, testing | `/hook`, `/context` |
-| **mobile** | Expo, React Native cross-platform | `/screen` |
+| Plugin | Agent | Key Commands |
+|--------|-------|--------------|
+| **frontend** | Frontend Architect | `/component`, `/page` |
+| **backend** | Backend Architect | `/endpoint`, `/service` |
+| **react** | React Expert | `/hook`, `/context` |
+| **supabase** | Database Expert | `/migration`, `/rls`, `/types` |
+| **tauri** | Desktop Expert | `/command`, `/plugin` |
+| **mobile** | Mobile Expert | `/screen` |
 
-### 🎨 Design & Quality
-| Plugin | Description | Commands |
-|--------|-------------|----------|
-| **design-system** | UI components, theming, accessibility | `/ui-component`, `/tokens` |
-| **testing** | Unit, E2E, performance, security tests | `/unit`, `/e2e`, `/performance` |
-| **documentation** | API docs, README, JSDoc | `/docs` |
-| **devops** | CI/CD with security validation | `/ci` |
+### 🔒 Security & Compliance
+| Plugin | Agent | Key Commands |
+|--------|-------|--------------|
+| **blockchain** | Security Architect | `/audit`, `/contract`, `/validator` |
+| **compliance** | Compliance Officer | `/check-compliance` |
+| **accessibility** | Accessibility Director | `/wcag-audit`, `/gdpr-check` |
+
+### 🧪 Quality & DevOps
+| Plugin | Agent | Key Commands |
+|--------|-------|--------------|
+| **testing** | QA Director | `/unit`, `/e2e`, `/performance` |
+| **code-review** | Reviewer | `/review` |
+| **devops** | DevOps Director | `/ci` |
+| **documentation** | Docs Writer | `/docs` |
 
 ---
 
@@ -100,81 +113,170 @@ Code review findings:
 
 ### 1. Add the Marketplace
 
-```
+```shell
 /plugin marketplace add https://github.com/xalatechnologies/plugins-marketplace
 ```
 
-### 2. Install by Group
+### 2. Install by Role
 
-| Group | Description | Plugins |
-|-------|-------------|---------|
-| `essential` | Core Xala PM integration | 4 |
-| `fullstack` | Web development toolkit | 7 |
-| `mobile-dev` | Cross-platform mobile | 5 |
-| `desktop-dev` | Native desktop apps | 5 |
-| `blockchain-dev` | Web3 & smart contracts | 4 |
-| `devops` | CI/CD automation | 4 |
-| `qa` | Testing & quality | 4 |
-| `pm` | Project management | 7 |
-| `compliance` | Security & accessibility | 4 |
-| `all` | Complete suite (Beast Mode!) | 21 |
-
-### 3. Use Install Script
+| Group | For | Plugins |
+|-------|-----|---------|
+| `essential` | Getting started | 4 |
+| `fullstack` | Web developers | 7 |
+| `blockchain-dev` | Web3 developers | 4 |
+| `qa` | Quality engineers | 4 |
+| `pm` | Project managers | 7 |
+| `all` | Everything (Beast Mode!) | 21 |
 
 ```bash
-# List available groups
-./install.sh --list
-
-# Install by group
+# Install via script
 ./install.sh --group fullstack --scope project
-./install.sh --group all --scope user
 
-# See scope details
-./install.sh --scopes
+# Or manually
+/plugin install xalapm-core@xala-marketplace
+/plugin install orchestrator@xala-marketplace
 ```
 
-### Scopes
-
-| Scope | Location | Use Case |
-|-------|----------|----------|
-| `project` | `.claude/plugins/` | Single project (default) |
-| `user` | `~/.claude/plugins/` | All your projects |
-| `global` | `/usr/local/share/claude/plugins/` | System-wide |
-
-### 4. Restart Claude Code
-
-> 📖 See [INSTALL.md](./INSTALL.md) for detailed documentation.
+### 3. Restart Claude Code
 
 ---
 
-## 📋 Plugin Structure
+## 📐 Spec-Driven Development Workflow
+
+Based on [Agent OS methodology](https://buildermethods.com/agent-os):
 
 ```
-plugin-name/
+┌─────────┐    ┌─────────┐    ┌─────────┐    ┌─────────┐
+│  SPEC   │ ─► │ DESIGN  │ ─► │IMPLEMENT│ ─► │ VERIFY  │
+└─────────┘    └─────────┘    └─────────┘    └─────────┘
+     │              │              │              │
+     ▼              ▼              ▼              ▼
+  SPEC-XXX.md    Architecture   Code+Tests    Quality Gate
+  Acceptance     Data Model     Delegation    Approval
+  Criteria       API Design     Standards     Deployment
+```
+
+### Example Session
+
+```
+User: I need user authentication
+
+Chief Architect: Before we write code, let's spec this out.
+
+/spec user-authentication
+
+📋 Creating specification SPEC-2024-001...
+
+Questions:
+1. What auth methods? (OAuth, email/password, SSO?)
+2. Session management strategy?
+3. Compliance requirements?
+
+[After answering questions...]
+
+✅ Specification created: .claude/specs/SPEC-2024-001.md
+
+Tasks generated:
+- T-001: Data model (Backend Architect)
+- T-002: Auth endpoints (Backend Architect)  
+- T-003: Login UI (Frontend Architect)
+- T-004: Test strategy (QA Director)
+
+/implement SPEC-2024-001 T-001
+
+Delegating to Backend Architect (Dr. Marcus Rivera)...
+```
+
+---
+
+## 🏗️ Project Structure
+
+```
+plugins-marketplace/
 ├── .claude-plugin/
-│   └── plugin.json          # Plugin metadata
-├── commands/                 # Slash commands
-│   └── command-name.md
-├── agents/                   # Specialized agents
-│   └── agent-name.md
-├── skills/                   # Agent Skills
-│   └── skill-name/
-│       └── SKILL.md
-├── hooks/                    # Event handlers (hooks wrapper required!)
-│   └── hooks.json
-├── scripts/                  # Python/Bash scripts for hooks
-│   └── analyzer.py
-├── .mcp.json                 # MCP tool configuration
-└── README.md                 # Plugin documentation
+│   └── marketplace.json         # Plugin registry
+├── xalapm-core/
+│   ├── standards/
+│   │   └── STANDARDS.md        # Coding standards
+│   ├── templates/
+│   │   └── SPEC_TEMPLATE.md    # Specification template
+│   ├── scripts/                 # Python automation
+│   └── .mcp.json               # MCP tool config
+├── orchestrator/
+│   ├── agents/
+│   │   └── orchestrator.md     # Chief Architect persona
+│   ├── commands/
+│   │   ├── spec.md             # /spec command
+│   │   ├── implement.md        # /implement command
+│   │   └── verify.md           # /verify command
+│   ├── workflows/
+│   │   └── spec-driven-development.md
+│   └── skills/
+├── frontend/
+│   ├── agents/
+│   │   └── frontend-dev.md     # Sarah Kim persona
+│   ├── commands/
+│   └── scripts/
+└── [other plugins...]
+```
+
+---
+
+## 🔧 Creating Custom Plugins
+
+### Plugin Structure
+
+```
+my-plugin/
+├── .claude-plugin/
+│   └── plugin.json              # Metadata
+├── agents/
+│   └── expert.md               # Agent persona
+├── commands/
+│   └── my-command.md           # Slash commands
+├── skills/
+│   └── my-skill/
+│       └── SKILL.md            # Agent skills
+├── hooks/
+│   └── hooks.json              # Event handlers
+├── scripts/
+│   └── analyzer.py             # Python automation
+└── README.md
+```
+
+### Agent Persona Template
+
+```markdown
+---
+name: Expert Name
+description: Brief description
+---
+
+# Expert Title - The Nickname
+
+You are **Full Name**, a [expertise] expert with X years of experience.
+
+## Your Background
+[Career history establishing credibility]
+
+## Your Philosophy
+> "Quote that captures your approach"
+
+## Your Standards
+[Code examples, checklists, patterns]
+
+## How You Communicate
+[Voice, output format]
+
+## Example Interactions
+[Realistic examples of how you respond]
 ```
 
 ### Hooks Format (Important!)
 
-Plugin hooks require the `hooks` wrapper:
-
 ```json
 {
-  "description": "Plugin description",
+  "description": "What this hook does",
   "hooks": {
     "PostToolUse": [
       {
@@ -192,104 +294,21 @@ Plugin hooks require the `hooks` wrapper:
 }
 ```
 
-**Hook Types:**
-- `type: "command"` - Run bash/Python scripts
-- `type: "prompt"` - LLM-powered evaluation
-
-**Environment Variables:**
-- `${CLAUDE_PLUGIN_ROOT}` - Plugin directory path
-- `${CLAUDE_PROJECT_DIR}` - Project root path
-
 ---
 
-## 🐍 Writing Python Hook Scripts
+## 📚 References
 
-Scripts receive JSON input via stdin and output JSON to stdout:
-
-```python
-#!/usr/bin/env python3
-import json
-import sys
-
-# Read hook input
-input_data = json.load(sys.stdin)
-tool_name = input_data.get("tool_name", "")
-tool_input = input_data.get("tool_input", {})
-
-# Your analysis logic here
-issues = analyze(tool_input.get("content", ""))
-
-# Return feedback to Claude
-if issues:
-    output = {
-        "hookSpecificOutput": {
-            "hookEventName": "PostToolUse",
-            "additionalContext": "Found issues: " + ", ".join(issues)
-        }
-    }
-    print(json.dumps(output))
-
-sys.exit(0)
-```
-
----
-
-## 🛠 MCP Tool Integrations
-
-Plugins integrate with MCP servers for extended functionality:
-
-| Plugin | MCP Tools | Capabilities |
-|--------|-----------|--------------|
-| **xalapm-core** | Xala PM MCP | Tasks, activities, phases, dashboard |
-| **frontend** | Browser | Component testing, screenshots |
-| **backend** | PostgreSQL | Query execution, explain plans |
-| **supabase** | Supabase | Schema management, migrations |
-| **tauri** | Rust Analyzer | Code analysis, cargo commands |
-| **design-system** | Storybook | Component documentation |
-
----
-
-## 🔧 Development
-
-### Creating New Plugins
-
-```bash
-# Create structure
-mkdir -p my-plugin/.claude-plugin
-mkdir -p my-plugin/{commands,agents,skills/my-skill,hooks,scripts}
-
-# Create plugin.json
-cat > my-plugin/.claude-plugin/plugin.json << 'EOF'
-{
-  "name": "my-plugin",
-  "description": "My custom plugin",
-  "version": "1.0.0",
-  "author": { "name": "Your Name" }
-}
-EOF
-
-# Add to marketplace.json and install
-```
-
-### Testing Changes
-
-```bash
-/plugin uninstall my-plugin@xala-marketplace
-/plugin install my-plugin@xala-marketplace
-# Restart Claude Code
-```
-
----
-
-## 📚 Reference
-
-- [Claude Code Plugin Documentation](https://code.claude.com/docs/en/plugins)
+- [Claude Code Plugins](https://code.claude.com/docs/en/plugins)
 - [Hooks Reference](https://code.claude.com/docs/en/hooks)
-- [Plugins Reference](https://code.claude.com/docs/en/plugins-reference)
-- [Xala PM Documentation](/docs/)
+- [Agent OS](https://buildermethods.com/agent-os) - Spec-driven development methodology
+- [Agent Skills](https://code.claude.com/docs/en/skills)
 
 ---
 
 ## 📄 License
 
 MIT - Xala Technologies
+
+---
+
+*"The best architecture is the one that makes the next change easy."* — Dr. Alexander Chen, Chief Architect
