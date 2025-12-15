@@ -70,14 +70,19 @@
     "compliance": {
       "name": "Compliance Officer",
       "description": "Security, accessibility, and regulatory compliance",
-      "plugins": ["xalapm-core", "compliance", "accessibility", "testing"]
+      "plugins": ["xalapm-core", "compliance", "accessibility", "security", "testing"]
+    },
+    "security": {
+      "name": "Security Engineer",
+      "description": "OWASP, SOC2, NIST, CIS security standards and auditing",
+      "plugins": ["xalapm-core", "security", "compliance", "code-review", "testing"]
     },
     "all": {
       "name": "Complete Suite",
-      "description": "Install all 21 plugins",
+      "description": "Install all 22 plugins",
       "plugins": [
         "xalapm-core", "orchestrator", "repo-analysis", "project-sync", "planning",
-        "standup", "tasks", "compliance", "frontend", "backend", "supabase", "tauri",
+        "standup", "tasks", "compliance", "security", "frontend", "backend", "supabase", "tauri",
         "react", "mobile", "design-system", "testing", "accessibility", "blockchain",
         "devops", "documentation", "code-review"
       ]
@@ -209,6 +214,12 @@
       "source": "./code-review",
       "description": "Code Review Agent - PR review, code quality, refactoring suggestions, best practices",
       "category": "quality"
+    },
+    {
+      "name": "security",
+      "source": "./security",
+      "description": "Security Standards Agent - OWASP Top 10, SOC2, NIST CSF, CIS Controls, OpenSSF, vulnerability scanning",
+      "category": "security"
     }
   ],
   "categories": {

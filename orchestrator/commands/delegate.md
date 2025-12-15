@@ -1,178 +1,176 @@
 ---
-description: Delegate a task to the appropriate specialized agent
-arguments:
-  - name: task
-    description: Task description or type
-    required: true
-  - name: agent
-    description: Specific agent to use (auto if not specified)
-    required: false
+description: Delegate a task to a specific agent with full context
+args:
+  agent: The agent handle (e.g., @backend-dev, @owasp-expert)
+  task: The task description or instruction
+  spec: Optional spec ID for context (e.g., SPEC-2024-001)
+  priority: Optional priority (low, medium, high, critical)
 ---
 
 # Delegate Command
 
-Route tasks to the most appropriate specialized agent.
+Route a task to a specific specialized agent with proper context and tracking.
 
-## Agent Registry
+## Agent Handles
 
-```typescript
-const AGENT_REGISTRY = {
-  // Analysis
-  'repo-analysis': {
-    triggers: ['analyze repo', 'project structure', 'codebase overview'],
-    capabilities: ['inventory', 'prd-inference', 'pitfall-detection'],
-  },
-  
-  // Development
-  'frontend': {
-    triggers: ['react', 'component', 'ui', 'page', 'layout'],
-    capabilities: ['create-component', 'create-page', 'styling'],
-  },
-  'backend': {
-    triggers: ['api', 'endpoint', 'server', 'rest'],
-    capabilities: ['create-endpoint', 'create-service', 'validation'],
-  },
-  'supabase': {
-    triggers: ['database', 'migration', 'rls', 'query', 'schema'],
-    capabilities: ['migration', 'rls-policy', 'type-generation'],
-  },
-  'react': {
-    triggers: ['hook', 'context', 'state', 'effect'],
-    capabilities: ['create-hook', 'create-context', 'optimization'],
-  },
-  'blockchain': {
-    triggers: ['contract', 'solidity', 'web3', 'validator', 'ethereum'],
-    capabilities: ['create-contract', 'audit', 'deploy', 'web3-call'],
-  },
-  'tauri': {
-    triggers: ['desktop', 'tauri', 'rust', 'native'],
-    capabilities: ['create-command', 'plugin-setup'],
-  },
-  'mobile': {
-    triggers: ['mobile', 'expo', 'react-native', 'ios', 'android'],
-    capabilities: ['create-screen', 'navigation', 'native-modules'],
-  },
-  
-  // Quality
-  'testing': {
-    triggers: ['test', 'e2e', 'unit', 'coverage', 'performance'],
-    capabilities: ['e2e-test', 'unit-test', 'performance-test', 'security-test'],
-  },
-  'accessibility': {
-    triggers: ['wcag', 'a11y', 'accessibility', 'gdpr', 'compliance'],
-    capabilities: ['wcag-audit', 'gdpr-check', 'nsm-audit'],
-  },
-  'code-review': {
-    triggers: ['review', 'pr', 'quality', 'refactor'],
-    capabilities: ['review-code', 'suggest-refactor'],
-  },
-  
-  // Design
-  'design-system': {
-    triggers: ['design', 'ui-component', 'tokens', 'theme'],
-    capabilities: ['create-ui-component', 'define-tokens'],
-  },
-  
-  // DevOps
-  'devops': {
-    triggers: ['deploy', 'ci', 'cd', 'docker', 'kubernetes'],
-    capabilities: ['setup-ci', 'create-dockerfile', 'deploy'],
-  },
-  
-  // Documentation
-  'documentation': {
-    triggers: ['docs', 'readme', 'api-docs', 'changelog'],
-    capabilities: ['generate-docs', 'update-readme', 'api-reference'],
-  },
-  
-  // Project Management
-  'tasks': {
-    triggers: ['task', 'backlog', 'sprint', 'todo'],
-    capabilities: ['create-task', 'update-task', 'backlog-manage'],
-  },
-  'planning': {
-    triggers: ['estimate', 'plan', 'breakdown', 'story'],
-    capabilities: ['estimate', 'breakdown'],
-  },
-}
-```
+| Handle | Name | Plugin | Specialty |
+|--------|------|--------|-----------|
+| `@orchestrator` | Dr. Alexander Chen | `orchestrator` | Coordination, architecture decisions |
+| `@frontend-dev` | Sarah Kim | `frontend` | React, UI components, accessibility |
+| `@backend-dev` | Dr. Marcus Rivera | `backend` | APIs, databases, server logic |
+| `@supabase-dev` | Supabase Expert | `supabase` | Postgres, RLS, Edge Functions |
+| `@testing-specialist` | Dr. Elena Vasquez | `testing` | E2E, unit, integration, performance |
+| `@owasp-expert` | Dr. Aisha Thompson | `security` | OWASP Top 10, secure coding |
+| `@soc2-auditor` | Dr. Robert Chen | `security` | SOC2 compliance, audit prep |
+| `@cybersecurity-architect` | Dr. Sarah Martinez | `security` | NIST, CIS, Zero Trust architecture |
+| `@opensource-standards` | Dr. Michael Foster | `security` | OpenSSF, SBOM, license compliance |
+| `@blockchain-expert` | Dr. Wei Zhang | `blockchain` | Smart contracts, DeFi security |
+| `@accessibility-expert` | Dr. Maya Patel | `accessibility` | WCAG, Universal Design, a11y |
+| `@compliance-officer` | Dr. Catherine Rhodes | `compliance` | GDPR, HIPAA, regulatory |
+| `@devops-engineer` | James O'Brien | `devops` | CI/CD, Docker, Kubernetes |
+| `@code-reviewer` | Code Review Agent | `code-review` | PR review, refactoring |
+| `@docs-writer` | Documentation Agent | `documentation` | API docs, README, guides |
+| `@design-dev` | Design System Agent | `design-system` | Components, design tokens |
+| `@react-dev` | React Expert | `react` | Hooks, state management |
+| `@mobile-dev` | Mobile Expert | `mobile` | Expo, React Native |
+| `@desktop-dev` | Desktop Expert | `tauri` | Tauri, Rust, native |
+| `@task-manager` | Task Manager Agent | `tasks` | Xala PM integration |
 
-## Routing Logic
-
-```typescript
-function routeToAgent(task: string): Agent {
-  const taskLower = task.toLowerCase()
-  
-  // Check each agent's triggers
-  for (const [agent, config] of Object.entries(AGENT_REGISTRY)) {
-    if (config.triggers.some(trigger => taskLower.includes(trigger))) {
-      return agent as Agent
-    }
-  }
-  
-  // Default to orchestrator for complex tasks
-  return 'orchestrator'
-}
-
-// Multi-agent routing for complex tasks
-function routeToMultipleAgents(task: string): Agent[] {
-  const agents: Agent[] = []
-  const taskLower = task.toLowerCase()
-  
-  for (const [agent, config] of Object.entries(AGENT_REGISTRY)) {
-    if (config.triggers.some(trigger => taskLower.includes(trigger))) {
-      agents.push(agent as Agent)
-    }
-  }
-  
-  return agents.length > 0 ? agents : ['orchestrator']
-}
-```
-
-## Usage Examples
+## Usage
 
 ```bash
-# Auto-route based on task description
-/delegate "Create a user registration form with validation"
-→ Routes to: frontend, react
+# Delegate to specific agent
+/delegate @backend-dev "Create REST API for user authentication"
 
-/delegate "Set up RLS policies for the users table"
-→ Routes to: supabase
+# Delegate with spec context
+/delegate @frontend-dev "Build login form component" --spec SPEC-2024-001
 
-/delegate "Audit the smart contract for vulnerabilities"
-→ Routes to: blockchain
+# Delegate with priority
+/delegate @owasp-expert "Security review of payment module" --priority critical
 
-/delegate "Add E2E tests for the checkout flow"
-→ Routes to: testing
-
-/delegate "Make the dashboard accessible"
-→ Routes to: accessibility, frontend
-
-# Explicit agent selection
-/delegate "Create login component" agent=frontend
-
-# Complex multi-agent task
-/delegate "Review and improve the entire authentication system"
-→ Routes to: backend, frontend, testing, security, code-review
+# Delegate with full context
+/delegate @testing-specialist "Write E2E tests for checkout flow" --spec SPEC-2024-003 --priority high
 ```
 
-## Response Format
+## Process
+
+### Step 1: Validate Agent
+
+1. Parse the agent handle from the command
+2. Verify agent exists in the registry
+3. Load agent's persona and skills
+
+### Step 2: Build Context
+
+1. Load the referenced spec (if provided)
+2. Gather relevant project context
+3. Include agent-specific standards and best practices
+
+### Step 3: Execute Delegation
+
+1. Switch to the target agent's persona
+2. Provide full task context
+3. Apply agent's operational guidelines (DO/DON'T)
+
+### Step 4: Track in Xala PM
+
+1. Create or update task in Xala PM
+2. Log agent assignment
+3. Track start time
+
+## Output Format
+
+```markdown
+## 🎯 Task Delegated
+
+**Agent:** @backend-dev (Dr. Marcus Rivera)
+**Plugin:** backend
+**Task:** Create REST API for user authentication
+
+### Context Loaded
+- Spec: SPEC-2024-001 (User Authentication)
+- Relevant ACs: AC-1, AC-2, AC-3
+
+### Agent Activated
+
+> I am Dr. Marcus Rivera, Backend Systems Architect. I will implement 
+> the authentication API following the spec requirements and my 
+> operational guidelines for secure API development.
+
+### Xala PM Tracking
+- Task: PM-12345
+- Status: In Progress
+- Assigned: @backend-dev
+```
+
+## Examples
+
+### Backend API Task
 
 ```
-🎯 TASK DELEGATION
-═══════════════════════════════════════════════════════════════
+/delegate @backend-dev "Implement user registration endpoint with email verification"
 
-Task: "Create a user registration form with validation"
+🎯 Delegating to @backend-dev (Dr. Marcus Rivera)...
 
-ROUTING DECISION
-───────────────────────────────────────────────────────────────
-Primary Agent:  frontend
-Supporting:     react
-Reason:         Task involves UI component creation with form handling
+Agent Response:
+I'll implement the registration endpoint following these principles:
 
-DELEGATED TO: @frontend-agent
-───────────────────────────────────────────────────────────────
+✅ DO:
+- Use parameterized queries for database operations
+- Validate all input with Zod schema
+- Hash passwords with bcrypt (cost 12)
+- Return consistent error responses
 
-[Frontend Agent takes over with /component create command...]
+❌ DON'T:
+- Store passwords in plain text
+- Expose internal error details
+- Skip rate limiting
+
+Implementation:
+[Agent proceeds with implementation]
 ```
 
+### Security Review Task
+
+```
+/delegate @owasp-expert "Review the payment module for OWASP vulnerabilities" --priority critical
+
+🎯 Delegating to @owasp-expert (Dr. Aisha Thompson)...
+
+Agent Response:
+I'll conduct an OWASP Top 10 security review:
+
+Checking:
+- A01: Broken Access Control
+- A02: Cryptographic Failures
+- A03: Injection
+- A07: Authentication Failures
+
+[Agent proceeds with security review]
+```
+
+## Integration with Spec
+
+When a spec ID is provided, the agent receives:
+
+1. **Summary** - What the feature does
+2. **Acceptance Criteria** - What must be achieved
+3. **Task Context** - Which specific task from the implementation plan
+4. **Best Practices** - Required standards for this feature
+5. **Tests Required** - What tests the agent must write/verify
+
+## Xala PM Integration
+
+All delegations are tracked:
+
+```typescript
+// Automatic logging to Xala PM
+await xalaPM.logActivity({
+  type: 'delegation',
+  agent: '@backend-dev',
+  task: 'Create REST API for user authentication',
+  spec: 'SPEC-2024-001',
+  status: 'started',
+  timestamp: new Date(),
+});
+```

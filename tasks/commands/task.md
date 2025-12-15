@@ -1,177 +1,190 @@
 ---
-description: Create, update, or manage tasks in Xala PM
-arguments:
-  - name: action
-    description: Action to perform (create, update, start, done, list, view)
-    required: true
-  - name: id
-    description: Task ID (required for update, start, done, view)
-    required: false
-  - name: title
-    description: Task title (for create)
-    required: false
+description: Create, update, and manage tasks with Xala PM integration
+args:
+  action: create | update | complete | log | list | assign
+  id: Task ID (for update/complete/log/assign)
+  title: Task title (for create)
+  spec: Spec ID to link (optional)
+  agent: Agent to assign (optional)
+  status: Task status (optional)
+  hours: Hours to log (for log action)
+  note: Note or description
 ---
 
-# Task Management Command
+# Task Command
 
-Manage tasks in Xala PM directly from Claude Code.
-
-## Prerequisites
-
-This command requires the Xala PM MCP server with these tools:
-- `get_tasks` - List tasks
-- `create_task` - Create new task
-- `update_task` - Update existing task
-- `log_activity` - Log activity
+Manage development tasks with full Xala PM integration.
 
 ## Actions
 
-### Create Task (`/task create`)
+### Create Task
 
-```
-/task create title="Implement user authentication" role=backend priority=high phase_id=2
-```
+```bash
+/task create "Implement user authentication API" --spec SPEC-2024-001 --agent @backend-dev
 
-**Required fields:**
-- `title` - Task title
-- `role` - One of: blockchain, contract, backend, frontend, mobile-ios, mobile-android, devops
-
-**Optional fields:**
-- `priority` - low, medium, high, critical (default: medium)
-- `phase_id` - Phase number (default: current phase)
-- `description` - Detailed description
-- `estimate` - Time estimate (e.g., "4h", "2d")
-
-**Workflow:**
-```
-1. create_task(id="t{phase}-{n}", title="{title}", role="{role}", phase_id={phase}, priority="{priority}")
-2. log_activity(type="task_update", title="Created task: {title}", entity_type="task", entity_id="{id}")
-3. Confirm creation to user
+# Output:
+✅ Task Created
+- ID: PM-12345
+- Title: Implement user authentication API
+- Spec: SPEC-2024-001
+- Assigned: @backend-dev (Dr. Marcus Rivera)
+- Status: Open
+- Synced to Xala PM: https://xala.pm/tasks/PM-12345
 ```
 
-### Update Task (`/task update`)
+### Update Task
 
-```
-/task update t1-5 status=in_progress
-/task update t1-5 priority=critical description="Updated requirements"
-```
+```bash
+/task update PM-12345 --status in_progress
 
-**Updatable fields:**
-- `status` - backlog, in_progress, review, done
-- `priority` - low, medium, high, critical
-- `title` - New title
-- `description` - New description
-- `assignee` - Assignee ID
-
-**Workflow:**
-```
-1. update_task(task_id="{id}", ...fields)
-2. log_activity(type="task_update", title="Updated {id}: {changes}", entity_type="task", entity_id="{id}")
-3. If status changed to done, check if phase progress needs update
+# Output:
+✅ Task Updated
+- ID: PM-12345
+- Status: in_progress
+- Updated: 2024-01-15 10:30
+- Synced to Xala PM
 ```
 
-### Start Task (`/task start`)
+### Assign Task
 
-```
-/task start t1-5
-```
+```bash
+/task assign PM-12345 --agent @frontend-dev
 
-Shorthand for `/task update t1-5 status=in_progress`
-
-**Workflow:**
-```
-1. update_task(task_id="{id}", status="in_progress")
-2. log_activity(type="task_update", title="Started task {id}", entity_type="task", entity_id="{id}")
-```
-
-### Complete Task (`/task done`)
-
-```
-/task done t1-5
+# Output:
+✅ Task Assigned
+- ID: PM-12345
+- Previous: @backend-dev
+- New: @frontend-dev (Sarah Kim)
+- Synced to Xala PM
 ```
 
-Shorthand for `/task update t1-5 status=done`
+### Log Work
 
-**Workflow:**
-```
-1. update_task(task_id="{id}", status="done")
-2. log_activity(type="task_update", title="Completed task {id}", entity_type="task", entity_id="{id}")
-3. Calculate new phase progress
-4. update_phase(phase_id={n}, progress={new_percentage})
-```
+```bash
+/task log PM-12345 --hours 2 --note "Completed API endpoint implementation"
 
-### List Tasks (`/task list`)
-
-```
-/task list
-/task list status=in_progress
-/task list role=backend phase_id=2
-/task list assignee=me
+# Output:
+✅ Work Logged
+- ID: PM-12345
+- Hours: 2
+- Total: 6h / 8h estimated
+- Note: Completed API endpoint implementation
+- Synced to Xala PM
 ```
 
-**Filters:**
-- `status` - Filter by status
-- `role` - Filter by role
-- `phase_id` - Filter by phase
-- `assignee` - Filter by assignee ("me" for current user)
-- `priority` - Filter by priority
+### Complete Task
 
-**Output format:**
-```
-📋 TASKS
+```bash
+/task complete PM-12345 --proof "All tests passing, PR #45 merged"
 
-Phase 2: Core Infrastructure (75% complete)
-─────────────────────────────────────────────
-
-🔴 Critical
-├── t2-1: [backend] Implement rate limiting     → in_progress
-└── t2-3: [frontend] Fix auth redirect          → review
-
-🟠 High  
-├── t2-5: [backend] Add pagination              → backlog
-└── t2-6: [frontend] Dashboard loading states   → in_progress
-
-🟡 Medium
-└── t2-8: [devops] Update CI pipeline           → done ✅
-
-Summary: 2 in_progress, 1 review, 1 backlog, 1 done
+# Output:
+✅ Task Completed
+- ID: PM-12345
+- Title: Implement user authentication API
+- Time: 8h logged
+- Proof: All tests passing, PR #45 merged
+- Synced to Xala PM
 ```
 
-### View Task (`/task view`)
+### List Tasks
 
-```
-/task view t1-5
-```
+```bash
+/task list --spec SPEC-2024-001
 
-**Output format:**
-```
-📌 TASK: t1-5
-═══════════════════════════════════════════════════════════════
+# Output:
+📋 Tasks for SPEC-2024-001
 
-Title:       Implement OAuth authentication
-Status:      in_progress
-Priority:    high
-Role:        backend
-Phase:       2 - Core Infrastructure
-Assignee:    @developer
+| ID | Title | Agent | Status | Progress |
+|----|-------|-------|--------|----------|
+| PM-12345 | Auth API | @backend-dev | ✅ Done | 8h/8h |
+| PM-12346 | Login UI | @frontend-dev | 🔄 In Progress | 3h/4h |
+| PM-12347 | E2E Tests | @testing-specialist | ⬜ Open | 0h/2h |
 
-Description:
-Add OAuth support for Google and GitHub authentication.
-Must integrate with existing session management.
+/task list --agent @backend-dev
 
-Created:     2024-12-10
-Updated:     2024-12-15
+# Output:
+📋 Tasks for @backend-dev
 
-Related:
-├── Blocks: t1-8 (Frontend auth UI)
-└── Blocked by: t1-2 (Auth middleware) ✅
+| ID | Title | Spec | Status |
+|----|-------|------|--------|
+| PM-12345 | Auth API | SPEC-2024-001 | ✅ Done |
+| PM-12350 | Payment API | SPEC-2024-002 | 🔄 In Progress |
 ```
 
-## Guidelines
+## Agent-Aware Task Creation
 
-1. **Always log activities** after task changes
-2. **Update phase progress** when completing tasks
-3. **Use consistent ID format** (t{phase}-{number})
-4. **Validate status transitions** (can't go from done to backlog)
-5. **Check for blockers** before starting tasks
+When creating tasks from a spec, specify the responsible agent:
 
+```bash
+# From spec, create all tasks with agents
+/task create-from-spec SPEC-2024-001
+
+# Output:
+📋 Creating tasks from SPEC-2024-001...
+
+✅ Created 5 tasks:
+
+| PM ID | Task | Agent | Estimate |
+|-------|------|-------|----------|
+| PM-12345 | Create login API | @backend-dev | 2h |
+| PM-12346 | Build login form | @frontend-dev | 2h |
+| PM-12347 | Security review | @owasp-expert | 1h |
+| PM-12348 | Write E2E tests | @testing-specialist | 2h |
+| PM-12349 | Accessibility audit | @accessibility-expert | 1h |
+
+All synced to Xala PM.
+```
+
+## Xala PM Sync
+
+All task operations sync automatically:
+
+```typescript
+// On task create
+await xalaPM.tasks.create({
+  title: 'Implement user authentication API',
+  specId: 'SPEC-2024-001',
+  assignee: '@backend-dev',
+  estimatedHours: 8,
+});
+
+// On status update
+await xalaPM.tasks.update(taskId, {
+  status: 'in_progress',
+  updatedBy: '@backend-dev',
+  updatedAt: new Date(),
+});
+
+// On completion
+await xalaPM.tasks.complete(taskId, {
+  proof: 'All tests passing, PR #45 merged',
+  actualHours: 8,
+  completedBy: '@backend-dev',
+  completedAt: new Date(),
+});
+```
+
+## Task States
+
+| Status | Icon | Description |
+|--------|------|-------------|
+| `open` | ⬜ | Not started |
+| `in_progress` | 🔄 | Currently being worked on |
+| `blocked` | 🚫 | Waiting on dependency |
+| `review` | 👀 | Ready for review |
+| `done` | ✅ | Completed |
+| `cancelled` | ❌ | Cancelled |
+
+## Integration with /delegate
+
+When using `/delegate`, a task is automatically created:
+
+```bash
+/delegate @backend-dev "Implement user API" --spec SPEC-2024-001
+
+# Automatically creates:
+# - Task PM-12345 assigned to @backend-dev
+# - Linked to SPEC-2024-001
+# - Status: in_progress
+# - Start time logged
+```

@@ -1,0 +1,28 @@
+{
+  "description": "Security plugin - Scans code for OWASP, SOC2, and security vulnerabilities",
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "prompt",
+            "prompt": "Review this code change for security issues: OWASP Top 10 (injection, auth failures, XSS), hardcoded secrets, missing input validation, insecure configurations. Report any findings with severity."
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "prompt",
+            "prompt": "Check if this command could expose secrets, modify security settings, or create security risks. Block dangerous operations."
+          }
+        ]
+      }
+    ]
+  }
+}
+

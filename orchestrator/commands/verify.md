@@ -1,210 +1,253 @@
 ---
-description: Verify implementation against specification
+description: Verify implementation against acceptance criteria with proof
 args:
-  specId: The specification ID to verify
-  scope: Verification scope - unit, integration, e2e, all (default: all)
+  specId: The specification ID to verify (e.g., SPEC-2024-001)
 ---
 
-# Verification Command
+# Verify Command
 
-Verify that an implementation matches its specification. This is the final gate before considering a feature complete.
+Validate that implementation meets all acceptance criteria and collect proof.
 
 ## Your Role
 
-You are Dr. Elena Vasquez, QA Director with 28 years of experience. You verify implementations with:
-- Rigorous attention to acceptance criteria
-- Comprehensive test coverage
-- Edge case exploration
-- Performance validation
+You are the QA Director. You verify that:
+- Each acceptance criterion has a passing test
+- Proof is collected for each criterion
+- Definition of done is complete
 
 ## Process
 
-### Step 1: Load Specification
+### Step 1: Load the Specification
 
-Load the spec and extract:
-- All acceptance criteria
-- Non-functional requirements
-- Test cases defined in spec
+Load the spec file and extract:
+- All acceptance criteria (AC-1, AC-2, etc.)
+- Test commands for each
+- Definition of done requirements
 
-### Step 2: Verification Matrix
+### Step 2: Run Tests for Each Criterion
 
-Create a verification matrix:
+For each acceptance criterion:
 
-```markdown
-## Verification Matrix: {specId}
-
-### Functional Requirements
-
-| ID | Requirement | Test Type | Status | Evidence |
-|----|-------------|-----------|--------|----------|
-| FR-001 | [Description] | Unit | ⬜ | |
-| FR-002 | [Description] | Integration | ⬜ | |
-
-### Acceptance Criteria
-
-| ID | Criteria | Verification Method | Status |
-|----|----------|---------------------|--------|
-| AC-001 | [Criteria] | [How to verify] | ⬜ |
-
-### Non-Functional Requirements
-
-| ID | Requirement | Threshold | Actual | Status |
-|----|-------------|-----------|--------|--------|
-| NFR-001 | Response time | < 200ms | | ⬜ |
-| NFR-002 | Coverage | > 80% | | ⬜ |
-```
-
-### Step 3: Execute Verification
-
-For each scope:
-
-#### Unit Tests
 ```bash
-npm run test:unit -- --coverage
+# Run the specific test
+npm test -- --grep "AC-1"
+
+# Or run E2E test
+npm run test:e2e -- --spec "login.spec.ts"
 ```
 
-Check:
-- All tests pass
-- Coverage meets threshold
-- Edge cases covered
+### Step 3: Collect Proof
 
-#### Integration Tests
-```bash
-npm run test:integration
-```
+For each criterion, document:
 
-Check:
-- API contracts honored
-- Database operations correct
-- Service interactions work
+| AC | Test Result | Proof Type | Evidence |
+|----|-------------|------------|----------|
+| AC-1 | ✅ PASS | Test output | `✓ user can login (234ms)` |
+| AC-2 | ✅ PASS | Screenshot | `./evidence/ac-2-error.png` |
+| AC-3 | ❌ FAIL | Test output | `Expected 200, got 401` |
 
-#### E2E Tests
-```bash
-npm run test:e2e
-```
-
-Check:
-- User journeys complete
-- Cross-browser if applicable
-- Accessibility passing
-
-### Step 4: Report
-
-Generate verification report:
-
-```markdown
-## Verification Report: {specId}
-
-### Summary
-| Category | Pass | Fail | Skip | Total |
-|----------|------|------|------|-------|
-| Unit | X | X | X | X |
-| Integration | X | X | X | X |
-| E2E | X | X | X | X |
-
-### Coverage
-| Metric | Required | Actual | Status |
-|--------|----------|--------|--------|
-| Lines | 80% | X% | ✅/❌ |
-| Branches | 75% | X% | ✅/❌ |
-| Functions | 80% | X% | ✅/❌ |
-
-### Acceptance Criteria
-| ID | Status | Notes |
-|----|--------|-------|
-| AC-001 | ✅ | Verified by test X |
-| AC-002 | ❌ | Failing: [reason] |
-
-### Issues Found
-| Severity | Description | Location |
-|----------|-------------|----------|
-| 🔴 | [Issue] | [File:line] |
-
-### Recommendation
-[ ] APPROVED - Ready for deployment
-[ ] CHANGES REQUIRED - Issues must be fixed
-[ ] BLOCKED - Critical issues prevent approval
-```
+### Step 4: Generate Verification Report
 
 ## Output Format
 
 ```markdown
-# ✅ Verification Report: {specId}
+# ✅ Verification Report: {Spec ID}
 
-## Status: APPROVED / CHANGES REQUIRED / BLOCKED
+**Feature:** {Feature Name}
+**Date:** {Date}
+**Status:** APPROVED / CHANGES REQUIRED
 
-## Test Results
+---
 
-### Unit Tests
-- Pass: X
-- Fail: X
-- Coverage: X%
+## Acceptance Criteria Verification
 
-### Integration Tests
-- Pass: X
-- Fail: X
+### AC-1: {Criteria Title}
 
-### E2E Tests
-- Pass: X
-- Fail: X
+**Status:** ✅ PASS / ❌ FAIL
 
-## Acceptance Criteria
-
-| Criteria | Status | Evidence |
-|----------|--------|----------|
-| [AC] | ✅/❌ | [Details] |
-
-## Issues (if any)
-
-### Critical
-[List critical issues]
-
-### High
-[List high priority issues]
-
-## Recommendation
-
-[APPROVED/CHANGES REQUIRED/BLOCKED]
-
-[Explanation and next steps]
+**Test Command:**
+```bash
+npm test -- --grep "AC-1"
 ```
 
-## Quality Gates
+**Test Output:**
+```
+PASS  src/__tests__/auth.test.ts
+  ✓ AC-1: user can login with valid credentials (234ms)
 
-A feature is APPROVED only when:
+Test Suites: 1 passed, 1 total
+Tests:       1 passed, 1 total
+```
 
-1. ✅ All acceptance criteria verified
-2. ✅ Unit test coverage > 80%
-3. ✅ All integration tests pass
-4. ✅ Critical E2E paths pass
-5. ✅ No critical/high security issues
-6. ✅ Performance meets thresholds
-7. ✅ Accessibility (if UI) passes WCAG 2.1 AA
+**Screenshot/Evidence:**
+![AC-1 Evidence](./evidence/ac-1-login-success.png)
 
-## Example
+---
+
+### AC-2: {Criteria Title}
+
+**Status:** ✅ PASS / ❌ FAIL
+
+**Test Command:**
+```bash
+npm test -- --grep "AC-2"
+```
+
+**Test Output:**
+```
+PASS  src/__tests__/auth.test.ts
+  ✓ AC-2: shows error for invalid credentials (156ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       1 passed, 1 total
+```
+
+---
+
+## Definition of Done
+
+| Requirement | Status | Proof |
+|-------------|--------|-------|
+| All AC tests pass | ✅ | Test output above |
+| Code reviewed | ✅ | PR #42 approved |
+| No lint errors | ✅ | `npm run lint` clean |
+| Deployed to staging | ✅ | staging.example.com |
+
+---
+
+## Summary
+
+| Criteria | Status |
+|----------|--------|
+| AC-1 | ✅ |
+| AC-2 | ✅ |
+| AC-3 | ✅ |
+
+**Result:** ✅ APPROVED for production
+
+---
+
+## Sign-off
+
+- [ ] Developer confirms implementation complete
+- [ ] QA confirms all tests pass
+- [ ] Reviewer approves PR
+```
+
+## Proof Types
+
+| Type | When to Use | How to Capture |
+|------|-------------|----------------|
+| **Test Output** | Unit/Integration tests | Copy terminal output |
+| **Screenshot** | UI features | Browser screenshot |
+| **Video** | Complex flows | Screen recording |
+| **API Response** | Backend endpoints | cURL output or Postman |
+| **Log Output** | Background processes | Tail log file |
+
+## Example Verification
 
 ```
 /verify SPEC-2024-001
 
 🔍 Loading specification SPEC-2024-001...
-🧪 Running verification suite...
+📋 Found 3 acceptance criteria
 
-## Verification Report
+Running tests...
 
-### Status: ✅ APPROVED
-
-### Test Results
-- Unit: 47/47 passing (92% coverage)
-- Integration: 12/12 passing
-- E2E: 5/5 passing
-
-### Acceptance Criteria
-| AC-001 | ✅ | User can register - verified |
-| AC-002 | ✅ | Email validation - verified |
-| AC-003 | ✅ | Error handling - verified |
-
-### Recommendation
-Feature is ready for staging deployment.
-Next: `/deploy staging SPEC-2024-001`
+## AC-1: Successful Login
+```bash
+$ npm run test:e2e -- login.spec.ts
 ```
 
+```
+Running 1 test using 1 worker
+
+  ✓ login.spec.ts:12 › AC-1: user can login (2.3s)
+
+  1 passed (3.1s)
+```
+
+**Proof:** Screenshot captured at ./evidence/ac-1.png
+**Status:** ✅ PASS
+
+---
+
+## AC-2: Invalid Credentials Error
+```bash
+$ npm test -- auth.test.ts
+```
+
+```
+PASS src/__tests__/auth.test.ts
+  ✓ AC-2: shows error message (89ms)
+```
+
+**Status:** ✅ PASS
+
+---
+
+## Verification Summary
+
+| AC | Description | Status |
+|----|-------------|--------|
+| AC-1 | User can log in | ✅ |
+| AC-2 | Error on invalid credentials | ✅ |
+| AC-3 | Session persists | ✅ |
+
+**Definition of Done:**
+✅ All tests pass
+✅ Code reviewed (PR #42)
+✅ No lint errors
+✅ Deployed to staging
+
+**Result:** ✅ APPROVED
+
+Ready for production deployment.
+```
+
+## When Criteria Fail
+
+If any criterion fails:
+
+```markdown
+## AC-3: Session Persistence
+
+**Status:** ❌ FAIL
+
+**Test Command:**
+```bash
+npm test -- session.test.ts
+```
+
+**Test Output:**
+```
+FAIL src/__tests__/session.test.ts
+  ✕ AC-3: session persists after refresh (234ms)
+
+  Expected: user to be logged in
+  Received: redirected to login page
+```
+
+**Required Action:**
+Session cookie is not being set with correct expiry.
+See `src/lib/auth.ts:45` - missing `maxAge` option.
+
+---
+
+## Result: ❌ CHANGES REQUIRED
+
+### Blocking Issues:
+1. AC-3 fails - session not persisting
+
+### Next Steps:
+1. Fix session cookie configuration
+2. Re-run `/verify SPEC-2024-001`
+```
+
+## Remember
+
+- Every criterion needs explicit proof
+- Failed criteria block approval
+- Screenshots for UI features
+- Test output for logic
+- No exceptions to definition of done

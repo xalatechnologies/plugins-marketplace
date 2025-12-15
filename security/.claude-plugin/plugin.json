@@ -1,0 +1,19 @@
+{
+  "name": "security",
+  "description": "Security standards compliance - OWASP, SOC2, NIST, ISO 27001, CIS",
+  "version": "1.0.0",
+  "author": {
+    "name": "Xala Technologies"
+  },
+  "keywords": [
+    "security",
+    "owasp",
+    "soc2",
+    "nist",
+    "iso27001",
+    "compliance",
+    "vulnerability",
+    "pentesting"
+  ]
+}
+
