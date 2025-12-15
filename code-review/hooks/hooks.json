@@ -1,0 +1,39 @@
+{
+  "dependencies": ["xalapm-core"],
+  "hooks": [
+    {
+      "event": "review_started",
+      "action": "log_review_start",
+      "description": "Log review start to Xala PM"
+    },
+    {
+      "event": "review_complete",
+      "action": "sync_review_results",
+      "description": "Sync review results and create tasks"
+    },
+    {
+      "event": "blocking_issue_found",
+      "action": "notify_blocking_issue",
+      "description": "Immediately notify of blocking issues"
+    },
+    {
+      "event": "pr_approved",
+      "action": "log_pr_approval",
+      "description": "Log PR approval to activity"
+    }
+  ],
+  "actions": {
+    "log_review_start": {
+      "prompt": "When starting a code review:\n\n1. log_activity(\n     type='review',\n     title='📝 Starting code review: {target}',\n     entity_type='task',\n     entity_id='{task_id}',\n     metadata={ agent: 'code-review', files: X }\n   )"
+    },
+    "sync_review_results": {
+      "prompt": "After completing review:\n\n1. log_activity(\n     type='review',\n     title='Code review complete: {verdict}',\n     entity_type='task',\n     entity_id='{task_id}',\n     metadata={\n       agent: 'code-review',\n       verdict: 'approved|changes_requested|comment',\n       issues: {\n         blocking: X,\n         should_fix: Y,\n         suggestions: Z\n       },\n       files_reviewed: N,\n       lines_reviewed: M\n     }\n   )\n2. For each blocking issue, create a task:\n   create_task(\n     id='t-review-{seq}',\n     title='Review: {issue_summary}',\n     description='{detailed_issue}',\n     role='{appropriate_role}',\n     priority='high'\n   )\n3. If approved:\n   update_task task_id='{original_task}' status='review' -> 'done'\n4. If changes requested:\n   notify_team(\n     type='warning',\n     title='Code review: Changes requested',\n     message='{X} blocking issues found in {target}',\n     recipients=['developer']\n   )"
+    },
+    "notify_blocking_issue": {
+      "prompt": "When a blocking issue is found during review:\n\n1. Immediately:\n   notify_team(\n     type='error',\n     title='🔴 Blocking issue in code review',\n     message='{issue_summary}\\n\\nLocation: {file}:{line}',\n     recipients=['developer', 'pm']\n   )\n2. log_activity(\n     type='review',\n     title='🔴 Blocking: {issue_type}',\n     entity_type='task',\n     entity_id='{task_id}',\n     metadata={\n       severity: 'blocking',\n       issue: '{description}',\n       location: '{file}:{line}'\n     }\n   )"
+    },
+    "log_pr_approval": {
+      "prompt": "When PR is approved:\n\n1. update_task task_id='{task_id}' status='done'\n2. log_activity(\n     type='review',\n     title='✅ PR Approved: {pr_title}',\n     entity_type='task',\n     entity_id='{task_id}',\n     metadata={\n       agent: 'code-review',\n       approved: true,\n       reviewer: 'code-review-agent'\n     }\n   )\n3. notify_team(\n     type='success',\n     title='PR Approved',\n     message='{pr_title} is ready to merge',\n     recipients=['developer', 'devops']\n   )"
+    }
+  }
+}

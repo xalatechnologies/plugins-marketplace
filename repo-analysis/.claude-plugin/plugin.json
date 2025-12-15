@@ -1,0 +1,20 @@
+{
+  "name": "repo-analysis",
+  "description": "Repository Analysis Agent for Xala PM - Analyze codebases, generate inventory, infer PRD, detect issues, create production-ready task backlog",
+  "version": "1.0.0",
+  "author": {
+    "name": "Xala Technologies",
+    "url": "https://xalatechnologies.com"
+  },
+  "keywords": [
+    "repository",
+    "analysis",
+    "inventory",
+    "prd",
+    "technical-debt",
+    "security",
+    "compliance"
+  ],
+  "license": "MIT"
+}
+

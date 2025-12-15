@@ -1,0 +1,46 @@
+{
+  "dependencies": ["xalapm-core"],
+  "hooks": [
+    {
+      "event": "session_start",
+      "action": "check_in_progress_tasks",
+      "description": "Check for tasks that were left in progress"
+    },
+    {
+      "event": "task_mentioned",
+      "pattern": "t\\d+-\\d+",
+      "action": "show_task_context",
+      "description": "When a task ID is mentioned, show context"
+    },
+    {
+      "event": "file_modified",
+      "pattern": "**/*.{ts,tsx,js,jsx}",
+      "action": "suggest_task_update",
+      "description": "Suggest task updates when code changes"
+    },
+    {
+      "event": "work_completed",
+      "pattern": "done|finished|fixed|implemented|completed",
+      "action": "prompt_task_completion",
+      "description": "Prompt to mark task as done when work is completed"
+    }
+  ],
+  "actions": {
+    "check_in_progress_tasks": {
+      "prompt": "At session start, check for tasks with status='in_progress'.\n\nIf found:\n1. List them briefly\n2. Ask if user is continuing work on any\n3. Offer to update status if work is done\n\nKeep this check brief and non-intrusive."
+    },
+    "show_task_context": {
+      "prompt": "When user mentions a task ID (t2-5, etc.):\n1. Fetch task details\n2. Show brief context (title, status, priority)\n3. If relevant, suggest actions (start, update, complete)"
+    },
+    "suggest_task_update": {
+      "prompt": "When code files are modified, consider:\n1. Is this work related to an existing task?\n2. Should the task status be updated?\n3. Is new work being done that needs a task?\n\nOnly prompt if confident there's a match. Don't be intrusive."
+    },
+    "prompt_task_completion": {
+      "prompt": "When user indicates work is done:\n1. Identify which task was being worked on\n2. Ask to confirm completion\n3. update_task task_id='{id}' status='done'\n4. log_activity(\n     type='task_update',\n     title='✅ Task completed: {title}',\n     entity_type='task',\n     entity_id='{task_id}',\n     metadata={ completed_by: 'user', via: 'tasks-agent' }\n   )\n5. Update phase progress\n6. notify_team type='success' title='Task completed' recipients=['pm']"
+    },
+    "create_task_from_finding": {
+      "prompt": "When creating task from analysis:\n1. Generate unique ID: t{phase}-{role_abbr}-{seq}\n2. create_task(\n     id='{generated_id}',\n     title='{title}',\n     description='{description}',\n     role='{role}',\n     phase_id={phase},\n     priority='{priority}'\n   )\n3. log_activity(\n     type='task_update',\n     title='Created task: {id}',\n     entity_type='task',\n     entity_id='{id}',\n     metadata={ agent: 'tasks', source: '{analysis|manual}' }\n   )"
+    }
+  }
+}
+

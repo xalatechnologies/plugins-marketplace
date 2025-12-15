@@ -1,0 +1,19 @@
+{
+  "name": "xalapm-core",
+  "description": "Xala PM Core Integration - Shared hooks, tools, and protocols for all agents to sync with Xala PM",
+  "version": "1.0.0",
+  "author": {
+    "name": "Xala Technologies"
+  },
+  "keywords": [
+    "xalapm",
+    "integration",
+    "sync",
+    "core",
+    "shared"
+  ],
+  "license": "MIT",
+  "priority": 999,
+  "required": true
+}
+

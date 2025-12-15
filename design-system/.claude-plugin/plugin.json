@@ -1,0 +1,19 @@
+{
+  "name": "design-system",
+  "description": "Design System Agent - UI components, Tailwind, accessibility, theming, design tokens",
+  "version": "1.0.0",
+  "author": {
+    "name": "Xala Technologies"
+  },
+  "keywords": [
+    "design-system",
+    "tailwind",
+    "ui",
+    "components",
+    "theming",
+    "accessibility",
+    "tokens"
+  ],
+  "license": "MIT"
+}
+

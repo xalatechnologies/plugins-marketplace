@@ -1,0 +1,19 @@
+{
+  "name": "orchestrator",
+  "description": "Orchestrator Agent - Master coordinator that manages and delegates to specialized agents, synthesizes findings",
+  "version": "1.0.0",
+  "author": {
+    "name": "Xala Technologies"
+  },
+  "keywords": [
+    "orchestrator",
+    "coordinator",
+    "multi-agent",
+    "delegation",
+    "synthesis",
+    "workflow"
+  ],
+  "license": "MIT",
+  "priority": 100
+}
+

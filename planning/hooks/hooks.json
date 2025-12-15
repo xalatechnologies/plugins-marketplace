@@ -1,0 +1,32 @@
+{
+  "dependencies": ["xalapm-core"],
+  "hooks": [
+    {
+      "event": "estimate_complete",
+      "action": "sync_estimate_to_task",
+      "description": "Save estimate to task in Xala PM"
+    },
+    {
+      "event": "breakdown_complete",
+      "action": "create_subtasks",
+      "description": "Create subtasks in Xala PM from breakdown"
+    },
+    {
+      "event": "sprint_planned",
+      "action": "sync_sprint",
+      "description": "Sync sprint planning to Xala PM"
+    }
+  ],
+  "actions": {
+    "sync_estimate_to_task": {
+      "prompt": "After estimating a task:\n\n1. update_task(\n     task_id='{id}',\n     estimate='{hours}h',\n     complexity='{low|medium|high}'\n   )\n2. log_activity(\n     type='task_update',\n     title='Estimated: {task_title} ({hours}h)',\n     entity_type='task',\n     entity_id='{task_id}',\n     metadata={\n       agent: 'planning',\n       estimate_hours: X,\n       complexity: '{level}',\n       breakdown: { frontend: Xh, backend: Yh, testing: Zh }\n     }\n   )"
+    },
+    "create_subtasks": {
+      "prompt": "After breaking down a task:\n\n1. For each subtask:\n   create_task(\n     id='{parent_id}.{seq}',\n     title='{subtask_title}',\n     role='{role}',\n     parent_id='{parent_task_id}',\n     priority='{priority}'\n   )\n\n2. log_activity(\n     type='task_update',\n     title='Broke down {parent_task} into {X} subtasks',\n     entity_type='task',\n     entity_id='{parent_task_id}',\n     metadata={\n       agent: 'planning',\n       subtasks_created: X,\n       total_estimate: '{hours}h'\n     }\n   )\n\n3. Update parent task with subtask count"
+    },
+    "sync_sprint": {
+      "prompt": "After sprint planning:\n\n1. For each task assigned to sprint:\n   update_task(\n     task_id='{id}',\n     sprint='{sprint_number}',\n     assignee='{assignee}'\n   )\n\n2. log_activity(\n     type='task_update',\n     title='Sprint {number} planned: {X} tasks, {Y} story points',\n     entity_type='project',\n     entity_id='{project_id}',\n     metadata={\n       agent: 'planning',\n       sprint: '{number}',\n       tasks: X,\n       story_points: Y,\n       by_role: { frontend: A, backend: B, ... }\n     }\n   )\n\n3. notify_team(\n     type='info',\n     title='Sprint {number} Planned',\n     message='{X} tasks assigned',\n     recipients=['team']\n   )"
+    }
+  }
+}
+

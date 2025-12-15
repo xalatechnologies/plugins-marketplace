@@ -1,0 +1,39 @@
+{
+  "dependencies": ["xalapm-core"],
+  "hooks": [
+    {
+      "event": "session_start",
+      "action": "load_full_context",
+      "description": "Load complete project context on session start"
+    },
+    {
+      "event": "analysis_delegated",
+      "action": "log_orchestration",
+      "description": "Log when delegating to agents"
+    },
+    {
+      "event": "synthesis_complete",
+      "action": "sync_orchestration_results",
+      "description": "Sync synthesized results to Xala PM"
+    },
+    {
+      "event": "multi_agent_complete",
+      "action": "create_summary_and_tasks",
+      "description": "Create summary and tasks from multi-agent work"
+    }
+  ],
+  "actions": {
+    "load_full_context": {
+      "prompt": "At orchestrator session start:\n\n1. Call get_dashboard_stats\n2. Call get_phases to understand project structure\n3. Call get_tasks status='in_progress' to see active work\n4. Call get_compliance to check compliance status\n5. Load repository info\n\nBriefly acknowledge:\n'🎯 Xala PM Orchestrator ready.\nProject: {name}\nActive tasks: {X}\nPhase: {current_phase} ({progress}%)\nCompliance: {status}'"
+    },
+    "log_orchestration": {
+      "prompt": "When delegating to specialized agents:\n\n1. log_activity(\n     type='analysis',\n     title='🎯 Orchestrator delegating to: {agent_list}',\n     entity_type='project',\n     entity_id='{project_id}',\n     metadata={\n       agent: 'orchestrator',\n       delegated_to: ['{agents}'],\n       task: '{description}',\n       mode: 'parallel|sequential'\n     }\n   )"
+    },
+    "sync_orchestration_results": {
+      "prompt": "After synthesizing results from multiple agents:\n\n1. log_activity(\n     type='analysis',\n     title='✅ Orchestrator synthesis complete',\n     entity_type='project',\n     entity_id='{project_id}',\n     metadata={\n       agent: 'orchestrator',\n       agents_used: ['{list}'],\n       findings_total: X,\n       findings_by_severity: { critical: A, high: B, medium: C },\n       tasks_created: Y,\n       health_score: Z\n     }\n   )\n2. update_repository(\n     repo_id='{repo_id}',\n     health_score={calculated_score},\n     last_analyzed=now()\n   )"
+    },
+    "create_summary_and_tasks": {
+      "prompt": "After multi-agent analysis:\n\n1. Create prioritized tasks from all agent findings:\n   for each finding where priority >= medium:\n     create_task(\n       id='t-{phase}-{role}-{seq}',\n       title='{finding_summary}',\n       description='{details}\\n\\nSource: {agent} agent',\n       role='{appropriate_role}',\n       phase_id={phase},\n       priority='{severity}'\n     )\n\n2. Update phase progress based on findings\n\n3. log_activity(\n     type='analysis',\n     title='🎯 Multi-agent analysis: {tasks_created} tasks created',\n     entity_type='project',\n     entity_id='{project_id}',\n     metadata={\n       agent: 'orchestrator',\n       summary: '{executive_summary}',\n       tasks_created: X,\n       by_role: { frontend: A, backend: B, ... }\n     }\n   )\n\n4. notify_team(\n     type='success',\n     title='Analysis Complete',\n     message='Multi-agent analysis complete. {X} issues found, {Y} tasks created. Health: {score}/100',\n     recipients=['pm', 'tech-lead']\n   )"
+    }
+  }
+}

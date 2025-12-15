@@ -1,0 +1,18 @@
+{
+  "mcpServers": {},
+  "tools": {
+    "analyze_complexity": {
+      "description": "Analyze code complexity",
+      "parameters": {
+        "file": "File to analyze"
+      }
+    },
+    "find_duplicates": {
+      "description": "Find duplicate code blocks"
+    },
+    "check_patterns": {
+      "description": "Check for anti-patterns"
+    }
+  }
+}
+

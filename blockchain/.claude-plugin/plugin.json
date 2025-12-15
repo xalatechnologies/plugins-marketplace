@@ -1,0 +1,26 @@
+{
+  "name": "blockchain",
+  "description": "Blockchain Expert Agent - Web3, validators, Ethereum, PoSA consensus, smart contracts, security auditing, AWS/Ansible infrastructure",
+  "version": "1.0.0",
+  "author": {
+    "name": "Xala Technologies"
+  },
+  "keywords": [
+    "blockchain",
+    "web3",
+    "ethereum",
+    "solidity",
+    "validators",
+    "consensus",
+    "posa",
+    "smart-contracts",
+    "security",
+    "auditing",
+    "aws",
+    "ansible",
+    "go",
+    "geth"
+  ],
+  "license": "MIT"
+}
+

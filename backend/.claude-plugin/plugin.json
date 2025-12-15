@@ -1,0 +1,20 @@
+{
+  "name": "backend",
+  "description": "Backend Development Agent - API design, Hono, NestJS, validation, error handling, security",
+  "version": "1.0.0",
+  "author": {
+    "name": "Xala Technologies"
+  },
+  "keywords": [
+    "backend",
+    "api",
+    "hono",
+    "nestjs",
+    "rest",
+    "graphql",
+    "validation",
+    "security"
+  ],
+  "license": "MIT"
+}
+

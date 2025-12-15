@@ -1,0 +1,63 @@
+{
+  "mcpServers": {
+    "xalapm": {
+      "command": "node",
+      "args": ["./mcp-server/dist/index.js"],
+      "cwd": "${workspaceFolder}",
+      "description": "Xala PM MCP server for task management"
+    }
+  },
+  "tools": {
+    "get_tasks": {
+      "description": "Get tasks with optional filters",
+      "parameters": {
+        "phase_id": "Filter by phase (optional)",
+        "status": "Filter by status (optional)",
+        "role": "Filter by role (optional)",
+        "assignee": "Filter by assignee (optional)"
+      }
+    },
+    "create_task": {
+      "description": "Create a new task",
+      "parameters": {
+        "id": "Task ID (t{phase}-{n})",
+        "title": "Task title",
+        "role": "Role (backend, frontend, etc.)",
+        "phase_id": "Phase number",
+        "priority": "Priority (low, medium, high, critical)",
+        "description": "Task description (optional)",
+        "estimate": "Time estimate (optional)"
+      }
+    },
+    "update_task": {
+      "description": "Update an existing task",
+      "parameters": {
+        "task_id": "Task ID to update",
+        "status": "New status (optional)",
+        "priority": "New priority (optional)",
+        "title": "New title (optional)",
+        "description": "New description (optional)"
+      }
+    },
+    "log_activity": {
+      "description": "Log an activity",
+      "parameters": {
+        "type": "Activity type",
+        "title": "Activity title",
+        "entity_type": "Entity type (task, phase, etc.)",
+        "entity_id": "Entity ID"
+      }
+    },
+    "get_phases": {
+      "description": "Get all phases with progress"
+    },
+    "update_phase": {
+      "description": "Update phase progress",
+      "parameters": {
+        "phase_id": "Phase number",
+        "progress": "Progress percentage (0-100)"
+      }
+    }
+  }
+}
+

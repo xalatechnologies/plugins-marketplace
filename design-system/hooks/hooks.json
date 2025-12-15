@@ -1,0 +1,31 @@
+{
+  "dependencies": ["xalapm-core"],
+  "hooks": [
+    {
+      "event": "component_created",
+      "action": "sync_ui_component",
+      "description": "Log UI component to Xala PM"
+    },
+    {
+      "event": "tokens_updated",
+      "action": "sync_design_tokens",
+      "description": "Log design token changes"
+    },
+    {
+      "event": "task_complete",
+      "action": "complete_design_task",
+      "description": "Mark design task complete"
+    }
+  ],
+  "actions": {
+    "sync_ui_component": {
+      "prompt": "After creating a UI component:\n\n1. log_activity(\n     type='code_change',\n     title='Created UI component: {name}',\n     entity_type='task',\n     entity_id='{task_id}',\n     metadata={\n       agent: 'design-system',\n       component: '{name}',\n       variants: X,\n       accessibility: '{a11y_status}',\n       artifacts: ['packages/ui/src/{name}.tsx']\n     }\n   )\n2. If accessibility compliant:\n   update_compliance check_id='ui_accessibility' status='pass'"
+    },
+    "sync_design_tokens": {
+      "prompt": "After updating design tokens:\n\n1. log_activity(\n     type='code_change',\n     title='Updated design tokens',\n     entity_type='project',\n     entity_id='{project_id}',\n     metadata={\n       agent: 'design-system',\n       tokens_added: X,\n       tokens_modified: Y,\n       categories: ['colors', 'spacing', etc]\n     }\n   )"
+    },
+    "complete_design_task": {
+      "prompt": "When design task is complete:\n\n1. update_task task_id='{id}' status='done'\n2. log_activity(\n     type='task_update',\n     title='✅ Design task completed: {title}',\n     entity_type='task',\n     entity_id='{task_id}',\n     metadata={ agent: 'design-system' }\n   )\n3. notify_team(\n     type='success',\n     title='Design component ready',\n     message='{title} is ready for integration',\n     recipients=['frontend', 'pm']\n   )"
+    }
+  }
+}

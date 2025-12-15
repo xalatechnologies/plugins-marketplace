@@ -1,0 +1,39 @@
+{
+  "dependencies": ["xalapm-core"],
+  "hooks": [
+    {
+      "event": "session_start",
+      "action": "check_pending_syncs",
+      "description": "Check for any pending syncs when starting a session"
+    },
+    {
+      "event": "task_mentioned",
+      "action": "link_task",
+      "description": "When a task ID is mentioned (t1-XX), offer to update its status"
+    },
+    {
+      "event": "git_commit",
+      "action": "sync_commit_to_task",
+      "description": "Link git commits to tasks"
+    },
+    {
+      "event": "branch_merged",
+      "action": "sync_merge_completion",
+      "description": "Update task when branch is merged"
+    }
+  ],
+  "actions": {
+    "check_pending_syncs": {
+      "prompt": "At session start:\n\n1. get_tasks status='in_progress'\n2. Check for tasks that might be stale (>24h in progress)\n3. get_activity limit=10 to see recent work\n\nIf found stale tasks:\n  'Found {X} tasks in progress. Any completed?'\n\nIf recent activity without task link:\n  'Found unlinked activity. Want to associate with a task?'"
+    },
+    "link_task": {
+      "prompt": "When task ID mentioned (t1-XX, t2-5, etc.):\n\n1. get_task task_id='{mentioned_id}'\n2. Show brief context: '{title}' [{status}] - {role}\n3. Offer actions:\n   - 'u' to update status\n   - 'd' to mark done\n   - 'l' to log activity\n\nIf updating:\n  update_task task_id='{id}' status='{new_status}'\n  log_activity(...)"
+    },
+    "sync_commit_to_task": {
+      "prompt": "When a git commit is made:\n\n1. Check commit message for task ID (t1-XX)\n2. If found:\n   log_activity(\n     type='code_change',\n     title='Commit: {short_message}',\n     entity_type='task',\n     entity_id='{task_id}',\n     metadata={\n       agent: 'project-sync',\n       commit: '{hash}',\n       files_changed: X\n     }\n   )\n3. If commit message contains 'fix', 'close', 'done':\n   Ask if task should be marked complete"
+    },
+    "sync_merge_completion": {
+      "prompt": "When a branch is merged:\n\n1. Extract task ID from branch name (feature/t1-5-user-login)\n2. If found:\n   update_task task_id='{id}' status='done'\n   log_activity(\n     type='task_update',\n     title='Branch merged: {branch}',\n     entity_type='task',\n     entity_id='{task_id}',\n     metadata={ agent: 'project-sync', merged: true }\n   )\n   notify_team(\n     type='success',\n     title='Feature merged',\n     message='{task_title} merged to main',\n     recipients=['pm']\n   )"
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "name": "supabase",
+  "description": "Supabase Development Agent - Database design, RLS policies, migrations, auth, realtime, edge functions",
+  "version": "1.0.0",
+  "author": {
+    "name": "Xala Technologies"
+  },
+  "keywords": [
+    "supabase",
+    "postgresql",
+    "database",
+    "rls",
+    "auth",
+    "realtime",
+    "migrations"
+  ],
+  "license": "MIT"
+}
+

@@ -1,0 +1,190 @@
+{
+  "name": "xala-marketplace",
+  "description": "Xala Technologies Plugin Marketplace - AI-native project management agents, development tools, and specialized skills",
+  "version": "1.0.0",
+  "owner": {
+    "name": "Xala Technologies",
+    "url": "https://xala.no"
+  },
+  "plugins": [
+    {
+      "name": "xalapm-core",
+      "source": "./xalapm-core",
+      "description": "Xala PM Core Integration - Shared hooks, tools, and protocols for all agents to sync with Xala PM",
+      "category": "core",
+      "priority": 999,
+      "required": true
+    },
+    {
+      "name": "repo-analysis",
+      "source": "./repo-analysis",
+      "description": "Repository Analysis Agent - Analyze codebases, generate inventory, detect issues, create task backlog",
+      "category": "analysis"
+    },
+    {
+      "name": "project-sync",
+      "source": "./project-sync",
+      "description": "Project Sync Agent - Keep Xala PM in sync with your work, update tasks, log activities",
+      "category": "productivity"
+    },
+    {
+      "name": "planning",
+      "source": "./planning",
+      "description": "Planning Agent - Estimate tasks, prioritize backlog, break down stories",
+      "category": "productivity"
+    },
+    {
+      "name": "compliance",
+      "source": "./compliance",
+      "description": "Compliance Agent - Check regulatory rules, audit changes, validate security tokens",
+      "category": "security"
+    },
+    {
+      "name": "standup",
+      "source": "./standup",
+      "description": "Standup Agent - Generate daily standups, summarize work, prepare updates",
+      "category": "productivity"
+    },
+    {
+      "name": "frontend",
+      "source": "./frontend",
+      "description": "Frontend Development Agent - React, Remix, Next.js, Tailwind, responsive design, accessibility",
+      "category": "development"
+    },
+    {
+      "name": "backend",
+      "source": "./backend",
+      "description": "Backend Development Agent - API design, Hono, NestJS, validation, error handling, security",
+      "category": "development"
+    },
+    {
+      "name": "supabase",
+      "source": "./supabase",
+      "description": "Supabase Development Agent - Database design, RLS policies, migrations, auth, realtime",
+      "category": "development"
+    },
+    {
+      "name": "tauri",
+      "source": "./tauri",
+      "description": "Tauri Desktop Development Agent - Native desktop apps, Rust backend, IPC, system integration",
+      "category": "development"
+    },
+    {
+      "name": "react",
+      "source": "./react",
+      "description": "React Development Agent - Hooks, state management, patterns, testing, performance",
+      "category": "development"
+    },
+    {
+      "name": "design-system",
+      "source": "./design-system",
+      "description": "Design System Agent - UI components, Tailwind, accessibility, theming, design tokens",
+      "category": "design"
+    },
+    {
+      "name": "tasks",
+      "source": "./tasks",
+      "description": "Tasks Agent - Create, update, manage, and track development tasks with Xala PM integration",
+      "category": "productivity"
+    },
+    {
+      "name": "blockchain",
+      "source": "./blockchain",
+      "description": "Blockchain Expert Agent - Web3, validators, Ethereum, PoSA, smart contracts, security auditing, AWS/Ansible",
+      "category": "blockchain"
+    },
+    {
+      "name": "accessibility",
+      "source": "./accessibility",
+      "description": "Accessibility & Compliance Agent - WCAG 2.1/2.2, Universal Utforming, GDPR, Digdir, NSM security",
+      "category": "compliance"
+    },
+    {
+      "name": "testing",
+      "source": "./testing",
+      "description": "Testing Specialist Agent - E2E, unit, integration, performance, penetration testing with Chrome MCP",
+      "category": "testing"
+    },
+    {
+      "name": "orchestrator",
+      "source": "./orchestrator",
+      "description": "Orchestrator Agent - Master coordinator that manages and delegates to specialized agents, synthesizes findings",
+      "category": "orchestration",
+      "priority": 100
+    },
+    {
+      "name": "mobile",
+      "source": "./mobile",
+      "description": "Mobile Development Agent - Expo, React Native, iOS, Android cross-platform development",
+      "category": "development"
+    },
+    {
+      "name": "devops",
+      "source": "./devops",
+      "description": "DevOps Agent - CI/CD, Docker, Kubernetes, GitHub Actions, deployment automation",
+      "category": "operations"
+    },
+    {
+      "name": "documentation",
+      "source": "./documentation",
+      "description": "Documentation Agent - README, API docs, changelog, JSDoc generation",
+      "category": "productivity"
+    },
+    {
+      "name": "code-review",
+      "source": "./code-review",
+      "description": "Code Review Agent - PR review, code quality, refactoring suggestions, best practices",
+      "category": "quality"
+    }
+  ],
+  "categories": {
+    "core": {
+      "name": "Core",
+      "description": "Core integration and shared functionality"
+    },
+    "analysis": {
+      "name": "Analysis",
+      "description": "Codebase analysis and insights"
+    },
+    "productivity": {
+      "name": "Productivity",
+      "description": "Project management and workflow automation"
+    },
+    "security": {
+      "name": "Security",
+      "description": "Compliance and security checking"
+    },
+    "development": {
+      "name": "Development",
+      "description": "Technology-specific development agents"
+    },
+    "design": {
+      "name": "Design",
+      "description": "UI/UX and design system tools"
+    },
+    "blockchain": {
+      "name": "Blockchain",
+      "description": "Web3, smart contracts, validators, and security"
+    },
+    "compliance": {
+      "name": "Compliance",
+      "description": "WCAG, GDPR, NSM, and regulatory standards"
+    },
+    "testing": {
+      "name": "Testing",
+      "description": "E2E, unit, performance, and security testing"
+    },
+    "orchestration": {
+      "name": "Orchestration",
+      "description": "Multi-agent coordination and workflow management"
+    },
+    "operations": {
+      "name": "Operations",
+      "description": "CI/CD, deployment, and infrastructure"
+    },
+    "quality": {
+      "name": "Quality",
+      "description": "Code review and quality assurance"
+    }
+  }
+}

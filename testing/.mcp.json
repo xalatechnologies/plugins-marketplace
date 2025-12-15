@@ -1,0 +1,68 @@
+{
+  "mcpServers": {
+    "browser": {
+      "command": "npx",
+      "args": ["-y", "@anthropic/mcp-browser"],
+      "description": "Browser automation for E2E testing"
+    },
+    "lighthouse": {
+      "command": "npx",
+      "args": ["-y", "@anthropic/mcp-lighthouse"],
+      "description": "Lighthouse for performance testing"
+    }
+  },
+  "tools": {
+    "browser_navigate": {
+      "description": "Navigate to URL for testing",
+      "parameters": {
+        "url": "URL to navigate to"
+      }
+    },
+    "browser_snapshot": {
+      "description": "Capture accessibility snapshot for assertions"
+    },
+    "browser_click": {
+      "description": "Click element in browser",
+      "parameters": {
+        "element": "Element description",
+        "ref": "Element reference"
+      }
+    },
+    "browser_type": {
+      "description": "Type text into element",
+      "parameters": {
+        "element": "Element description",
+        "ref": "Element reference",
+        "text": "Text to type"
+      }
+    },
+    "browser_wait_for": {
+      "description": "Wait for condition",
+      "parameters": {
+        "text": "Text to wait for",
+        "time": "Time to wait in seconds"
+      }
+    },
+    "browser_console_messages": {
+      "description": "Get console messages for debugging"
+    },
+    "browser_network_requests": {
+      "description": "Get network requests for API testing"
+    },
+    "run_lighthouse": {
+      "description": "Run Lighthouse audit",
+      "parameters": {
+        "url": "URL to audit",
+        "categories": "Categories to audit"
+      }
+    },
+    "run_tests": {
+      "description": "Run test suite",
+      "parameters": {
+        "type": "Test type (unit, e2e, all)",
+        "pattern": "Test file pattern"
+      }
+    }
+  }
+}
+

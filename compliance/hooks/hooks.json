@@ -1,0 +1,32 @@
+{
+  "dependencies": ["xalapm-core"],
+  "hooks": [
+    {
+      "event": "compliance_check",
+      "action": "sync_compliance_check",
+      "description": "Log compliance check to Xala PM"
+    },
+    {
+      "event": "violation_detected",
+      "action": "report_violation",
+      "description": "Report compliance violation immediately"
+    },
+    {
+      "event": "token_action",
+      "action": "check_token_compliance",
+      "description": "Verify security token actions are compliant"
+    }
+  ],
+  "actions": {
+    "sync_compliance_check": {
+      "prompt": "After any compliance check:\n\n1. update_compliance(\n     check_id='{check_type}',\n     status='{pass|fail|warning}',\n     notes='{summary}'\n   )\n\n2. log_activity(\n     type='compliance',\n     title='Compliance check: {type} - {status}',\n     entity_type='project',\n     entity_id='{project_id}',\n     metadata={\n       agent: 'compliance',\n       check_type: '{type}',\n       rules_checked: X,\n       passed: Y,\n       failed: Z\n     }\n   )"
+    },
+    "report_violation": {
+      "prompt": "When compliance violation detected:\n\n1. IMMEDIATELY:\n   notify_team(\n     type='error',\n     title='⛔ COMPLIANCE VIOLATION',\n     message='{violation_type}: {description}',\n     recipients=['compliance-officer', 'pm', 'legal']\n   )\n\n2. update_compliance(\n     check_id='{check_type}',\n     status='fail',\n     notes='VIOLATION: {description}'\n   )\n\n3. log_activity(\n     type='compliance',\n     title='⛔ VIOLATION: {type}',\n     entity_type='project',\n     entity_id='{project_id}',\n     metadata={\n       agent: 'compliance',\n       violation: '{description}',\n       severity: 'critical',\n       action_required: true\n     }\n   )\n\n4. create_task(\n     id='t-compliance-{seq}',\n     title='⛔ Fix violation: {summary}',\n     priority='critical',\n     role='{relevant_role}'\n   )"
+    },
+    "check_token_compliance": {
+      "prompt": "For ANY action involving security tokens (PM-EQ, NV-EQ):\n\n🚨 MANDATORY COMPLIANCE CHECK:\n\n1. Verify against rules:\n   - NO public trading\n   - NO DEX/CEX integration\n   - KYC REQUIRED\n   - Whitelist REQUIRED\n   - Pause mechanism REQUIRED\n\n2. If compliant:\n   log_activity(\n     type='compliance',\n     title='Token action verified: {action}',\n     entity_type='project',\n     entity_id='{project_id}',\n     metadata={ agent: 'compliance', token: '{symbol}', action: '{type}', compliant: true }\n   )\n\n3. If NON-COMPLIANT:\n   STOP and call report_violation\n   DO NOT proceed with the action"
+    }
+  }
+}
+

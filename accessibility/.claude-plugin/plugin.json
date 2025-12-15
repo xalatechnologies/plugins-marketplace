@@ -1,0 +1,22 @@
+{
+  "name": "accessibility",
+  "description": "Accessibility & Compliance Agent - WCAG 2.1/2.2, Universal Utforming, GDPR, Digdir, NSM security standards",
+  "version": "1.0.0",
+  "author": {
+    "name": "Xala Technologies"
+  },
+  "keywords": [
+    "accessibility",
+    "wcag",
+    "a11y",
+    "universal-utforming",
+    "gdpr",
+    "digdir",
+    "nsm",
+    "compliance",
+    "norway",
+    "security"
+  ],
+  "license": "MIT"
+}
+

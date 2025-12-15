@@ -1,0 +1,42 @@
+{
+  "mcpServers": {
+    "storybook": {
+      "command": "npx",
+      "args": ["-y", "@anthropic/mcp-storybook"],
+      "description": "Storybook integration for component documentation"
+    },
+    "figma": {
+      "command": "npx",
+      "args": ["-y", "@anthropic/mcp-figma"],
+      "env": {
+        "FIGMA_TOKEN": "${FIGMA_TOKEN}"
+      },
+      "description": "Figma integration for design specs"
+    }
+  },
+  "tools": {
+    "get_stories": {
+      "description": "List all Storybook stories"
+    },
+    "view_story": {
+      "description": "View a specific story",
+      "parameters": {
+        "storyId": "Story ID to view"
+      }
+    },
+    "get_figma_component": {
+      "description": "Get component specs from Figma",
+      "parameters": {
+        "nodeId": "Figma node ID"
+      }
+    },
+    "check_contrast": {
+      "description": "Check color contrast ratio",
+      "parameters": {
+        "foreground": "Foreground color",
+        "background": "Background color"
+      }
+    }
+  }
+}
+

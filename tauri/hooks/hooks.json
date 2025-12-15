@@ -1,0 +1,31 @@
+{
+  "dependencies": ["xalapm-core"],
+  "hooks": [
+    {
+      "event": "command_created",
+      "action": "sync_command_created",
+      "description": "Log Tauri command creation"
+    },
+    {
+      "event": "task_complete",
+      "action": "complete_desktop_task",
+      "description": "Mark desktop task complete"
+    },
+    {
+      "event": "build_complete",
+      "action": "log_desktop_build",
+      "description": "Log desktop build result"
+    }
+  ],
+  "actions": {
+    "sync_command_created": {
+      "prompt": "After creating a Tauri command:\n\n1. log_activity(\n     type='code_change',\n     title='Created Tauri command: {name}',\n     entity_type='task',\n     entity_id='{task_id}',\n     metadata={\n       agent: 'tauri',\n       command: '{name}',\n       artifacts: ['src-tauri/src/commands/{name}.rs']\n     }\n   )"
+    },
+    "complete_desktop_task": {
+      "prompt": "When desktop task is complete:\n\n1. update_task task_id='{id}' status='done'\n2. log_activity(\n     type='task_update',\n     title='✅ Desktop task completed: {title}',\n     entity_type='task',\n     entity_id='{task_id}',\n     metadata={ agent: 'tauri' }\n   )\n3. notify_team(\n     type='success',\n     title='Desktop task completed',\n     message='{title}',\n     recipients=['pm']\n   )"
+    },
+    "log_desktop_build": {
+      "prompt": "After desktop build:\n\n1. log_activity(\n     type='deployment',\n     title='🖥️ Desktop build: {platform} - {status}',\n     entity_type='project',\n     entity_id='{project_id}',\n     metadata={\n       agent: 'tauri',\n       platforms: ['windows', 'macos', 'linux'],\n       build_status: '{status}',\n       binary_size: '{size}'\n     }\n   )"
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "name": "testing",
+  "description": "Testing Specialist Agent - E2E, unit, integration, performance, penetration testing with Chrome MCP integration",
+  "version": "1.0.0",
+  "author": {
+    "name": "Xala Technologies"
+  },
+  "keywords": [
+    "testing",
+    "e2e",
+    "unit",
+    "integration",
+    "performance",
+    "security",
+    "penetration",
+    "playwright",
+    "vitest",
+    "chrome"
+  ],
+  "license": "MIT"
+}
+

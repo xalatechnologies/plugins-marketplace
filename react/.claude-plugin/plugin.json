@@ -1,0 +1,18 @@
+{
+  "name": "react",
+  "description": "React Development Agent - Hooks, state management, patterns, testing, performance optimization",
+  "version": "1.0.0",
+  "author": {
+    "name": "Xala Technologies"
+  },
+  "keywords": [
+    "react",
+    "hooks",
+    "state",
+    "context",
+    "testing",
+    "performance"
+  ],
+  "license": "MIT"
+}
+

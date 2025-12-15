@@ -1,0 +1,10 @@
+{
+  "name": "compliance",
+  "description": "Compliance Agent for Xala PM - Check regulatory rules, audit changes, validate security tokens, ensure legal compliance",
+  "version": "1.0.0",
+  "author": {
+    "name": "Xala Technologies"
+  },
+  "keywords": ["compliance", "security-tokens", "audit", "regulatory", "kyc"]
+}
+

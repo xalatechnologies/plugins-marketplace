@@ -1,0 +1,27 @@
+{
+  "mcpServers": {
+    "postgres": {
+      "command": "npx",
+      "args": ["-y", "@anthropic/mcp-postgres"],
+      "env": {
+        "DATABASE_URL": "${DATABASE_URL}"
+      },
+      "description": "Direct PostgreSQL access for debugging"
+    }
+  },
+  "tools": {
+    "query": {
+      "description": "Execute a read-only SQL query",
+      "parameters": {
+        "sql": "SQL query to execute"
+      }
+    },
+    "explain": {
+      "description": "Explain a query execution plan",
+      "parameters": {
+        "sql": "SQL query to analyze"
+      }
+    }
+  }
+}
+

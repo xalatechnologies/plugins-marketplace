@@ -1,0 +1,10 @@
+{
+  "name": "standup",
+  "description": "Standup Agent for Xala PM - Generate daily standups, summarize work, prepare team updates",
+  "version": "1.0.0",
+  "author": {
+    "name": "Xala Technologies"
+  },
+  "keywords": ["standup", "daily", "summary", "team", "updates"]
+}
+

@@ -1,0 +1,128 @@
+{
+  "mcpServers": {
+    "xalapm": {
+      "command": "node",
+      "args": ["./mcp-server/dist/index.js"],
+      "cwd": "${workspaceFolder}",
+      "description": "Xala PM MCP server for project management integration"
+    }
+  },
+  "tools": {
+    "get_dashboard_stats": {
+      "description": "Get project dashboard statistics",
+      "returns": "{ tasks_total, tasks_done, phases_complete, team_members }"
+    },
+    "get_tasks": {
+      "description": "List tasks with optional filters",
+      "parameters": {
+        "status": "backlog | in_progress | review | done",
+        "role": "frontend | backend | blockchain | etc",
+        "phase_id": "Phase number",
+        "priority": "low | medium | high | critical"
+      }
+    },
+    "get_task": {
+      "description": "Get single task by ID",
+      "parameters": {
+        "task_id": "Task identifier"
+      }
+    },
+    "create_task": {
+      "description": "Create a new task",
+      "parameters": {
+        "id": "Task ID (e.g., t1-fe-001)",
+        "title": "Task title",
+        "description": "Task description",
+        "role": "Assigned role",
+        "phase_id": "Phase number",
+        "priority": "low | medium | high | critical",
+        "parent_id": "Optional parent task ID"
+      }
+    },
+    "update_task": {
+      "description": "Update task properties",
+      "parameters": {
+        "task_id": "Task identifier",
+        "status": "New status",
+        "progress": "Progress percentage (0-100)",
+        "assignee": "Assigned user"
+      }
+    },
+    "delete_task": {
+      "description": "Delete a task",
+      "parameters": {
+        "task_id": "Task identifier"
+      }
+    },
+    "get_phases": {
+      "description": "List all project phases"
+    },
+    "update_phase": {
+      "description": "Update phase progress",
+      "parameters": {
+        "phase_id": "Phase number",
+        "progress": "Progress percentage",
+        "status": "pending | active | complete"
+      }
+    },
+    "log_activity": {
+      "description": "Log activity to the feed",
+      "parameters": {
+        "type": "task_update | code_change | review | deployment | analysis | compliance",
+        "title": "Activity title",
+        "description": "Optional description",
+        "entity_type": "task | project | phase | repository",
+        "entity_id": "Entity identifier",
+        "metadata": "Optional JSON metadata"
+      }
+    },
+    "get_activity": {
+      "description": "Get recent activity log",
+      "parameters": {
+        "limit": "Number of entries",
+        "entity_type": "Filter by entity type"
+      }
+    },
+    "get_compliance": {
+      "description": "Get compliance status"
+    },
+    "update_compliance": {
+      "description": "Update compliance check",
+      "parameters": {
+        "check_id": "Compliance check ID",
+        "status": "pass | fail | warning",
+        "notes": "Optional notes"
+      }
+    },
+    "get_repositories": {
+      "description": "List connected repositories"
+    },
+    "update_repository": {
+      "description": "Update repository info",
+      "parameters": {
+        "repo_id": "Repository ID",
+        "last_analyzed": "Timestamp",
+        "health_score": "Score 0-100"
+      }
+    },
+    "update_project": {
+      "description": "Update project metadata",
+      "parameters": {
+        "project_id": "Project ID",
+        "prd_content": "PRD markdown content",
+        "concept": "Project concept",
+        "tech_stack": "Technology stack array"
+      }
+    },
+    "notify_team": {
+      "description": "Send notification to team members",
+      "parameters": {
+        "type": "info | warning | error | success",
+        "title": "Notification title",
+        "message": "Notification message",
+        "recipients": "Array of roles or user IDs"
+      }
+    }
+  }
+}
+

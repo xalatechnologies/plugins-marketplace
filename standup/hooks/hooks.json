@@ -1,0 +1,32 @@
+{
+  "dependencies": ["xalapm-core"],
+  "hooks": [
+    {
+      "event": "standup_started",
+      "action": "gather_standup_data",
+      "description": "Gather data for standup from Xala PM"
+    },
+    {
+      "event": "standup_complete",
+      "action": "log_standup",
+      "description": "Log standup summary to Xala PM"
+    },
+    {
+      "event": "blocker_reported",
+      "action": "escalate_blocker",
+      "description": "Escalate blockers to PM"
+    }
+  ],
+  "actions": {
+    "gather_standup_data": {
+      "prompt": "When starting a standup:\n\n1. get_activity limit=20 - get recent activity\n2. get_tasks status='done' - completed since last standup\n3. get_tasks status='in_progress' - current work\n4. get_compliance - any compliance issues\n\nGenerate standup summary:\n'📅 STANDUP DATA:\n- Completed: {X} tasks\n- In Progress: {Y} tasks\n- Blockers: {Z}'"
+    },
+    "log_standup": {
+      "prompt": "After standup is complete:\n\n1. log_activity(\n     type='task_update',\n     title='📋 Daily Standup - {date}',\n     entity_type='project',\n     entity_id='{project_id}',\n     metadata={\n       agent: 'standup',\n       completed_yesterday: X,\n       planned_today: Y,\n       blockers: Z,\n       attendees: ['{list}']\n     }\n   )\n\n2. If blockers reported:\n   For each blocker:\n     create_task(\n       id='t-blocker-{seq}',\n       title='BLOCKER: {description}',\n       role='{affected_role}',\n       priority='critical'\n     )"
+    },
+    "escalate_blocker": {
+      "prompt": "When a blocker is reported:\n\n1. create_task(\n     id='t-blocker-{seq}',\n     title='🚫 BLOCKER: {description}',\n     priority='critical',\n     role='{relevant_role}'\n   )\n\n2. log_activity(\n     type='task_update',\n     title='🚫 Blocker reported: {summary}',\n     entity_type='project',\n     entity_id='{project_id}',\n     metadata={\n       agent: 'standup',\n       blocker: '{description}',\n       reported_by: '{user}',\n       affects: ['{roles}']\n     }\n   )\n\n3. notify_team(\n     type='error',\n     title='🚫 Blocker Reported',\n     message='{description}',\n     recipients=['pm', 'tech-lead']\n   )"
+    }
+  }
+}
+

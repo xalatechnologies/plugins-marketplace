@@ -1,0 +1,22 @@
+{
+  "name": "frontend",
+  "description": "Frontend Development Agent - React, Remix, Next.js, Tailwind, responsive design, accessibility",
+  "version": "1.0.0",
+  "author": {
+    "name": "Xala Technologies"
+  },
+  "keywords": [
+    "frontend",
+    "react",
+    "remix",
+    "nextjs",
+    "tailwind",
+    "typescript",
+    "accessibility"
+  ],
+  "license": "MIT",
+  "engines": {
+    "claude-code": ">=2.0.0"
+  }
+}
+

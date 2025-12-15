@@ -1,0 +1,18 @@
+{
+  "name": "tasks",
+  "description": "Tasks Agent - Create, update, manage, and track development tasks with Xala PM integration",
+  "version": "1.0.0",
+  "author": {
+    "name": "Xala Technologies"
+  },
+  "keywords": [
+    "tasks",
+    "project-management",
+    "tracking",
+    "status",
+    "backlog",
+    "xala-pm"
+  ],
+  "license": "MIT"
+}
+

@@ -1,0 +1,30 @@
+{
+  "mcpServers": {
+    "browser": {
+      "command": "npx",
+      "args": ["-y", "@anthropic/mcp-browser"],
+      "description": "Browser automation for testing and debugging"
+    },
+    "lighthouse": {
+      "command": "npx",
+      "args": ["-y", "@anthropic/mcp-lighthouse"],
+      "description": "Performance and accessibility auditing"
+    }
+  },
+  "tools": {
+    "browser_navigate": {
+      "description": "Navigate to a URL for visual testing"
+    },
+    "browser_snapshot": {
+      "description": "Capture accessibility tree of current page"
+    },
+    "run_lighthouse": {
+      "description": "Run Lighthouse audit on a URL",
+      "parameters": {
+        "url": "URL to audit",
+        "categories": ["performance", "accessibility", "best-practices", "seo"]
+      }
+    }
+  }
+}
+

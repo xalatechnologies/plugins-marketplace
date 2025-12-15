@@ -1,0 +1,10 @@
+{
+  "name": "planning",
+  "description": "Planning Agent for Xala PM - Estimate tasks, prioritize backlog, break down stories, suggest sprint plans",
+  "version": "1.0.0",
+  "author": {
+    "name": "Xala Technologies"
+  },
+  "keywords": ["planning", "estimation", "sprint", "backlog", "prioritization"]
+}
+

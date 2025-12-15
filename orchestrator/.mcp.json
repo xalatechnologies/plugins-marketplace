@@ -1,0 +1,43 @@
+{
+  "mcpServers": {
+    "xalapm": {
+      "command": "node",
+      "args": ["./mcp-server/dist/index.js"],
+      "cwd": "${workspaceFolder}",
+      "description": "Xala PM MCP server for task and project management"
+    }
+  },
+  "tools": {
+    "list_agents": {
+      "description": "List all available specialized agents"
+    },
+    "dispatch_agent": {
+      "description": "Dispatch a task to a specific agent",
+      "parameters": {
+        "agent": "Agent name",
+        "task": "Task description",
+        "context": "Optional context object"
+      }
+    },
+    "run_parallel": {
+      "description": "Run multiple agents in parallel",
+      "parameters": {
+        "agents": "Array of agent names",
+        "target": "Target path or description"
+      }
+    },
+    "synthesize_results": {
+      "description": "Synthesize results from multiple agent runs",
+      "parameters": {
+        "results": "Array of agent results"
+      }
+    },
+    "create_tasks_from_findings": {
+      "description": "Create Xala PM tasks from agent findings",
+      "parameters": {
+        "findings": "Array of findings to convert to tasks"
+      }
+    }
+  }
+}
+

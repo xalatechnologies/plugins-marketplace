@@ -1,0 +1,24 @@
+{
+  "mcpServers": {
+    "react-devtools": {
+      "command": "npx",
+      "args": ["-y", "@anthropic/mcp-react-devtools"],
+      "description": "React DevTools integration for debugging"
+    }
+  },
+  "tools": {
+    "component_tree": {
+      "description": "Get the React component tree"
+    },
+    "component_state": {
+      "description": "Inspect component state and props",
+      "parameters": {
+        "componentName": "Name of component to inspect"
+      }
+    },
+    "profile_renders": {
+      "description": "Profile component render times"
+    }
+  }
+}
+

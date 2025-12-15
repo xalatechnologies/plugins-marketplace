@@ -1,0 +1,48 @@
+{
+  "dependencies": ["xalapm-core"],
+  "hooks": [
+    {
+      "event": "analysis_started",
+      "action": "log_analysis_start",
+      "description": "Log analysis start to Xala PM"
+    },
+    {
+      "event": "inventory_complete",
+      "action": "sync_inventory",
+      "description": "Update project with inventory data"
+    },
+    {
+      "event": "prd_inferred",
+      "action": "sync_prd_to_project",
+      "description": "Save inferred PRD to project database"
+    },
+    {
+      "event": "pitfalls_detected",
+      "action": "create_tasks_from_pitfalls",
+      "description": "Create tasks for detected issues"
+    },
+    {
+      "event": "analysis_complete",
+      "action": "sync_full_analysis",
+      "description": "Full sync of analysis results"
+    }
+  ],
+  "actions": {
+    "log_analysis_start": {
+      "prompt": "When starting repository analysis:\n\n1. log_activity(\n     type='analysis',\n     title='🔍 Starting repository analysis...',\n     entity_type='project',\n     entity_id='{project_id}',\n     metadata={ agent: 'repo-analysis', scope: '{path}' }\n   )"
+    },
+    "sync_inventory": {
+      "prompt": "When inventory is complete:\n\n1. update_project(\n     project_id='{id}',\n     tech_stack=[detected technologies],\n     structure={ directories, file_counts }\n   )\n2. update_repository(\n     repo_id='{repo_id}',\n     last_analyzed=now(),\n     file_count=X,\n     line_count=Y\n   )\n3. log_activity(\n     type='analysis',\n     title='Inventory complete: {file_count} files analyzed',\n     entity_type='project',\n     entity_id='{project_id}',\n     metadata={\n       agent: 'repo-analysis',\n       files: X,\n       frameworks: [detected],\n       languages: [detected]\n     }\n   )"
+    },
+    "sync_prd_to_project": {
+      "prompt": "When PRD is inferred from codebase:\n\n1. Save PRD content to docs/PRD.md\n2. update_project(\n     project_id='{id}',\n     prd_content='{markdown_content}',\n     prd_updated_at=now(),\n     concept='{inferred_concept}'\n   )\n3. log_activity(\n     type='analysis',\n     title='📋 PRD inferred from codebase',\n     entity_type='project',\n     entity_id='{project_id}',\n     metadata={\n       agent: 'repo-analysis',\n       features_detected: X,\n       user_flows_identified: Y\n     }\n   )\n4. notify_team(\n     type='info',\n     title='PRD Generated',\n     message='Inferred PRD ready for review',\n     recipients=['pm', 'product-owner']\n   )"
+    },
+    "create_tasks_from_pitfalls": {
+      "prompt": "For each detected pitfall/issue:\n\n1. Determine severity and appropriate role\n2. create_task(\n     id='t-{phase}-{role}-{seq}',\n     title='{pitfall_summary}',\n     description='{detailed_description}\\n\\nLocation: {file}:{line}',\n     role='{appropriate_role}',\n     phase_id={relevant_phase},\n     priority='{severity}'\n   )\n3. After all tasks created:\n   log_activity(\n     type='analysis',\n     title='Created {X} tasks from analysis',\n     entity_type='project',\n     entity_id='{project_id}',\n     metadata={\n       agent: 'repo-analysis',\n       tasks_by_priority: { critical: X, high: Y, medium: Z }\n     }\n   )\n4. Update phase progress if applicable"
+    },
+    "sync_full_analysis": {
+      "prompt": "When full analysis is complete:\n\n1. Calculate health score\n2. update_repository(\n     repo_id='{repo_id}',\n     health_score={calculated_score},\n     last_analyzed=now()\n   )\n3. log_activity(\n     type='analysis',\n     title='✅ Analysis complete - Health: {score}/100',\n     entity_type='project',\n     entity_id='{project_id}',\n     metadata={\n       agent: 'repo-analysis',\n       health_score: X,\n       issues_found: Y,\n       tasks_created: Z,\n       prd_generated: true/false\n     }\n   )\n4. notify_team(\n     type='success',\n     title='Repository Analysis Complete',\n     message='Found {issues} issues, created {tasks} tasks. Health score: {score}/100',\n     recipients=['pm', 'tech-lead']\n   )"
+    }
+  }
+}
+

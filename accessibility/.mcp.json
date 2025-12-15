@@ -1,0 +1,40 @@
+{
+  "mcpServers": {
+    "browser": {
+      "command": "npx",
+      "args": ["-y", "@anthropic/mcp-browser"],
+      "description": "Browser for accessibility testing"
+    },
+    "lighthouse": {
+      "command": "npx",
+      "args": ["-y", "@anthropic/mcp-lighthouse"],
+      "description": "Lighthouse for accessibility audits"
+    }
+  },
+  "tools": {
+    "run_lighthouse_a11y": {
+      "description": "Run Lighthouse accessibility audit",
+      "parameters": {
+        "url": "URL to audit"
+      }
+    },
+    "check_contrast": {
+      "description": "Check color contrast ratio",
+      "parameters": {
+        "foreground": "Foreground color (hex)",
+        "background": "Background color (hex)",
+        "textSize": "normal or large"
+      }
+    },
+    "browser_snapshot": {
+      "description": "Get accessibility tree snapshot"
+    },
+    "axe_scan": {
+      "description": "Run axe-core accessibility scan",
+      "parameters": {
+        "url": "URL or element to scan"
+      }
+    }
+  }
+}
+

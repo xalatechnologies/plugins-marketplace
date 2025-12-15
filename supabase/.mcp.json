@@ -1,0 +1,44 @@
+{
+  "mcpServers": {
+    "supabase": {
+      "command": "npx",
+      "args": ["-y", "@supabase/mcp-server"],
+      "env": {
+        "SUPABASE_URL": "${SUPABASE_URL}",
+        "SUPABASE_SERVICE_ROLE_KEY": "${SUPABASE_SERVICE_ROLE_KEY}"
+      },
+      "description": "Supabase management and querying"
+    }
+  },
+  "tools": {
+    "query": {
+      "description": "Execute a SQL query against Supabase",
+      "parameters": {
+        "sql": "SQL query to execute",
+        "readonly": "Whether query is read-only (default: true)"
+      }
+    },
+    "list_tables": {
+      "description": "List all tables in the database"
+    },
+    "describe_table": {
+      "description": "Get table schema",
+      "parameters": {
+        "table": "Table name"
+      }
+    },
+    "list_policies": {
+      "description": "List RLS policies",
+      "parameters": {
+        "table": "Table name (optional)"
+      }
+    },
+    "run_migration": {
+      "description": "Run pending migrations"
+    },
+    "generate_types": {
+      "description": "Generate TypeScript types from schema"
+    }
+  }
+}
+

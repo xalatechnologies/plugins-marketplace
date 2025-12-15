@@ -1,0 +1,48 @@
+{
+  "dependencies": ["xalapm-core"],
+  "hooks": [
+    {
+      "event": "wcag_audit_complete",
+      "action": "sync_wcag_results",
+      "description": "Sync WCAG audit results to compliance"
+    },
+    {
+      "event": "gdpr_check_complete",
+      "action": "sync_gdpr_results",
+      "description": "Sync GDPR check results to compliance"
+    },
+    {
+      "event": "nsm_audit_complete",
+      "action": "sync_nsm_results",
+      "description": "Sync NSM audit results to compliance"
+    },
+    {
+      "event": "issue_detected",
+      "action": "create_accessibility_task",
+      "description": "Create task for accessibility issues"
+    },
+    {
+      "event": "file_created",
+      "pattern": "**/*.tsx",
+      "action": "check_new_component_a11y",
+      "description": "Check new components for accessibility"
+    }
+  ],
+  "actions": {
+    "sync_wcag_results": {
+      "prompt": "After WCAG audit:\n\n1. update_compliance(\n     check_id='wcag_2.1_aa',\n     status='{pass|fail|partial}',\n     notes='{summary}'\n   )\n2. log_activity(\n     type='compliance',\n     title='♿ WCAG {level} Audit: {score}%',\n     entity_type='project',\n     entity_id='{project_id}',\n     metadata={\n       agent: 'accessibility',\n       wcag_level: '{level}',\n       criteria_passed: X,\n       criteria_failed: Y,\n       issues: [\n         { criterion: '1.1.1', severity: 'high', count: N }\n       ]\n     }\n   )\n3. For each WCAG failure, create task\n4. If critical failures:\n   notify_team(\n     type='warning',\n     title='WCAG Compliance Issues',\n     message='{Y} WCAG criteria failing - blocks Universal Utforming compliance',\n     recipients=['pm', 'frontend', 'ux']\n   )"
+    },
+    "sync_gdpr_results": {
+      "prompt": "After GDPR check:\n\n1. update_compliance(\n     check_id='gdpr',\n     status='{pass|fail|partial}',\n     notes='{summary}'\n   )\n2. log_activity(\n     type='compliance',\n     title='🔒 GDPR Check: {status}',\n     entity_type='project',\n     entity_id='{project_id}',\n     metadata={\n       agent: 'accessibility',\n       requirements_met: X,\n       requirements_failed: Y,\n       data_processing_issues: Z\n     }\n   )\n3. If GDPR violations found:\n   notify_team(\n     type='error',\n     title='🔴 GDPR Compliance Violation',\n     message='Critical data protection issues detected',\n     recipients=['pm', 'legal', 'dpo']\n   )\n4. Create high-priority tasks for violations"
+    },
+    "sync_nsm_results": {
+      "prompt": "After NSM/Digdir audit:\n\n1. update_compliance(\n     check_id='nsm_grunnprinsipper',\n     status='{pass|fail|partial}',\n     notes='{summary}'\n   )\n2. log_activity(\n     type='compliance',\n     title='🛡️ NSM Security Audit: {status}',\n     entity_type='project',\n     entity_id='{project_id}',\n     metadata={\n       agent: 'accessibility',\n       pillars: {\n         identify: '{status}',\n         protect: '{status}',\n         detect: '{status}',\n         respond: '{status}'\n       },\n       controls_passed: X,\n       controls_failed: Y\n     }\n   )\n3. Create tasks for security gaps"
+    },
+    "create_accessibility_task": {
+      "prompt": "For each accessibility issue:\n\n1. Determine severity (A = critical, AA = high, AAA = medium)\n2. create_task(\n     id='t-a11y-{seq}',\n     title='A11y: {wcag_criterion} - {issue_summary}',\n     description='{detailed_description}\\n\\nLocation: {file}:{line}\\nWCAG: {criterion}\\nFix: {suggested_fix}',\n     role='frontend',\n     phase_id={current_phase},\n     priority='{severity}'\n   )\n3. log_activity for task creation"
+    },
+    "check_new_component_a11y": {
+      "prompt": "When a new .tsx component is created:\n\n1. Quick accessibility check:\n   - Images have alt?\n   - Interactive elements have labels?\n   - ARIA used correctly?\n2. If issues found, suggest fixes inline\n3. Log minor activity if clean:\n   log_activity(\n     type='compliance',\n     title='A11y check passed: {component}',\n     entity_type='task',\n     entity_id='{task_id}',\n     metadata={ agent: 'accessibility', checks_passed: true }\n   )"
+    }
+  }
+}

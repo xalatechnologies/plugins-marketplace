@@ -1,0 +1,47 @@
+{
+  "dependencies": ["xalapm-core"],
+  "hooks": [
+    {
+      "event": "contract_created",
+      "action": "sync_contract_created",
+      "description": "Log contract creation to Xala PM"
+    },
+    {
+      "event": "audit_complete",
+      "action": "sync_audit_results",
+      "description": "Sync security audit to compliance"
+    },
+    {
+      "event": "contract_deployed",
+      "action": "log_contract_deployment",
+      "description": "Log contract deployment"
+    },
+    {
+      "event": "security_token_action",
+      "action": "check_compliance_rules",
+      "description": "Enforce security token compliance"
+    },
+    {
+      "event": "validator_setup",
+      "action": "log_validator_setup",
+      "description": "Log validator infrastructure setup"
+    }
+  ],
+  "actions": {
+    "sync_contract_created": {
+      "prompt": "After creating a smart contract:\n\n1. log_activity(\n     type='code_change',\n     title='Created smart contract: {name}',\n     entity_type='task',\n     entity_id='{task_id}',\n     metadata={\n       agent: 'blockchain',\n       contract: '{name}',\n       type: '{ERC20|ERC721|custom}',\n       artifacts: ['contracts/{Name}.sol'],\n       security_features: ['pausable', 'ownable', etc]\n     }\n   )\n2. Create audit task:\n   create_task(\n     id='t-bc-audit-{seq}',\n     title='Audit: {contract_name}',\n     role='blockchain',\n     priority='high'\n   )"
+    },
+    "sync_audit_results": {
+      "prompt": "After security audit:\n\n1. update_compliance(\n     check_id='smart_contract_audit',\n     status='{pass|fail|warning}',\n     notes='{summary}'\n   )\n2. log_activity(\n     type='compliance',\n     title='🔍 Contract audit: {contract_name} - {status}',\n     entity_type='task',\n     entity_id='{task_id}',\n     metadata={\n       agent: 'blockchain',\n       contract: '{name}',\n       findings: {\n         critical: X,\n         high: Y,\n         medium: Z,\n         low: W,\n         informational: V\n       },\n       gas_optimization: '{notes}'\n     }\n   )\n3. For each critical/high finding:\n   create_task(...) with priority='critical|high'\n4. If critical issues:\n   notify_team(\n     type='error',\n     title='🔴 Critical vulnerability in {contract}',\n     message='{vulnerability_summary}',\n     recipients=['blockchain-lead', 'security', 'pm']\n   )"
+    },
+    "log_contract_deployment": {
+      "prompt": "After deploying contract:\n\n1. log_activity(\n     type='deployment',\n     title='📜 Contract deployed: {name}',\n     entity_type='project',\n     entity_id='{project_id}',\n     metadata={\n       agent: 'blockchain',\n       contract: '{name}',\n       network: '{mainnet|testnet}',\n       address: '{contract_address}',\n       tx_hash: '{hash}',\n       gas_used: X\n     }\n   )\n2. Update repository with contract address\n3. notify_team(\n     type='success',\n     title='Contract Deployed',\n     message='{name} deployed to {network}\\nAddress: {address}',\n     recipients=['pm', 'blockchain', 'frontend']\n   )"
+    },
+    "check_compliance_rules": {
+      "prompt": "For ANY security token action (PM-EQ, NV-EQ):\n\n🚨 COMPLIANCE CHECK REQUIRED:\n\n1. Verify action doesn't violate rules:\n   - NO public trading\n   - NO DEX/CEX integration\n   - KYC REQUIRED\n   - Whitelist REQUIRED\n   \n2. If violation attempted:\n   log_activity(\n     type='compliance',\n     title='⛔ Blocked: Security token violation attempted',\n     entity_type='project',\n     entity_id='{project_id}',\n     metadata={\n       agent: 'blockchain',\n       violation_type: '{type}',\n       token: '{token_symbol}',\n       action_blocked: true\n     }\n   )\n   notify_team(\n     type='error',\n     title='⛔ COMPLIANCE VIOLATION BLOCKED',\n     message='Attempted: {action} for {token}\\nThis violates security token regulations.',\n     recipients=['compliance-officer', 'pm', 'legal']\n   )\n   STOP and explain why action is blocked"
+    },
+    "log_validator_setup": {
+      "prompt": "After validator infrastructure setup:\n\n1. log_activity(\n     type='deployment',\n     title='🖥️ Validator node configured',\n     entity_type='project',\n     entity_id='{project_id}',\n     metadata={\n       agent: 'blockchain',\n       infrastructure: {\n         provider: 'AWS|GCP',\n         region: '{region}',\n         instance_type: '{type}'\n       },\n       network: '{network}',\n       consensus: 'PoSA|PoS'\n     }\n   )"
+    }
+  }
+}

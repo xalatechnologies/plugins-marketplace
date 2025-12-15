@@ -1,0 +1,24 @@
+{
+  "mcpServers": {
+    "expo": {
+      "command": "npx",
+      "args": ["expo"],
+      "description": "Expo CLI"
+    }
+  },
+  "tools": {
+    "expo_start": {
+      "description": "Start Expo development server"
+    },
+    "expo_build": {
+      "description": "Build app for distribution",
+      "parameters": {
+        "platform": "ios or android"
+      }
+    },
+    "expo_publish": {
+      "description": "Publish OTA update"
+    }
+  }
+}
+

@@ -1,0 +1,48 @@
+{
+  "dependencies": ["xalapm-core"],
+  "hooks": [
+    {
+      "event": "ci_setup_complete",
+      "action": "sync_ci_setup",
+      "description": "Log CI/CD setup to Xala PM"
+    },
+    {
+      "event": "build_complete",
+      "action": "log_build_result",
+      "description": "Log build results"
+    },
+    {
+      "event": "deployment_started",
+      "action": "log_deployment_start",
+      "description": "Log deployment initiation"
+    },
+    {
+      "event": "deployment_complete",
+      "action": "sync_deployment",
+      "description": "Sync deployment results and notify team"
+    },
+    {
+      "event": "file_modified",
+      "pattern": ".github/workflows/*.yml",
+      "action": "log_workflow_change",
+      "description": "Log CI workflow changes"
+    }
+  ],
+  "actions": {
+    "sync_ci_setup": {
+      "prompt": "After setting up CI/CD:\n\n1. log_activity(\n     type='deployment',\n     title='⚙️ CI/CD pipeline configured',\n     entity_type='project',\n     entity_id='{project_id}',\n     metadata={\n       agent: 'devops',\n       platform: 'github-actions|gitlab-ci',\n       workflows: ['ci', 'deploy'],\n       artifacts: ['.github/workflows/ci.yml']\n     }\n   )\n2. Create/update tasks for CI setup\n3. Update phase progress if applicable"
+    },
+    "log_build_result": {
+      "prompt": "After build completes:\n\n1. log_activity(\n     type='deployment',\n     title='🔨 Build {status}: {project}',\n     entity_type='project',\n     entity_id='{project_id}',\n     metadata={\n       agent: 'devops',\n       build_status: '{success|failed}',\n       duration: '{time}',\n       artifacts: ['{build_output}']\n     }\n   )\n2. If build failed:\n   notify_team(\n     type='error',\n     title='Build Failed',\n     message='Build failed: {error_summary}',\n     recipients=['developer', 'devops']\n   )"
+    },
+    "log_deployment_start": {
+      "prompt": "When deployment starts:\n\n1. log_activity(\n     type='deployment',\n     title='🚀 Deployment started: {environment}',\n     entity_type='project',\n     entity_id='{project_id}',\n     metadata={\n       agent: 'devops',\n       environment: '{env}',\n       version: '{version}',\n       initiated_by: '{user_or_ci}'\n     }\n   )\n2. notify_team(\n     type='info',\n     title='Deployment Started',\n     message='Deploying to {environment}...',\n     recipients=['pm', 'devops']\n   )"
+    },
+    "sync_deployment": {
+      "prompt": "After deployment completes:\n\n1. log_activity(\n     type='deployment',\n     title='✅ Deployed to {environment}',\n     entity_type='project',\n     entity_id='{project_id}',\n     metadata={\n       agent: 'devops',\n       environment: '{env}',\n       version: '{version}',\n       url: '{deployed_url}',\n       duration: '{time}'\n     }\n   )\n2. If deployment task exists, mark complete:\n   update_task task_id='{deploy_task}' status='done'\n3. notify_team(\n     type='success',\n     title='🎉 Deployment Complete',\n     message='Successfully deployed to {environment}\\nURL: {url}',\n     recipients=['pm', 'team']\n   )\n4. Update project deployment status"
+    },
+    "log_workflow_change": {
+      "prompt": "When CI workflow files change:\n\n1. log_activity(\n     type='code_change',\n     title='CI workflow updated: {filename}',\n     entity_type='project',\n     entity_id='{project_id}',\n     metadata={\n       agent: 'devops',\n       file: '{filepath}',\n       changes: '{summary}'\n     }\n   )"
+    }
+  }
+}

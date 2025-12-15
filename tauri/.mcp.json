@@ -1,0 +1,30 @@
+{
+  "mcpServers": {
+    "rust": {
+      "command": "npx",
+      "args": ["-y", "@anthropic/mcp-rust-analyzer"],
+      "description": "Rust language server for code analysis"
+    }
+  },
+  "tools": {
+    "cargo_check": {
+      "description": "Run cargo check on Tauri project",
+      "parameters": {
+        "path": "Path to Cargo.toml"
+      }
+    },
+    "cargo_build": {
+      "description": "Build Tauri application",
+      "parameters": {
+        "release": "Build in release mode (default: false)"
+      }
+    },
+    "tauri_dev": {
+      "description": "Run Tauri in development mode"
+    },
+    "tauri_build": {
+      "description": "Build Tauri for distribution"
+    }
+  }
+}
+

@@ -1,0 +1,19 @@
+{
+  "mcpServers": {},
+  "tools": {
+    "generate_typedoc": {
+      "description": "Generate TypeDoc documentation",
+      "parameters": {
+        "entryPoint": "Entry point file"
+      }
+    },
+    "update_changelog": {
+      "description": "Update changelog with new entry",
+      "parameters": {
+        "type": "Added, Changed, Fixed, etc.",
+        "description": "Change description"
+      }
+    }
+  }
+}
+

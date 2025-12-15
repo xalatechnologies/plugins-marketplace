@@ -1,0 +1,24 @@
+{
+  "mcpServers": {
+    "docker": {
+      "command": "docker",
+      "description": "Docker CLI"
+    }
+  },
+  "tools": {
+    "docker_build": {
+      "description": "Build Docker image",
+      "parameters": {
+        "tag": "Image tag",
+        "context": "Build context"
+      }
+    },
+    "docker_push": {
+      "description": "Push image to registry"
+    },
+    "validate_yaml": {
+      "description": "Validate YAML syntax"
+    }
+  }
+}
+

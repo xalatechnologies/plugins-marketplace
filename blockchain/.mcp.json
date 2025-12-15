@@ -1,0 +1,65 @@
+{
+  "mcpServers": {
+    "ethereum": {
+      "command": "npx",
+      "args": ["-y", "@anthropic/mcp-ethereum"],
+      "env": {
+        "RPC_URL": "${RPC_URL}",
+        "ETHERSCAN_API_KEY": "${ETHERSCAN_API_KEY}"
+      },
+      "description": "Ethereum RPC interaction and contract verification"
+    },
+    "foundry": {
+      "command": "npx",
+      "args": ["-y", "@anthropic/mcp-foundry"],
+      "description": "Foundry testing and deployment"
+    }
+  },
+  "tools": {
+    "eth_call": {
+      "description": "Call a contract method (read-only)",
+      "parameters": {
+        "to": "Contract address",
+        "data": "Encoded call data"
+      }
+    },
+    "eth_getBalance": {
+      "description": "Get ETH balance of address",
+      "parameters": {
+        "address": "Address to check"
+      }
+    },
+    "eth_getCode": {
+      "description": "Get contract bytecode",
+      "parameters": {
+        "address": "Contract address"
+      }
+    },
+    "forge_test": {
+      "description": "Run Foundry tests",
+      "parameters": {
+        "match": "Test pattern to match (optional)"
+      }
+    },
+    "forge_build": {
+      "description": "Build contracts with Foundry"
+    },
+    "forge_coverage": {
+      "description": "Get test coverage report"
+    },
+    "slither": {
+      "description": "Run Slither static analysis",
+      "parameters": {
+        "path": "Contract path"
+      }
+    },
+    "verify_contract": {
+      "description": "Verify contract on Etherscan",
+      "parameters": {
+        "address": "Contract address",
+        "constructorArgs": "Constructor arguments"
+      }
+    }
+  }
+}
+

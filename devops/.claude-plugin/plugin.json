@@ -1,0 +1,19 @@
+{
+  "name": "devops",
+  "description": "DevOps Agent - CI/CD, Docker, Kubernetes, GitHub Actions, deployment automation",
+  "version": "1.0.0",
+  "author": {
+    "name": "Xala Technologies"
+  },
+  "keywords": [
+    "devops",
+    "ci",
+    "cd",
+    "docker",
+    "kubernetes",
+    "github-actions",
+    "deployment"
+  ],
+  "license": "MIT"
+}
+
