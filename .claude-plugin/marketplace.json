@@ -11,9 +11,7 @@
       "name": "xalapm-core",
       "source": "./xalapm-core",
       "description": "Xala PM Core Integration - Shared hooks, tools, and protocols for all agents to sync with Xala PM",
-      "category": "core",
-      "priority": 999,
-      "required": true
+      "category": "core"
     },
     {
       "name": "repo-analysis",
@@ -109,8 +107,7 @@
       "name": "orchestrator",
       "source": "./orchestrator",
       "description": "Orchestrator Agent - Master coordinator that manages and delegates to specialized agents, synthesizes findings",
-      "category": "orchestration",
-      "priority": 100
+      "category": "orchestration"
     },
     {
       "name": "mobile",
