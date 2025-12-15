@@ -12,8 +12,6 @@
     "core",
     "shared"
   ],
-  "license": "MIT",
-  "priority": 999,
-  "required": true
+  "license": "MIT"
 }
 
